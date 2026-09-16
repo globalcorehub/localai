@@ -1,5 +1,5 @@
 // LocalAI Service Worker - 100% Offline & Air-Gapped Cache
-const CACHE_NAME = 'localai-offline-v5';
+const CACHE_NAME = 'localai-offline-v6';
 const STATIC_ASSETS = [
   "/",
   "/manifest.json",
@@ -59,29 +59,30 @@ const STATIC_ASSETS = [
   "/pt/offline-code-regex-explainer",
   "/pt/local-document-vector-search",
   "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js",
-  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm-simd.wasm",
-  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm.wasm"
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm-simd.wasm"
 ];
 
-// 1. Install & Pre-cache critical routes with resilient allSettled and per-asset timeout
+// 1. Install & Pre-cache critical routes with resilient allSettled and per-asset timeout covering body streaming
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async cache => {
       await Promise.allSettled(
         STATIC_ASSETS.map(async url => {
           const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-          const timer = controller ? setTimeout(() => controller.abort(), 8000) : null;
+          const timer = controller ? setTimeout(() => {
+            try { controller.abort(); } catch(e) {}
+          }, 8000) : null;
           try {
             const fetchOpts = { cache: 'no-cache' };
             if (controller) fetchOpts.signal = controller.signal;
             const res = await fetch(url, fetchOpts);
-            if (timer) clearTimeout(timer);
             if (res && (res.status === 200 || res.type === 'opaque')) {
               await cache.put(url, res);
             }
           } catch(err) {
-            if (timer) clearTimeout(timer);
             console.warn('SW pre-cache skip for ' + url, err);
+          } finally {
+            if (timer) clearTimeout(timer);
           }
         })
       );
