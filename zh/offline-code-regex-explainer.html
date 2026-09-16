@@ -551,22 +551,76 @@
         resultOutput.textContent = breakdown;
 
       } else if (activeTab === 'explain') {
-        const lines = val.split(LF);
-        let maxNesting = 0;
-        let currentDepth = 0;
-        let totalLoops = 0;
-        lines.forEach(l => {
-          const isLoop = /(?:^|\s)(?:for|while|do)(?:\s|\(|$)/.test(l);
-          if (isLoop) {
-            totalLoops++;
-            currentDepth++;
-            if (currentDepth > maxNesting) maxNesting = currentDepth;
-          }
-          if (l.includes('}')) {
-            currentDepth = Math.max(0, currentDepth - 1);
-          }
-        });
+        // Robust token & indentation loop parser (C-family, JS, Python, etc.)
+        const cleanCode = val
+          .replace(/\/\*[\s\S]*?\*\//g, '')
+          .replace(/\/\/.*/g, '');
 
+        let maxNesting = 0;
+        let totalLoops = 0;
+        const isPython = /for\s+\w+\s+in\s+.*:/.test(cleanCode) && !cleanCode.includes('{');
+
+        if (isPython) {
+          const pLines = cleanCode.split(LF);
+          const loopStack = [];
+          pLines.forEach(line => {
+            if (!line.trim()) return;
+            const indent = line.search(/\S/);
+            while (loopStack.length > 0 && indent <= loopStack[loopStack.length - 1]) {
+              loopStack.pop();
+            }
+            if (/(?:^|\s)(?:for|while)\\b/.test(line)) {
+              totalLoops++;
+              loopStack.push(indent);
+              if (loopStack.length > maxNesting) maxNesting = loopStack.length;
+            }
+          });
+        } else {
+          let braceDepth = 0;
+          const loopDepths = [];
+          let pendingLoop = 0;
+          const tokens = cleanCode.match(/\\b(?:for|while|do|forEach|map)\\b|[{}();]/g) || [];
+          let tIdx = 0;
+          while (tIdx < tokens.length) {
+            const tok = tokens[tIdx];
+            if (tok === 'for' || tok === 'while' || tok === 'do' || tok === 'forEach' || tok === 'map') {
+              totalLoops++;
+              const currentNesting = loopDepths.length + pendingLoop + 1;
+              if (currentNesting > maxNesting) maxNesting = currentNesting;
+
+              tIdx++;
+              if (tIdx < tokens.length && tokens[tIdx] === '(') {
+                let parenDepth = 1;
+                tIdx++;
+                while (tIdx < tokens.length && parenDepth > 0) {
+                  if (tokens[tIdx] === '(') parenDepth++;
+                  else if (tokens[tIdx] === ')') parenDepth--;
+                  tIdx++;
+                }
+              }
+              if (tIdx < tokens.length && tokens[tIdx] === '{') {
+                braceDepth++;
+                loopDepths.push(braceDepth);
+                tIdx++;
+              } else {
+                pendingLoop++;
+              }
+              continue;
+            } else if (tok === '{') {
+              braceDepth++;
+            } else if (tok === '}') {
+              if (loopDepths.length > 0 && loopDepths[loopDepths.length - 1] === braceDepth) {
+                loopDepths.pop();
+              }
+              braceDepth = Math.max(0, braceDepth - 1);
+            } else if (tok === ';') {
+              if (pendingLoop > 0) pendingLoop--;
+            }
+            tIdx++;
+          }
+        }
+
+        const lines = val.split(LF);
         const hasRecursion = lines.some(l => /function\s+(\w+)/.test(l) && val.includes(RegExp.$1 + '('));
         const isAsync = new RegExp('\\b(async|await|Promise)\\b').test(val);
 
