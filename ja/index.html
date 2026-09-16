@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>LocalAI Suite - 100% ブラウザ内完結・完全ローカルAIツール集</title>
+  <meta name="description" content="外部サーバー送信ゼロ、API費用ゼロ、完全なプライバシー保護。Whisper音声文字起こし、AI背景切り抜き、プライベートOCRをWebGPUで高速実行。">
+  <meta name="keywords" content="LocalAI Suite, amazon fba calculator, shopify profit margin, customs tariff, landed freight cost, cross border ecommerce">
+  <meta name="author" content="LocalAI Suite">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://localai.globalcorehub.com/ja/">
+  <link rel="alternate" hreflang="en" href="https://localai.globalcorehub.com/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://localai.globalcorehub.com/zh" />
+  <link rel="alternate" hreflang="zh" href="https://localai.globalcorehub.com/zh" />
+  <link rel="alternate" hreflang="es" href="https://localai.globalcorehub.com/es" />
+  <link rel="alternate" hreflang="pt" href="https://localai.globalcorehub.com/pt" />
+  <link rel="alternate" hreflang="de" href="https://localai.globalcorehub.com/de" />
+  <link rel="alternate" hreflang="fr" href="https://localai.globalcorehub.com/fr" />
+  <link rel="alternate" hreflang="ja" href="https://localai.globalcorehub.com/ja" />
+  <link rel="alternate" hreflang="x-default" href="https://localai.globalcorehub.com/" />
+
+  <!-- Dynamic Inline SVG Favicon (3D Apple Glass Frosted Package Cube) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='pkg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%230284c7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23pkg)'/%3E%3Cpath d='M16 6l10 5.5v11L16 28 6 22.5v-11L16 6z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M16 6v11M16 17l10-5.5M16 17L6 11.5' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E" type="image/svg+xml">
+
+  <!-- OpenGraph Social Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LocalAI Suite">
+  <meta property="og:title" content="LocalAI Suite - 100% ブラウザ内完結・完全ローカルAIツール集">
+  <meta property="og:description" content="外部サーバー送信ゼロ、API費用ゼロ、完全なプライバシー保護。Whisper音声文字起こし、AI背景切り抜き、プライベートOCRをWebGPUで高速実行。">
+  <meta property="og:url" content="https://localai.globalcorehub.com/ja/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://localai.globalcorehub.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LocalAI Suite">
+
+  <!-- Twitter Social Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LocalAI Suite - 100% ブラウザ内完結・完全ローカルAIツール集">
+  <meta name="twitter:description" content="外部サーバー送信ゼロ、API費用ゼロ、完全なプライバシー保護。Whisper音声文字起こし、AI背景切り抜き、プライベートOCRをWebGPUで高速実行。">
+  <meta name="twitter:image" content="https://localai.globalcorehub.com/og-image.svg">
+
+  <!-- Apple SF Pro / Plus Jakarta Sans Typography Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Framework -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            bento: {
+              sky: '#0284c7',
+              cyan: '#06b6d4',
+              slate: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Petite-Vue Reactive Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer></script>
+
+  <!-- Apple Bento Glassmorphism Custom CSS -->
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      letter-spacing: -0.015em;
+    }
+    .bento-glass {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .dark .bento-glass {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(51, 65, 85, 0.85);
+    }
+    .floating-nav {
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      margin: 0 auto;
+      max-width: 82rem;
+      padding: 0 1rem;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+    #tool-search, #search-section, [data-search-target] {
+      scroll-margin-top: 130px;
+    }
+    @keyframes search-glow-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .search-highlight-pulse {
+      animation: search-glow-pulse 0.4s ease-in-out 2;
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.45) !important;
+      border-color: rgb(14, 165, 233) !important;
+    }
+  </style>
+
+  <!-- Structured Data JSON-LD (WebSite & SearchAction) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "LocalAI Suite",
+    "url": "https://localai.globalcorehub.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://localai.globalcorehub.com/?q={search_term_string}#tool-search",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data JSON-LD (WebApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LocalAI Suite",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "url": "https://localai.globalcorehub.com/ja/",
+    "description": "外部サーバー送信ゼロ、API費用ゼロ、完全なプライバシー保護。Whisper音声文字起こし、AI背景切り抜き、プライベートOCRをWebGPUで高速実行。",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Floating Island Navigation Bar -->
+  <header class="floating-nav">
+    <div class="bento-glass rounded-full px-4 sm:px-6 py-3 shadow-[0_10px_35px_rgba(0,0,0,0.06)] flex items-center justify-between transition-all">
+      
+      <!-- Brand Identity -->
+      <a href="/ja/" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition">LocalAI Suite</span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">FBA & DTC DASHBOARD</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
+        <a href="/ja/" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sky-600 font-bold bg-sky-50 dark:bg-sky-950/50">
+          ホーム
+        </a>
+
+        
+        <a href="/ja/whisper-speech-to-text" title="ブラウザ完結型 Whisper 音声認識 - 100% 完全ローカル音声文字起こし・字幕生成" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition truncate max-w-[150px]">
+          Whisper 音声文字起こし
+        </a>
+        
+        <a href="/ja/ai-background-remover" title="ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition truncate max-w-[150px]">
+          AI 背景透過・切り抜き
+        </a>
+        
+
+        <!-- All Tools Dropdown -->
+        <div class="relative group/menu">
+          <button id="tools-dropdown-btn" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+            <span>全ツール一覧</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="tools-dropdown-panel" class="hidden group-hover/menu:block absolute right-0 mt-2 w-72 rounded-3xl bento-glass shadow-2xl p-2.5 z-50">
+            <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
+              全ツール一覧 (6)
+            </div>
+            <div class="max-h-80 overflow-y-auto space-y-1">
+              
+              <a href="/ja/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">Whisper 音声文字起こし</div>
+                <div class="text-[11px] text-slate-500 truncate">WebGPUによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。</div>
+              </a>
+              
+              <a href="/ja/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">AI 背景透過・切り抜き</div>
+                <div class="text-[11px] text-slate-500 truncate">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</div>
+              </a>
+              
+              <a href="/ja/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">プライバシー保護 OCR</div>
+                <div class="text-[11px] text-slate-500 truncate">領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。</div>
+              </a>
+              
+              <a href="/ja/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">機密保持 PDF 要約</div>
+                <div class="text-[11px] text-slate-500 truncate">社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。</div>
+              </a>
+              
+              <a href="/ja/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">隔離環境 Dev AI</div>
+                <div class="text-[11px] text-slate-500 truncate">企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、SQL最適化をブラウザ内で実行。</div>
+              </a>
+              
+              <a href="/ja/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">ローカル RAG 検索</div>
+                <div class="text-[11px] text-slate-500 truncate">複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。</div>
+              </a>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center space-x-2">
+        <a href="/ja/?focus_search=1#tool-search" id="nav-search-btn" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition cursor-pointer" title="Search Tools (Ctrl+K)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </a>
+
+        <!-- Language Selector Details -->
+        <details class="relative">
+          <summary class="list-none cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-mono font-bold flex items-center space-x-1 transition">
+            <span>[JA]</span>
+            <span class="hidden sm:inline">Japanese</span>
+          </summary>
+          <div class="absolute right-0 mt-2 w-44 rounded-2xl bento-glass shadow-2xl p-1.5 z-50 text-xs space-y-0.5">
+            
+            <a href="/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[EN] English</span>
+              
+            </a>
+            
+            <a href="/zh/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[ZH] 简体中文</span>
+              
+            </a>
+            
+            <a href="/es/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[ES] Español</span>
+              
+            </a>
+            
+            <a href="/pt/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[PT] Português</span>
+              
+            </a>
+            
+            <a href="/de/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[DE] Deutsch</span>
+              
+            </a>
+            
+            <a href="/fr/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[FR] Français</span>
+              
+            </a>
+            
+            <a href="/ja/" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition font-bold text-sky-600 bg-sky-50 dark:bg-sky-950/50">
+              <span>[JA] 日本語</span>
+              <span>✓</span>
+            </a>
+            
+          </div>
+        </details>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden mt-2 bento-glass rounded-3xl p-4 shadow-xl space-y-2">
+      <a href="/ja/?focus_search=1#tool-search" class="mobile-search-link flex items-center justify-between px-3.5 py-2 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/70 text-xs font-mono text-slate-600 dark:text-slate-300">
+        <span class="flex items-center space-x-2">
+          <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span>ツール名・用途・拡張子で瞬時に絞り込み... (/ キーで検索)</span>
+        </span>
+        <kbd class="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 opacity-60 bg-white dark:bg-slate-900 font-mono">/</kbd>
+      </a>
+      <a href="/ja/" class="block px-3.5 py-2 rounded-2xl text-sm font-bold text-sky-600 bg-sky-50 dark:bg-sky-950/50">
+        ホーム
+      </a>
+      
+      <a href="/ja/whisper-speech-to-text" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        Whisper 音声文字起こし
+      </a>
+      
+      <a href="/ja/ai-background-remover" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        AI 背景透過・切り抜き
+      </a>
+      
+      <a href="/ja/in-browser-ocr-scanner" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        プライバシー保護 OCR
+      </a>
+      
+      <a href="/ja/private-pdf-summarizer" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        機密保持 PDF 要約
+      </a>
+      
+      <a href="/ja/offline-code-regex-explainer" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        隔離環境 Dev AI
+      </a>
+      
+      <a href="/ja/local-document-vector-search" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        ローカル RAG 検索
+      </a>
+      
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="flex-grow w-full py-6 sm:py-8">
+    
+
+    
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center py-8 sm:py-12 md:py-16">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs font-mono mb-4 sm:mb-5">
+          <span>100% ブラウザ内完結・完全ローカルAIツール集</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-3 sm:mb-4">
+          LocalAI Suite
+        </h1>
+        <p class="max-w-2xl mx-auto text-xs sm:text-sm md:text-base opacity-75 leading-relaxed px-2">
+          外部サーバー送信ゼロ、API費用ゼロ、完全なプライバシー保護。Whisper音声文字起こし、AI背景切り抜き、プライベートOCRをWebGPUで高速実行。
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
+        <div id="search-section" class="relative flex items-center scroll-mt-28 sm:scroll-mt-36">
+          <div class="absolute left-4 opacity-50 pointer-events-none">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input type="text" id="tool-search" placeholder="ツール名・用途・拡張子で瞬時に絞り込み... (/ キーで検索)" class="w-full pl-11 pr-20 py-3 sm:py-3.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 text-xs sm:text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition scroll-mt-28 sm:scroll-mt-36">
+          <div class="absolute right-3.5 flex items-center space-x-1.5">
+            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 opacity-50 bg-black/20">Ctrl+K</kbd>
+            <button id="btn-clear-search" class="hidden text-xs opacity-60 hover:opacity-100 font-mono px-1">&times;</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] font-mono opacity-60 mt-2.5 px-1">
+          <span id="search-stats">全 6 件の開発者向けツールを表示中</span>
+          <span class="hidden sm:inline">100% ブラウザ内クライアント実行</span>
+        </div>
+      </div>
+
+      <div id="no-tools-found" class="hidden text-center py-12 px-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5 mb-12">
+        <p class="text-sm font-mono opacity-75 mb-3">該当するツールが見つかりませんでした。別のキーワードをお試しください。</p>
+        <button id="btn-reset-filter" class="px-4 py-1.5 rounded-xl text-xs font-mono font-bold border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 hover:bg-white/10 transition">
+          フィルターをリセット
+        </button>
+      </div>
+
+      <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
+        <a href="/ja/whisper-speech-to-text" data-search="ブラウザ完結型 whisper 音声認識 - 100% 完全ローカル音声文字起こし・字幕生成 webgpuによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。 音声文字起こし オフライン ブラウザ完結 音声認識 whisper 無料 制限なし 音声ファイル テキスト変換 安全 会議録音 文字起こし ローカル whisper-speech-to-text" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">ブラウザ完結型 Whisper 音声認識 - 100% 完全ローカル音声文字起こし・字幕生成</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">WebGPUによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#音声文字起こし オフライン</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ブラウザ完結 音声認識</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#Whisper 無料 制限なし</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+<a href="/ja/ai-background-remover" data-search="ブラウザ完結型 ai 背景透過ツール - 端末内処理で一発切り抜き透過png作成 写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。 画像 背景透過 無料 オンライン 写真 背景 切り抜き サーバー送信なし 透過png 作成 オフライン 証明写真 背景透過 ツール ai-background-remover" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#画像 背景透過 無料 オンライン</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#写真 背景 切り抜き サーバー送信なし</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#透過PNG 作成 オフライン</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+<a href="/ja/in-browser-ocr-scanner" data-search="ブラウザ完結型 ocr 文字認識 - 画像文字抽出 & 機密情報自動マスキング 領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。 画像 文字抽出 オフライン ブラウザ ocr 安全 レシート 文字認識 サーバー送信なし プライバシー保護 ocr ツール in-browser-ocr-scanner" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">ブラウザ完結型 OCR 文字認識 - 画像文字抽出 & 機密情報自動マスキング</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#画像 文字抽出 オフライン</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ブラウザ OCR 安全</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#レシート 文字認識 サーバー送信なし</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+<a href="/ja/private-pdf-summarizer" data-search="機密保持型 pdf・ドキュメント要約 ai - 100% クライアント完結 契約書レビュー 社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。 pdf 要約 オフライン 機密文書 ai 要約 契約書 レビュー 外部送信なし セキュア pdf 要約 ツール private-pdf-summarizer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">機密保持型 PDF・ドキュメント要約 AI - 100% クライアント完結 契約書レビュー</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#PDF 要約 オフライン</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#機密文書 AI 要約</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#契約書 レビュー 外部送信なし</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+<a href="/ja/offline-code-regex-explainer" data-search="オフライン対応 コード解説 & 正規表現・sql生成 - クローズド環境専用 dev ai 企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、sql最適化をブラウザ内で実行。 コード解説 オフライン 正規表現 生成 サーバー送信なし sql 最適化 ローカル セキュア 開発アシスタント ai offline-code-regex-explainer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">オフライン対応 コード解説 & 正規表現・SQL生成 - クローズド環境専用 Dev AI</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、SQL最適化をブラウザ内で実行。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#コード解説 オフライン</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#正規表現 生成 サーバー送信なし</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#SQL 最適化 ローカル</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+<a href="/ja/local-document-vector-search" data-search="完全ローカル文書ベクトル検索 - ブラウザ内 rag 知識ベース & 類似度サーチ 複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。 ベクトル検索 ブラウザ完結 ローカル rag ツール オフライン セマンティック検索 プライベート ドキュメント 類似度検索 local-document-vector-search" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% ローカル実行</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">完全ローカル文書ベクトル検索 - ブラウザ内 RAG 知識ベース & 類似度サーチ</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ベクトル検索 ブラウザ完結</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ローカル RAG ツール</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#オフライン セマンティック検索</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>ツールを開く</span><span>&rarr;</span></div></div></a>
+      </div>
+    </div>
+
+    <script>
+    (function() {
+      const searchInput = document.getElementById('tool-search');
+      const clearBtn = document.getElementById('btn-clear-search');
+      const resetBtn = document.getElementById('btn-reset-filter');
+      const emptyState = document.getElementById('no-tools-found');
+      const cards = Array.from(document.querySelectorAll('.tool-card'));
+      const statsEl = document.getElementById('search-stats');
+      const totalCards = cards.length;
+
+      function filterCards() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (clearBtn) clearBtn.classList.toggle('hidden', !query);
+
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const corpus = card.getAttribute('data-search') || '';
+          const matches = !query || corpus.includes(query);
+          card.style.display = matches ? '' : 'none';
+          if (matches) visibleCount++;
+        });
+
+        if (statsEl) {
+          statsEl.innerText = query ? ('__TOTAL__ 件中 __N__ 件のツールが見つかりました'.replace('__N__', visibleCount).replace('__TOTAL__', totalCards)) : ('全 __N__ 件の開発者向けツールを表示中'.replace('__N__', totalCards));
+        }
+
+        if (emptyState) {
+          emptyState.classList.toggle('hidden', visibleCount > 0);
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterCards);
+
+        document.addEventListener('keydown', e => {
+          const isSearchKey = (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') ||
+                              (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey));
+          if (isSearchKey) {
+            e.preventDefault();
+            if (typeof window.focusAndCenterSearch === 'function') {
+              window.focusAndCenterSearch();
+            } else {
+              searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              searchInput.focus();
+              searchInput.select();
+            }
+          }
+          if (e.key === 'Escape' && document.activeElement === searchInput) {
+            searchInput.value = '';
+            filterCards();
+            searchInput.blur();
+          }
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          filterCards();
+          searchInput.focus();
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          filterCards();
+          searchInput.focus();
+        });
+      }
+    })();
+    </script>
+    
+  </main>
+
+  <!-- Modern SaaS Frosted Footer -->
+  <footer class="mt-auto border-t border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl text-slate-600 dark:text-slate-400 py-12 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2 space-y-3">
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600"></span>
+            <span class="font-black text-slate-900 dark:text-slate-100 text-sm">LocalAI Suite</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed max-w-md">
+            100% クライアント内サンドボックス：すべてのAIモデル推論と計算はブラウザのメモリ内でのみ実行され、データは外部に送信されません。
+          </p>
+          <div class="flex items-center space-x-3 text-[11px] font-mono text-slate-500">
+            <span>⚡ Cloudflare エッジ · 0ms コールドスタート</span>
+            <span>&bull;</span>
+            <span>100% ブラウザ内ローカル処理：サーバー保存ゼロ、データ送信ゼロで完全なプライバシーを保護。</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider text-[11px] mb-3">ツール＆ディレクトリ</h4>
+          <ul class="space-y-2 font-mono text-[11px]">
+            
+            <li><a href="/ja/whisper-speech-to-text" class="hover:text-sky-600 transition">Whisper 音声文字起こし</a></li>
+            
+            <li><a href="/ja/ai-background-remover" class="hover:text-sky-600 transition">AI 背景透過・切り抜き</a></li>
+            
+            <li><a href="/ja/in-browser-ocr-scanner" class="hover:text-sky-600 transition">プライバシー保護 OCR</a></li>
+            
+            <li><a href="/ja/private-pdf-summarizer" class="hover:text-sky-600 transition">機密保持 PDF 要約</a></li>
+            
+            <li><a href="/ja/offline-code-regex-explainer" class="hover:text-sky-600 transition">隔離環境 Dev AI</a></li>
+            
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider text-[11px] mb-3">グローバル多言語ネットワーク</h4>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+            
+            <a href="/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">English</a>
+            
+            <a href="/zh/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Chinese</a>
+            
+            <a href="/es/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Spanish</a>
+            
+            <a href="/pt/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Portuguese</a>
+            
+            <a href="/de/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">German</a>
+            
+            <a href="/fr/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">French</a>
+            
+            <a href="/ja/" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Japanese</a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 font-mono">
+        <div>&copy; LocalAI Suite. Apple Bento Glass Engine.</div>
+        <div class="mt-2 sm:mt-0">7大グローバル言語 · 42 本地化エンドポイント · 100% クライアント完結</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top-btn" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bento-glass shadow-2xl hover:scale-110 transition opacity-0 pointer-events-none transform translate-y-4" title="トップへ戻る">
+    <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <!-- Interaction Runtime -->
+  <script>
+  (function() {
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    const btt = document.getElementById('back-to-top-btn');
+    if (btt) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY > 300;
+        btt.classList.toggle('opacity-0', !scrolled);
+        btt.classList.toggle('pointer-events-none', !scrolled);
+        btt.classList.toggle('translate-y-4', !scrolled);
+      });
+      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    window.showToast = function(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-6 right-6 z-50 bento-glass text-slate-900 dark:text-white text-xs font-semibold px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 transition-all duration-300';
+      toast.innerHTML = '<span class="text-sky-500 font-bold">✓</span><span>' + msg + '</span>';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    };
+
+    // Smooth Centered Search Focus Runtime
+    window.focusAndCenterSearch = function() {
+      const searchInput = document.getElementById('tool-search');
+      if (searchInput) {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+          try {
+            searchInput.focus({ preventScroll: true });
+            searchInput.select();
+          } catch(e) {
+            searchInput.focus();
+          }
+          searchInput.classList.add('search-highlight-pulse');
+          setTimeout(() => searchInput.classList.remove('search-highlight-pulse'), 1200);
+        }, 300);
+        return true;
+      } else {
+        window.location.href = '/ja/?focus_search=1#tool-search';
+        return false;
+      }
+    };
+
+    // Intercept clicks on top nav search & mobile search
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('#nav-search-btn, .mobile-search-link, a[href*="#tool-search"]');
+      if (btn && document.getElementById('tool-search')) {
+        e.preventDefault();
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        if (history.replaceState) history.replaceState(null, '', '#tool-search');
+        window.focusAndCenterSearch();
+      }
+    });
+
+    // Auto focus when loading with #tool-search or focus_search=1
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const shouldFocus = window.location.hash === '#tool-search' || params.get('focus_search') === '1' || params.has('q');
+      if (shouldFocus && document.getElementById('tool-search')) {
+        setTimeout(window.focusAndCenterSearch, 250);
+      }
+    });
+
+    // Global Keyboard Shortcuts (Ctrl+K or /)
+    document.addEventListener('keydown', (e) => {
+      const isSearchKey = (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) ||
+                          (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey));
+      if (isSearchKey) {
+        e.preventDefault();
+        window.focusAndCenterSearch();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

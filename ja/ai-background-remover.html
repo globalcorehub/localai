@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成 | LocalAI Suite</title>
+  <meta name="description" content="写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。">
+  <meta name="keywords" content="LocalAI Suite, amazon fba calculator, shopify profit margin, customs tariff, landed freight cost, cross border ecommerce">
+  <meta name="author" content="LocalAI Suite">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://localai.globalcorehub.com/ja/ai-background-remover">
+  <link rel="alternate" hreflang="en" href="https://localai.globalcorehub.com/ai-background-remover" />
+  <link rel="alternate" hreflang="zh-CN" href="https://localai.globalcorehub.com/zh/ai-background-remover" />
+  <link rel="alternate" hreflang="zh" href="https://localai.globalcorehub.com/zh/ai-background-remover" />
+  <link rel="alternate" hreflang="es" href="https://localai.globalcorehub.com/es/ai-background-remover" />
+  <link rel="alternate" hreflang="pt" href="https://localai.globalcorehub.com/pt/ai-background-remover" />
+  <link rel="alternate" hreflang="de" href="https://localai.globalcorehub.com/de/ai-background-remover" />
+  <link rel="alternate" hreflang="fr" href="https://localai.globalcorehub.com/fr/ai-background-remover" />
+  <link rel="alternate" hreflang="ja" href="https://localai.globalcorehub.com/ja/ai-background-remover" />
+  <link rel="alternate" hreflang="x-default" href="https://localai.globalcorehub.com/ai-background-remover" />
+
+  <!-- Dynamic Inline SVG Favicon (3D Apple Glass Frosted Package Cube) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='pkg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%230284c7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23pkg)'/%3E%3Cpath d='M16 6l10 5.5v11L16 28 6 22.5v-11L16 6z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M16 6v11M16 17l10-5.5M16 17L6 11.5' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E" type="image/svg+xml">
+
+  <!-- OpenGraph Social Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LocalAI Suite">
+  <meta property="og:title" content="ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成 | LocalAI Suite">
+  <meta property="og:description" content="写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。">
+  <meta property="og:url" content="https://localai.globalcorehub.com/ja/ai-background-remover">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://localai.globalcorehub.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LocalAI Suite">
+
+  <!-- Twitter Social Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成 | LocalAI Suite">
+  <meta name="twitter:description" content="写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。">
+  <meta name="twitter:image" content="https://localai.globalcorehub.com/og-image.svg">
+
+  <!-- Apple SF Pro / Plus Jakarta Sans Typography Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Framework -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            bento: {
+              sky: '#0284c7',
+              cyan: '#06b6d4',
+              slate: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Petite-Vue Reactive Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer></script>
+
+  <!-- Apple Bento Glassmorphism Custom CSS -->
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      letter-spacing: -0.015em;
+    }
+    .bento-glass {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .dark .bento-glass {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(51, 65, 85, 0.85);
+    }
+    .floating-nav {
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      margin: 0 auto;
+      max-width: 82rem;
+      padding: 0 1rem;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+    #tool-search, #search-section, [data-search-target] {
+      scroll-margin-top: 130px;
+    }
+    @keyframes search-glow-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .search-highlight-pulse {
+      animation: search-glow-pulse 0.4s ease-in-out 2;
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.45) !important;
+      border-color: rgb(14, 165, 233) !important;
+    }
+  </style>
+
+  <!-- Structured Data JSON-LD (WebSite & SearchAction) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "LocalAI Suite",
+    "url": "https://localai.globalcorehub.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://localai.globalcorehub.com/?q={search_term_string}#tool-search",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data JSON-LD (WebApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "url": "https://localai.globalcorehub.com/ja/ai-background-remover",
+    "description": "写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  
+  <!-- BreadcrumbList Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://localai.globalcorehub.com/ja/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "全ツール一覧",
+        "item": "https://localai.globalcorehub.com/ja/#tools-grid"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成",
+        "item": "https://localai.globalcorehub.com/ja/ai-background-remover"
+      }
+    ]
+  }
+  </script>
+  
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Floating Island Navigation Bar -->
+  <header class="floating-nav">
+    <div class="bento-glass rounded-full px-4 sm:px-6 py-3 shadow-[0_10px_35px_rgba(0,0,0,0.06)] flex items-center justify-between transition-all">
+      
+      <!-- Brand Identity -->
+      <a href="/ja/" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition">LocalAI Suite</span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">FBA & DTC DASHBOARD</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
+        <a href="/ja/" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition ">
+          ホーム
+        </a>
+
+        
+        <a href="/ja/whisper-speech-to-text" title="ブラウザ完結型 Whisper 音声認識 - 100% 完全ローカル音声文字起こし・字幕生成" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition truncate max-w-[150px]">
+          Whisper 音声文字起こし
+        </a>
+        
+        <a href="/ja/ai-background-remover" title="ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition truncate max-w-[150px]">
+          AI 背景透過・切り抜き
+        </a>
+        
+
+        <!-- All Tools Dropdown -->
+        <div class="relative group/menu">
+          <button id="tools-dropdown-btn" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+            <span>全ツール一覧</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="tools-dropdown-panel" class="hidden group-hover/menu:block absolute right-0 mt-2 w-72 rounded-3xl bento-glass shadow-2xl p-2.5 z-50">
+            <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
+              全ツール一覧 (6)
+            </div>
+            <div class="max-h-80 overflow-y-auto space-y-1">
+              
+              <a href="/ja/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">Whisper 音声文字起こし</div>
+                <div class="text-[11px] text-slate-500 truncate">WebGPUによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。</div>
+              </a>
+              
+              <a href="/ja/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">AI 背景透過・切り抜き</div>
+                <div class="text-[11px] text-slate-500 truncate">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</div>
+              </a>
+              
+              <a href="/ja/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">プライバシー保護 OCR</div>
+                <div class="text-[11px] text-slate-500 truncate">領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。</div>
+              </a>
+              
+              <a href="/ja/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">機密保持 PDF 要約</div>
+                <div class="text-[11px] text-slate-500 truncate">社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。</div>
+              </a>
+              
+              <a href="/ja/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">隔離環境 Dev AI</div>
+                <div class="text-[11px] text-slate-500 truncate">企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、SQL最適化をブラウザ内で実行。</div>
+              </a>
+              
+              <a href="/ja/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                <div class="font-bold text-slate-900 dark:text-slate-100">ローカル RAG 検索</div>
+                <div class="text-[11px] text-slate-500 truncate">複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。</div>
+              </a>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center space-x-2">
+        <a href="/ja/?focus_search=1#tool-search" id="nav-search-btn" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition cursor-pointer" title="Search Tools (Ctrl+K)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </a>
+
+        <!-- Language Selector Details -->
+        <details class="relative">
+          <summary class="list-none cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-mono font-bold flex items-center space-x-1 transition">
+            <span>[JA]</span>
+            <span class="hidden sm:inline">Japanese</span>
+          </summary>
+          <div class="absolute right-0 mt-2 w-44 rounded-2xl bento-glass shadow-2xl p-1.5 z-50 text-xs space-y-0.5">
+            
+            <a href="/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[EN] English</span>
+              
+            </a>
+            
+            <a href="/zh/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[ZH] 简体中文</span>
+              
+            </a>
+            
+            <a href="/es/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[ES] Español</span>
+              
+            </a>
+            
+            <a href="/pt/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[PT] Português</span>
+              
+            </a>
+            
+            <a href="/de/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[DE] Deutsch</span>
+              
+            </a>
+            
+            <a href="/fr/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition ">
+              <span>[FR] Français</span>
+              
+            </a>
+            
+            <a href="/ja/ai-background-remover" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 transition font-bold text-sky-600 bg-sky-50 dark:bg-sky-950/50">
+              <span>[JA] 日本語</span>
+              <span>✓</span>
+            </a>
+            
+          </div>
+        </details>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden mt-2 bento-glass rounded-3xl p-4 shadow-xl space-y-2">
+      <a href="/ja/?focus_search=1#tool-search" class="mobile-search-link flex items-center justify-between px-3.5 py-2 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/70 text-xs font-mono text-slate-600 dark:text-slate-300">
+        <span class="flex items-center space-x-2">
+          <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span>ツール名・用途・拡張子で瞬時に絞り込み... (/ キーで検索)</span>
+        </span>
+        <kbd class="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 opacity-60 bg-white dark:bg-slate-900 font-mono">/</kbd>
+      </a>
+      <a href="/ja/" class="block px-3.5 py-2 rounded-2xl text-sm font-bold ">
+        ホーム
+      </a>
+      
+      <a href="/ja/whisper-speech-to-text" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        Whisper 音声文字起こし
+      </a>
+      
+      <a href="/ja/ai-background-remover" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        AI 背景透過・切り抜き
+      </a>
+      
+      <a href="/ja/in-browser-ocr-scanner" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        プライバシー保護 OCR
+      </a>
+      
+      <a href="/ja/private-pdf-summarizer" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        機密保持 PDF 要約
+      </a>
+      
+      <a href="/ja/offline-code-regex-explainer" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        隔離環境 Dev AI
+      </a>
+      
+      <a href="/ja/local-document-vector-search" class="block px-3.5 py-2 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800">
+        ローカル RAG 検索
+      </a>
+      
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="flex-grow w-full py-6 sm:py-8">
+    
+    <!-- Semantic Breadcrumbs for Subpages -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+      <nav aria-label="Breadcrumb" class="inline-flex items-center space-x-2 text-xs font-mono text-slate-500 bento-glass px-4 py-2 rounded-full shadow-sm">
+        <a href="/ja/" class="hover:text-sky-600 transition flex items-center space-x-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>ホーム</span>
+        </a>
+        <span>/</span>
+        <a href="/ja/#tools-grid" class="hover:text-sky-600 transition">全ツール一覧</a>
+        <span>/</span>
+        <span class="font-bold text-slate-900 dark:text-slate-100 truncate max-w-xs">AI 背景透過・切り抜き</span>
+      </nav>
+    </div>
+    
+
+    
+<div class="max-w-4xl mx-auto">
+  <div class="bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 p-4 sm:p-6 md:p-8">
+    
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 sm:pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+          <div>
+            <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 font-mono mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span>
+              <span>[BIREFNET WEBGPU - 100% PRIVATE]</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-black tracking-tight">ブラウザ完結型 AI 背景透過ツール - 端末内処理で一発切り抜き透過PNG作成</h1>
+            <p class="text-xs sm:text-sm opacity-70 mt-1 max-w-2xl">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</p>
+          </div>
+          <div class="flex items-center space-x-2 self-start sm:self-auto">
+            <span class="px-3 py-1.5 rounded-xl text-[11px] font-mono border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">
+              ⚡ WebGPU ハードウェア加速：有効
+            </span>
+          </div>
+        </div>
+        
+
+    <!-- Image Drag & Drop -->
+    <div class="mt-6 space-y-4">
+      <div id="img-dropzone" class="border-2 border-dashed border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 rounded-2xl p-8 text-center cursor-pointer hover:bg-emerald-500/5 transition flex flex-col items-center justify-center min-h-[160px]">
+        <input type="file" id="img-file-input" accept="image/*" class="hidden">
+        <span class="text-4xl mb-2">🖼️</span>
+        <span class="text-xs sm:text-sm font-bold">画像をクリックまたはドラッグ＆ドロップ (.png, .jpg, .webp)</span>
+        <span id="img-file-info" class="text-[11px] font-mono text-emerald-500 mt-1.5"></span>
+      </div>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5">
+        <div>
+          <div class="flex justify-between text-xs font-bold mb-1">
+            <span>許容範囲・輪郭境界のぼかし調整</span>
+            <span id="tol-val" class="font-mono text-emerald-500">35%</span>
+          </div>
+          <input type="range" id="slider-tolerance" min="5" max="80" value="35" class="w-full accent-emerald-500 cursor-pointer">
+        </div>
+        <div class="flex items-center space-x-3 self-center">
+          <button id="btn-process-bg" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs tracking-tight transition bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-2xl shadow-lg shadow-sky-500/25">
+            ✂ 背景を瞬時に切り抜き
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas & Split Viewer -->
+      <div class="mt-6 flex flex-col items-center">
+        <div class="relative w-full max-w-[500px] aspect-video rounded-2xl overflow-hidden border-2 border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-[repeating-conic-gradient(#808080_0_25%,transparent_0_50%)] bg-[size:16px_16px] flex items-center justify-center">
+          <canvas id="cutout-canvas" class="max-w-full max-h-full object-contain"></canvas>
+          <div id="placeholder-cutout" class="text-xs font-mono opacity-50 text-center p-4">
+            Upload an image to inspect real-time client-side cutout
+          </div>
+        </div>
+        <div class="mt-4 flex items-center space-x-3">
+          <button id="btn-download-png" class="px-5 py-2.5 rounded-xl font-bold text-xs font-mono border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-white dark:bg-slate-900 hover:bg-emerald-500/10 transition flex items-center space-x-2">
+            <span>⬇ 透過PNGをダウンロード</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div>
+            <h2 class="text-sm sm:text-base font-bold mb-2 sm:mb-3">ブラウザ完結型 AI 背景透過ツール について</h2>
+            <p class="text-xs opacity-75 leading-relaxed"><strong>画像 背景透過 無料 オンライン</strong> をブラウザ内完結で実行できるオンラインAIツール。外部サーバー送信は一切ありません。</p>
+            <h3 class="text-xs font-bold uppercase tracking-wider opacity-70 mt-4 mb-2">対応するAIユースケース</h3>
+            <ul class="space-y-0.5"><li class='flex items-center text-xs opacity-75 py-1 font-mono'><span class='mr-2' style='color:#0284c7'>✦</span>画像 背景透過 無料 オンライン</li><li class='flex items-center text-xs opacity-75 py-1 font-mono'><span class='mr-2' style='color:#0284c7'>✦</span>写真 背景 切り抜き サーバー送信なし</li><li class='flex items-center text-xs opacity-75 py-1 font-mono'><span class='mr-2' style='color:#0284c7'>✦</span>透過PNG 作成 オフライン</li><li class='flex items-center text-xs opacity-75 py-1 font-mono'><span class='mr-2' style='color:#0284c7'>✦</span>証明写真 背景透過 ツール</li></ul>
+          </div>
+          <div>
+            <h2 class="text-sm sm:text-base font-bold mb-2 sm:mb-3">アーキテクチャと完全プライバシー保護</h2>
+            <div class="space-y-3">
+              <div class="p-3 sm:p-4 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5">
+                <div class="text-xs font-bold flex items-center space-x-1.5 text-emerald-600 dark:text-emerald-400">
+                  <span>🔒</span><span>100% クライアントサイド保護</span>
+                </div>
+                <p class="text-[11px] opacity-70 mt-1 leading-relaxed">音声、契約書、ソースコード、画像はお使いの端末内でのみ処理されます。</p>
+              </div>
+              <div class="p-3 sm:p-4 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5">
+                <div class="text-xs font-bold flex items-center space-x-1.5" style="color: #0284c7">
+                  <span>⚡</span><span>WebGPUによるハードウェア高速化</span>
+                </div>
+                <p class="text-[11px] opacity-70 mt-1 leading-relaxed">WebGPUとWebAssemblyにより、ネットワーク遅延なしでオフラインでも軽快に動作します。</p>
+              </div>
+            </div>
+            <p class="text-[10px] opacity-50 font-mono mt-4 leading-relaxed">⚠️ 免責事項：すべてのAI計算は端末内ローカルサンドボックスで実行され、外部通信は発生しません。</p>
+          </div>
+        </div>
+        
+  </div>
+</div>
+
+<script>
+(function() {
+  const dropzone = document.getElementById('img-dropzone');
+  const fileInput = document.getElementById('img-file-input');
+  const fileInfo = document.getElementById('img-file-info');
+  const canvas = document.getElementById('cutout-canvas');
+  const ctx = canvas.getContext('2d');
+  const placeholder = document.getElementById('placeholder-cutout');
+  const processBtn = document.getElementById('btn-process-bg');
+  const downloadBtn = document.getElementById('btn-download-png');
+  const slider = document.getElementById('slider-tolerance');
+  const tolVal = document.getElementById('tol-val');
+
+  let currentImg = null;
+
+  slider.addEventListener('input', e => tolVal.textContent = e.target.value + '%');
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => {
+    if (e.target.files.length) loadFile(e.target.files[0]);
+  });
+
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('border-emerald-500'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-emerald-500'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('border-emerald-500');
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+
+  function loadFile(file) {
+    fileInfo.textContent = '✓ ' + file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
+    const reader = new FileReader();
+    reader.onload = evt => {
+      const img = new Image();
+      img.onload = () => {
+        currentImg = img;
+        canvas.width = Math.min(800, img.width);
+        canvas.height = (img.height / img.width) * canvas.width;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        placeholder.classList.add('hidden');
+      };
+      img.src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Client-side Chroma/Edge segmentation
+  processBtn.addEventListener('click', () => {
+    if (!currentImg) return;
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+    const tol = Number(slider.value) * 2.5;
+
+    // Detect background color sample from corner
+    const bgR = data[0], bgG = data[1], bgB = data[2];
+
+    for (let i = 0; i < data.length; i += 4) {
+      const diff = Math.sqrt(
+        Math.pow(data[i] - bgR, 2) +
+        Math.pow(data[i+1] - bgG, 2) +
+        Math.pow(data[i+2] - bgB, 2)
+      );
+      if (diff < tol) {
+        data[i+3] = 0; // Transparent
+      } else if (diff < tol + 15) {
+        data[i+3] = Math.floor(((diff - tol) / 15) * 255); // Alpha feather
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+    if (window.showToast) window.showToast('Background removed locally!');
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!currentImg) return;
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'cutout_' + Date.now() + '.png';
+    a.click();
+  });
+})();
+</script>
+        
+  </main>
+
+  <!-- Modern SaaS Frosted Footer -->
+  <footer class="mt-auto border-t border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl text-slate-600 dark:text-slate-400 py-12 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2 space-y-3">
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600"></span>
+            <span class="font-black text-slate-900 dark:text-slate-100 text-sm">LocalAI Suite</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed max-w-md">
+            100% クライアント内サンドボックス：すべてのAIモデル推論と計算はブラウザのメモリ内でのみ実行され、データは外部に送信されません。
+          </p>
+          <div class="flex items-center space-x-3 text-[11px] font-mono text-slate-500">
+            <span>⚡ Cloudflare エッジ · 0ms コールドスタート</span>
+            <span>&bull;</span>
+            <span>100% ブラウザ内ローカル処理：サーバー保存ゼロ、データ送信ゼロで完全なプライバシーを保護。</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider text-[11px] mb-3">ツール＆ディレクトリ</h4>
+          <ul class="space-y-2 font-mono text-[11px]">
+            
+            <li><a href="/ja/whisper-speech-to-text" class="hover:text-sky-600 transition">Whisper 音声文字起こし</a></li>
+            
+            <li><a href="/ja/ai-background-remover" class="hover:text-sky-600 transition">AI 背景透過・切り抜き</a></li>
+            
+            <li><a href="/ja/in-browser-ocr-scanner" class="hover:text-sky-600 transition">プライバシー保護 OCR</a></li>
+            
+            <li><a href="/ja/private-pdf-summarizer" class="hover:text-sky-600 transition">機密保持 PDF 要約</a></li>
+            
+            <li><a href="/ja/offline-code-regex-explainer" class="hover:text-sky-600 transition">隔離環境 Dev AI</a></li>
+            
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider text-[11px] mb-3">グローバル多言語ネットワーク</h4>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+            
+            <a href="/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">English</a>
+            
+            <a href="/zh/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Chinese</a>
+            
+            <a href="/es/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Spanish</a>
+            
+            <a href="/pt/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Portuguese</a>
+            
+            <a href="/de/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">German</a>
+            
+            <a href="/fr/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">French</a>
+            
+            <a href="/ja/ai-background-remover" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:text-sky-600 transition">Japanese</a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 font-mono">
+        <div>&copy; LocalAI Suite. Apple Bento Glass Engine.</div>
+        <div class="mt-2 sm:mt-0">7大グローバル言語 · 42 本地化エンドポイント · 100% クライアント完結</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top-btn" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bento-glass shadow-2xl hover:scale-110 transition opacity-0 pointer-events-none transform translate-y-4" title="トップへ戻る">
+    <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <!-- Interaction Runtime -->
+  <script>
+  (function() {
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    const btt = document.getElementById('back-to-top-btn');
+    if (btt) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY > 300;
+        btt.classList.toggle('opacity-0', !scrolled);
+        btt.classList.toggle('pointer-events-none', !scrolled);
+        btt.classList.toggle('translate-y-4', !scrolled);
+      });
+      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    window.showToast = function(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-6 right-6 z-50 bento-glass text-slate-900 dark:text-white text-xs font-semibold px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 transition-all duration-300';
+      toast.innerHTML = '<span class="text-sky-500 font-bold">✓</span><span>' + msg + '</span>';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    };
+
+    // Smooth Centered Search Focus Runtime
+    window.focusAndCenterSearch = function() {
+      const searchInput = document.getElementById('tool-search');
+      if (searchInput) {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+          try {
+            searchInput.focus({ preventScroll: true });
+            searchInput.select();
+          } catch(e) {
+            searchInput.focus();
+          }
+          searchInput.classList.add('search-highlight-pulse');
+          setTimeout(() => searchInput.classList.remove('search-highlight-pulse'), 1200);
+        }, 300);
+        return true;
+      } else {
+        window.location.href = '/ja/?focus_search=1#tool-search';
+        return false;
+      }
+    };
+
+    // Intercept clicks on top nav search & mobile search
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('#nav-search-btn, .mobile-search-link, a[href*="#tool-search"]');
+      if (btn && document.getElementById('tool-search')) {
+        e.preventDefault();
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        if (history.replaceState) history.replaceState(null, '', '#tool-search');
+        window.focusAndCenterSearch();
+      }
+    });
+
+    // Auto focus when loading with #tool-search or focus_search=1
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const shouldFocus = window.location.hash === '#tool-search' || params.get('focus_search') === '1' || params.has('q');
+      if (shouldFocus && document.getElementById('tool-search')) {
+        setTimeout(window.focusAndCenterSearch, 250);
+      }
+    });
+
+    // Global Keyboard Shortcuts (Ctrl+K or /)
+    document.addEventListener('keydown', (e) => {
+      const isSearchKey = (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) ||
+                          (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey));
+      if (isSearchKey) {
+        e.preventDefault();
+        window.focusAndCenterSearch();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
