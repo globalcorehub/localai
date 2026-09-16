@@ -558,7 +558,7 @@
 
         let maxNesting = 0;
         let totalLoops = 0;
-        const isPython = /for\s+\w+\s+in\s+.*:/.test(cleanCode) && !cleanCode.includes('{');
+        const isPython = /for\s+[a-zA-Z_$][a-zA-Z0-9_$]*\s+in\s+.*:/.test(cleanCode) && !cleanCode.includes('{');
 
         if (isPython) {
           const pLines = cleanCode.split(LF);
@@ -569,7 +569,8 @@
             while (loopStack.length > 0 && indent <= loopStack[loopStack.length - 1]) {
               loopStack.pop();
             }
-            if (/(?:^|\s)(?:for|while)\\b/.test(line)) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('for ') || trimmed.startsWith('while ') || /^for\s+/.test(trimmed) || /^while\s+/.test(trimmed)) {
               totalLoops++;
               loopStack.push(indent);
               if (loopStack.length > maxNesting) maxNesting = loopStack.length;
@@ -579,7 +580,7 @@
           let braceDepth = 0;
           const loopDepths = [];
           let pendingLoop = 0;
-          const tokens = cleanCode.match(/\\b(?:for|while|do|forEach|map)\\b|[{}();]/g) || [];
+          const tokens = cleanCode.match(/[a-zA-Z_$][a-zA-Z0-9_$]*|[{}();]/g) || [];
           let tIdx = 0;
           while (tIdx < tokens.length) {
             const tok = tokens[tIdx];
@@ -621,8 +622,8 @@
         }
 
         const lines = val.split(LF);
-        const hasRecursion = lines.some(l => /function\s+(\w+)/.test(l) && val.includes(RegExp.$1 + '('));
-        const isAsync = new RegExp('\\b(async|await|Promise)\\b').test(val);
+        const hasRecursion = lines.some(l => /function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/.test(l) && val.includes(RegExp.$1 + '('));
+        const isAsync = /async\s+|await\s+|Promise\./.test(cleanCode);
 
         let complexity = 'O(1) Constant Time';
         if (maxNesting >= 2) complexity = 'O(n^' + maxNesting + ') Polynomial / Nested Loops';
@@ -642,9 +643,9 @@
         const keywords = ['SELECT', 'FROM', 'WHERE', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'JOIN', 'GROUP BY', 'HAVING', 'ORDER BY', 'LIMIT'];
         const parts = val.split("'");
         keywords.forEach(kw => {
-          const re = new RegExp('\\b' + kw + '\\b', 'gi');
+          const re = new RegExp('(^|[^a-zA-Z0-9_])' + kw + '(?=[^a-zA-Z0-9_]|$)', 'gi');
           for (let pIdx = 0; pIdx < parts.length; pIdx += 2) {
-            parts[pIdx] = parts[pIdx].replace(re, LF + kw);
+            parts[pIdx] = parts[pIdx].replace(re, '$1' + LF + kw);
           }
         });
         let formatted = parts.join("'").trim();

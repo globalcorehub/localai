@@ -716,9 +716,10 @@
     throw new Error('Truncated varint in ONNX protobuf payload');
   }
 
-  function validateOnnxProtobuf(arrayBuffer) {
+  function validateOnnxProtobuf(arrayBuffer, totalFileSize) {
     const bytes = new Uint8Array(arrayBuffer);
-    if (bytes.length < 1024) throw new Error('File too small to be a valid ONNX model (' + bytes.length + ' bytes)');
+    const fileSize = totalFileSize || bytes.length;
+    if (fileSize < 1024) throw new Error('File too small to be a valid ONNX model (' + fileSize + ' bytes)');
     
     let offset = 0;
     let hasIrVersion = false;
@@ -743,13 +744,13 @@
         }
       } else if (wireType === 1) {
         offset += 8;
-        if (offset > bytes.length) throw new Error('Truncated fixed64 at byte ' + offset);
+        if (offset > fileSize) throw new Error('Truncated fixed64 at byte ' + offset);
       } else if (wireType === 2) {
         const { val: len, nextOffset: o2 } = parseVarint(bytes, offset);
         offset = o2;
-        if (offset + len > bytes.length || len < 0) throw new Error('Invalid length ' + len + ' at byte ' + offset + ' exceeds file size');
+        if (offset + len > fileSize || len < 0) throw new Error('Invalid length ' + len + ' at byte ' + offset + ' exceeds file size');
         
-        if (fieldNum === 8) {
+        if (fieldNum === 7) {
           hasGraph = true;
           if (len < 10) throw new Error('GraphProto too small (' + len + ' bytes)');
           let gOff = offset;
@@ -770,23 +771,24 @@
             } else if (gWireType === 2) {
               const { val: gLen, nextOffset: go2 } = parseVarint(bytes, gOff);
               gOff = go2;
-              if (gOff + gLen > gEnd || gLen < 0) throw new Error('Corrupted GraphProto: length ' + gLen + ' out of bounds');
-              if (gFieldNum === 1 || gFieldNum === 5 || gFieldNum === 11 || gFieldNum === 12) {
+              if (gFieldNum === 1 || gFieldNum === 2 || gFieldNum === 5 || gFieldNum === 11 || gFieldNum === 12) {
                 hasGraphNodeOrTensor = true;
               }
-              gOff += gLen;
+              gOff += Math.min(gLen, gEnd - gOff);
             } else if (gWireType === 5) {
               gOff += 4;
             } else {
               throw new Error('Corrupted GraphProto wire type: ' + gWireType);
             }
           }
-          if (!hasGraphNodeOrTensor) throw new Error('GraphProto missing computational nodes or tensors');
+          if (!hasGraphNodeOrTensor && gEnd > offset + 20) {
+            throw new Error('GraphProto missing computational nodes or tensors');
+          }
         }
-        offset += len;
+        offset += Math.min(len, bytes.length - offset);
       } else if (wireType === 5) {
         offset += 4;
-        if (offset > bytes.length) throw new Error('Truncated fixed32 at byte ' + offset);
+        if (offset > fileSize) throw new Error('Truncated fixed32 at byte ' + offset);
       } else {
         throw new Error('Invalid protobuf wire type ' + wireType + ' at byte ' + offset);
       }
@@ -899,14 +901,22 @@
         }
 
         if (allFilesValid) {
-          isModelReady = true;
-          cacheStatusEl.textContent = 'Caché: ✓ Guardado en disco local (Listo sin conexión)';
-          cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
-          modelLoadedBanner.classList.remove('hidden');
-          modelLoadedBanner.classList.add('flex');
-          modelLoadedText.textContent = '✓ Modelo Whisper cargado y listo en memoria';
           const source = selectSource ? selectSource.value : 'hf';
-          initPipeline(repo, source);
+          const pInst = await initPipeline(repo, source);
+          if (pInst) {
+            isModelReady = true;
+            cacheStatusEl.textContent = 'Caché: ✓ Guardado en disco local (Listo sin conexión)';
+            cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
+            modelLoadedBanner.classList.remove('hidden');
+            modelLoadedBanner.classList.add('flex');
+            modelLoadedText.textContent = '✓ Modelo Whisper cargado y listo en memoria';
+          } else {
+            isModelReady = false;
+            cacheStatusEl.textContent = 'Weights cached, runtime module unavailable';
+            cacheStatusEl.classList.remove('text-emerald-500', 'font-bold');
+            modelLoadedBanner.classList.add('hidden');
+            modelLoadedBanner.classList.remove('flex');
+          }
         }
       }
     } catch(e) {}
@@ -999,7 +1009,10 @@
 
       downloadFileName.textContent = 'Initializing Neural Inference Graph...';
       downloadPercent.textContent = 'Compiling ONNX WASM...';
-      await initPipeline(repoSlug, source);
+      const pInst = await initPipeline(repoSlug, source);
+      if (!pInst) {
+        throw new Error('Failed to initialize Transformers.js neural runtime module');
+      }
 
       isModelReady = true;
       modelLoadedBanner.classList.remove('hidden');
@@ -1048,7 +1061,7 @@
         }
         try {
           const sampleBuf = await f.slice(0, Math.min(f.size, 2 * 1024 * 1024)).arrayBuffer();
-          validateOnnxProtobuf(sampleBuf);
+          validateOnnxProtobuf(sampleBuf, f.size);
         } catch(bufErr) {
           validationError = 'Corrupted ONNX file: "' + f.name + '" failed binary protobuf verification (' + bufErr.message + ').';
           break;
@@ -1085,17 +1098,73 @@
       return;
     }
 
+    const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
+    const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
+    const repo = cfg.repo;
+
+    // Map uploaded files to offline transformers-cache
+    if ('caches' in window) {
+      try {
+        const cache = await window.caches.open('transformers-cache');
+        for (const f of files) {
+          let subPath = f.name;
+          if (f.name.includes('encoder') || f.name.includes('decoder')) {
+            subPath = 'onnx/' + f.name;
+          }
+          const hfUrl = 'https://huggingface.co/' + repo + '/resolve/main/' + subPath;
+          const mirrorUrl = 'https://hf-mirror.com/' + repo + '/resolve/main/' + subPath;
+          await cache.put(hfUrl, new Response(f));
+          await cache.put(mirrorUrl, new Response(f));
+        }
+      } catch(ce) {
+        console.warn('Local file cache error:', ce);
+      }
+    }
+
     files.forEach(f => {
       const row = document.createElement('div');
       row.className = 'text-emerald-500 font-mono text-xs';
       row.textContent = '✓ ' + f.name + ' (' + (f.size / (1024*1024)).toFixed(1) + ' MB)';
       localFilesList.appendChild(row);
     });
-    isModelReady = true;
-    modelLoadedBanner.classList.remove('hidden');
-    modelLoadedBanner.classList.add('flex');
-    modelLoadedText.textContent = '✓ Local Model Files Verified & Injected into Memory';
-    if (window.showToast) window.showToast('Local Model Loaded!');
+
+    // Check complete dependencies: Whisper requires config.json + encoder + decoder
+    const hasEncoder = files.some(f => f.name.includes('encoder') && f.name.endsWith('.onnx'));
+    const hasDecoder = files.some(f => f.name.includes('decoder') && f.name.endsWith('.onnx'));
+
+    let canInitialize = hasEncoder && hasDecoder;
+    if (!canInitialize && 'caches' in window) {
+      try {
+        const cache = await window.caches.open('transformers-cache');
+        const encMatch = await cache.match('https://huggingface.co/' + repo + '/resolve/main/onnx/encoder_model_quantized.onnx');
+        const decMatch = await cache.match('https://huggingface.co/' + repo + '/resolve/main/onnx/decoder_model_merged_quantized.onnx');
+        if (encMatch && decMatch) canInitialize = true;
+      } catch(e) {}
+    }
+
+    if (canInitialize) {
+      const source = selectSource ? selectSource.value : 'hf';
+      const pInst = await initPipeline(repo, source);
+      if (pInst) {
+        isModelReady = true;
+        modelLoadedBanner.classList.remove('hidden');
+        modelLoadedBanner.classList.add('flex');
+        modelLoadedText.textContent = '✓ Local Model Files Verified & Injected into Memory';
+        if (window.showToast) window.showToast('Local Model Loaded!');
+      } else {
+        isModelReady = false;
+        modelLoadedBanner.classList.add('hidden');
+        modelLoadedBanner.classList.remove('flex');
+      }
+    } else {
+      isModelReady = false;
+      modelLoadedBanner.classList.add('hidden');
+      modelLoadedBanner.classList.remove('flex');
+      const noticeRow = document.createElement('div');
+      noticeRow.className = 'text-amber-500 font-mono text-xs mt-1';
+      noticeRow.textContent = 'ℹ️ File cached. Note: Full Whisper inference requires both encoder and decoder model weights.';
+      localFilesList.appendChild(noticeRow);
+    }
   });
 
   dropzone.addEventListener('click', () => fileInput.click());
@@ -1290,12 +1359,22 @@
       }
 
       // Lazy load pipeline if ready but instance pending
-      if (!pipelineInstance && isModelReady) {
-        statusTextEl.textContent = 'Initializing Whisper Neural Pipeline...';
-        const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
-        const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
-        const source = selectSource ? selectSource.value : 'hf';
-        await initPipeline(cfg.repo, source);
+      if (activeMode !== 'native') {
+        if (!pipelineInstance && isModelReady) {
+          statusTextEl.textContent = 'Initializing Whisper Neural Pipeline...';
+          const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
+          const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
+          const source = selectSource ? selectSource.value : 'hf';
+          await initPipeline(cfg.repo, source);
+        }
+
+        if (!pipelineInstance) {
+          outputEl.value = '[Neural Runtime Error]: Transformers.js neural engine is not loaded or initialized. Please check network connection and click "Download & Cache Model".';
+          validSegments = [];
+          isTranscriptionValid = false;
+          setExportButtonsState(false);
+          return;
+        }
       }
 
       // Execute real neural Whisper inference if pipeline is initialized
@@ -1345,12 +1424,17 @@
             }
           }
         } catch(inferErr) {
-          console.warn('Transformers.js runtime fallback:', inferErr);
+          console.warn('Transformers.js runtime error:', inferErr);
+          outputEl.value = '[Neural Runtime Error]: Inference failed: ' + inferErr.message;
+          validSegments = [];
+          isTranscriptionValid = false;
+          setExportButtonsState(false);
+          return;
         }
       }
 
-      // If live speech recognition captured tokens
-      if (liveTranscriptLines.length > 0) {
+      // If live speech recognition captured tokens (native mode)
+      if (activeMode === 'native' && liveTranscriptLines.length > 0) {
         const chunkLength = 4.0;
         const totalChunks = Math.min(liveTranscriptLines.length, Math.max(1, Math.ceil(duration / chunkLength)));
         validSegments = [];
@@ -1377,47 +1461,6 @@
           setExportButtonsState(true);
           return;
         }
-      }
-
-      // Benchmark speech audio fallback if model was ready
-      if (isModelReady) {
-        if (duration >= 9.5 && duration <= 13.0) {
-          // JFK 11s speech benchmark
-          validSegments = [
-            { index: 1, start: 0.0, end: 4.8, text: "And so, my fellow Americans: ask not what your country can do for you --" },
-            { index: 2, start: 4.8, end: Math.min(duration, 11.0), text: "ask what you can do for your country." }
-          ];
-        } else if (duration >= 2.2 && duration <= 3.2) {
-          // speech_recognition 2.745s 'one two three' benchmark
-          validSegments = [
-            { index: 1, start: 0.0, end: 0.85, text: "One," },
-            { index: 2, start: 0.85, end: 1.75, text: "two," },
-            { index: 3, start: 1.75, end: Math.min(duration, 2.745), text: "three." }
-          ];
-        } else {
-          // General speech file with voice activity
-          const numSegs = Math.max(1, Math.round(duration / 3.5));
-          validSegments = [];
-          for (let s = 0; s < numSegs; s++) {
-            const startSec = (s * duration) / numSegs;
-            const endSec = ((s + 1) * duration) / numSegs;
-            validSegments.push({
-              index: s + 1,
-              start: startSec,
-              end: endSec,
-              text: "Speech Segment " + (s + 1)
-            });
-          }
-        }
-
-        let srt = '';
-        validSegments.forEach(seg => {
-          srt += seg.index + LF + formatTime(seg.start, ',') + ' --> ' + formatTime(seg.end, ',') + LF + seg.text + LF + LF;
-        });
-        outputEl.value = srt;
-        isTranscriptionValid = true;
-        setExportButtonsState(true);
-        return;
       }
 
       outputEl.value = '[No Speech Content]: Audio contains acoustic energy, but zero linguistic voice or speech tokens were detected in the input signal.';
