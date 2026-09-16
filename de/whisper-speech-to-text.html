@@ -1011,6 +1011,9 @@
       if (testInst && typeof testInst.dispose === 'function') {
         try { await testInst.dispose(); } catch(e) {}
       }
+      if (!testInst) {
+        throw new Error('Inference graph compilation self-test failed: ' + (lastPipelineInitError || 'Could not instantiate test pipeline'));
+      }
 
       if (runtimeProgressCont) runtimeProgressCont.classList.add('hidden');
       await updateRuntimeUI();
@@ -1128,6 +1131,7 @@
         }
       }
     } catch(e) {}
+  }
   checkCache();
   updateRuntimeUI().then(probe => {
     if (!probe.ready && navigator.onLine) {
