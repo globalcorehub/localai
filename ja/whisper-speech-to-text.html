@@ -882,8 +882,26 @@
   let lastPipelineInitError = '';
   let moduleRetryNonce = 0;
   const RUNTIME_VERIFIED_KEY = 'localai_neural_verified_v1';
+  const RUNTIME_SIGNATURE = {
+    version: 'v4.1',
+    runtime: '@xenova/transformers@2.17.2',
+    onnx: 'ort-wasm-simd.wasm'
+  };
 
-  async function initPipeline(repoSlug, source, isRetry = false) {
+  function recordRuntimeVerified() {
+    try {
+      localStorage.setItem(RUNTIME_VERIFIED_KEY, JSON.stringify({
+        ...RUNTIME_SIGNATURE,
+        verifiedAt: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  function revokeRuntimeVerified() {
+    try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+  }
+
+  async function initPipeline(repoSlug, source, isRetry = false, progressCallback = null) {
     lastPipelineInitError = '';
     try {
       let moduleUrl = 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js';
@@ -915,7 +933,11 @@
         env.backends.onnx.wasm.simd = true;
         env.backends.onnx.wasm.proxy = false;
       }
-      const localInst = await pipeline('automatic-speech-recognition', repoSlug, { quantized: true });
+      const pipelineOpts = { quantized: true };
+      if (typeof progressCallback === 'function') {
+        pipelineOpts.progress_callback = progressCallback;
+      }
+      const localInst = await pipeline('automatic-speech-recognition', repoSlug, pipelineOpts);
       return localInst;
     } catch(err) {
       lastPipelineInitError = err ? (err.message || String(err)) : 'Unknown runtime initialization error';
@@ -953,11 +975,23 @@
           }
         }
       }
-      const isVerified = (localStorage.getItem(RUNTIME_VERIFIED_KEY) === 'true');
-      if ((!jsFound || !wasmFound) && isVerified) {
-        try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+      let isVerified = false;
+      try {
+        const raw = localStorage.getItem(RUNTIME_VERIFIED_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data && data.version === RUNTIME_SIGNATURE.version && data.runtime === RUNTIME_SIGNATURE.runtime) {
+            isVerified = true;
+          }
+        }
+      } catch(e) {
+        if (localStorage.getItem(RUNTIME_VERIFIED_KEY) === 'true') isVerified = true;
       }
-      const verified = jsFound && wasmFound && (localStorage.getItem(RUNTIME_VERIFIED_KEY) === 'true');
+      if ((!jsFound || !wasmFound) && isVerified) {
+        revokeRuntimeVerified();
+        isVerified = false;
+      }
+      const verified = jsFound && wasmFound && isVerified;
       return { ready: verified, jsCached: jsFound, wasmCached: wasmFound, verified: verified };
     } catch(e) {
       return { ready: false, jsCached: false, wasmCached: false, verified: false };
@@ -1020,7 +1054,7 @@
     if (isExplicitRetry) {
       moduleRetryNonce++;
     }
-    try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+    revokeRuntimeVerified();
 
     if (btnPrepareRuntime) {
       btnPrepareRuntime.disabled = true;
@@ -1029,7 +1063,7 @@
     if (runtimeProgressCont) runtimeProgressCont.classList.remove('hidden');
 
     try {
-      const swCache = await window.caches.open('localai-offline-v7');
+      const swCache = await window.caches.open('localai-offline-v8');
       const tfCache = await window.caches.open('transformers-cache');
 
       for (let i = 0; i < RUNTIME_ASSETS.length; i++) {
@@ -1059,7 +1093,20 @@
       }
 
       if (runtimeProgressFile) runtimeProgressFile.textContent = 'Verifying ONNX WASM Graph...';
-      const testInst = await initPipeline('Xenova/whisper-tiny', 'hf', isExplicitRetry || moduleRetryNonce > 0);
+      if (runtimeProgressPct) runtimeProgressPct.textContent = 'Checking...';
+      const currentSource = (selectSource && selectSource.value) ? selectSource.value : 'mirror';
+      const progressCallback = (p) => {
+        if (p && p.file) {
+          const shortName = p.file.split('/').pop();
+          if (runtimeProgressFile) runtimeProgressFile.textContent = `[ONNX] ${shortName}`;
+          if (p.loaded && p.total && runtimeProgressBar && runtimeProgressPct) {
+            const pct = Math.min(100, Math.round((p.loaded / p.total) * 100));
+            runtimeProgressBar.style.width = pct + '%';
+            runtimeProgressPct.textContent = `${pct}%`;
+          }
+        }
+      };
+      const testInst = await initPipeline('Xenova/whisper-tiny', currentSource, isExplicitRetry || moduleRetryNonce > 0, progressCallback);
       if (testInst && typeof testInst.dispose === 'function') {
         try { await testInst.dispose(); } catch(e) {}
       }
@@ -1067,7 +1114,7 @@
         throw new Error('Inference graph compilation self-test failed: ' + (lastPipelineInitError || 'Could not instantiate test pipeline'));
       }
 
-      try { localStorage.setItem(RUNTIME_VERIFIED_KEY, 'true'); } catch(e) {}
+      recordRuntimeVerified();
 
       if (runtimeProgressCont) runtimeProgressCont.classList.add('hidden');
       await updateRuntimeUI();
@@ -1078,7 +1125,7 @@
       }
     } catch(err) {
       console.warn('Runtime preparation error:', err);
-      try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+      revokeRuntimeVerified();
       if (runtimeProgressCont) runtimeProgressCont.classList.add('hidden');
       if (runtimeBadge) {
         runtimeBadge.textContent = '❌ Preparation Failed';
@@ -1167,7 +1214,7 @@
             return;
           }
           if (pInst) {
-            try { localStorage.setItem(RUNTIME_VERIFIED_KEY, 'true'); } catch(e) {}
+            recordRuntimeVerified();
             pipelineInstance = pInst;
             isModelReady = true;
             cacheStatusEl.textContent = 'キャッシュ：✓ 端末ローカルに保存済み（オフライン即時起動）';
@@ -1180,7 +1227,7 @@
             btnLoadOnline.classList.remove('opacity-50', 'cursor-not-allowed');
             updateRuntimeUI();
           } else {
-            try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+            revokeRuntimeVerified();
             pipelineInstance = null;
             isModelReady = false;
             cacheStatusEl.textContent = 'Weights cached, runtime module unavailable';
@@ -1465,7 +1512,7 @@
         return;
       }
       if (pInst) {
-        try { localStorage.setItem(RUNTIME_VERIFIED_KEY, 'true'); } catch(e) {}
+        recordRuntimeVerified();
         pipelineInstance = pInst;
         isModelReady = true;
         updateRuntimeUI();
@@ -1474,7 +1521,7 @@
         modelLoadedText.textContent = '✓ Local Model Files Verified & Injected into Memory';
         if (window.showToast) window.showToast('Local Model Loaded!');
       } else {
-        try { localStorage.removeItem(RUNTIME_VERIFIED_KEY); } catch(e) {}
+        revokeRuntimeVerified();
         pipelineInstance = null;
         isModelReady = false;
         updateRuntimeUI();

@@ -1,5 +1,5 @@
 // LocalAI Service Worker - 100% Offline & Air-Gapped Cache
-const CACHE_NAME = 'localai-offline-v7';
+const CACHE_NAME = 'localai-offline-v8';
 const STATIC_ASSETS = [
   "/",
   "/manifest.json",
@@ -116,7 +116,7 @@ self.addEventListener('fetch', event => {
         return response;
       }).catch(async () => {
         const cache = await caches.open(CACHE_NAME);
-        let cached = await cache.match(event.request, { ignoreSearch: true });
+        let cached = await cache.match(event.request);
         if (cached) return cached;
         const url = new URL(event.request.url);
         let p = url.pathname;
@@ -133,8 +133,23 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Precise query normalization strictly for allowed runtime modules with retry param
+  let lookupTarget = event.request;
+  try {
+    const reqUrl = new URL(event.request.url);
+    if (
+      reqUrl.origin === 'https://cdn.jsdelivr.net' &&
+      reqUrl.pathname === '/npm/@xenova/transformers@2.17.2/dist/transformers.min.js' &&
+      reqUrl.searchParams.has('retry')
+    ) {
+      const cleanUrl = new URL(event.request.url);
+      cleanUrl.searchParams.delete('retry');
+      lookupTarget = cleanUrl.toString();
+    }
+  } catch(e) {}
+
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then(cached => {
+    caches.match(lookupTarget).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
         if (response && response.status === 200 && (response.type === 'basic' || response.type === 'cors')) {
