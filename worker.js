@@ -21,11 +21,15 @@ export default {
     const asset = ASSET_ROUTES[path] || ASSET_ROUTES[url.pathname];
 
     if (asset) {
+      const cacheControl = (path === '/sw.js' || url.pathname === '/sw.js')
+        ? 'no-cache, no-store, must-revalidate'
+        : 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800';
+
       return new Response(asset.content, {
         status: 200,
         headers: {
           'Content-Type': asset.type,
-          'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+          'Cache-Control': cacheControl,
           'X-Powered-By': 'agy_auto_site / Cloudflare Workers',
           'Access-Control-Allow-Origin': '*',
           'Service-Worker-Allowed': '/'
