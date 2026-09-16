@@ -499,11 +499,11 @@
 
     setTimeout(() => {
       container.innerHTML = '';
-      const queryTerms = query.match(/\w+/g) || [];
+      const queryTerms = query.match(/\b\w+\b/g) || [];
       if (!queryTerms.length) return;
 
       const scored = localDocs.map(doc => {
-        const docWords = doc.text.toLowerCase().match(/\w+/g) || [];
+        const docWords = doc.text.toLowerCase().match(/\b\w+\b/g) || [];
         const docFreq = {};
         docWords.forEach(w => docFreq[w] = (docFreq[w] || 0) + 1);
 

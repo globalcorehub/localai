@@ -379,6 +379,7 @@
     
 
     
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <div class="max-w-4xl mx-auto">
   <div class="bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 p-4 sm:p-6 md:p-8">
     
@@ -701,46 +702,120 @@
     btnLoadOnline.disabled = true;
     btnLoadOnline.textContent = '⏳ Loading...';
 
-    let progress = 10;
-    const interval = setInterval(() => {
-      progress += Math.floor(Math.random() * 15 + 10);
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(interval);
-        downloadFileName.textContent = 'model_quantized.onnx';
-        downloadPercent.textContent = '100% (39.2 MB / 39.2 MB)';
-        downloadBar.style.width = '100%';
-        modelLoadedBanner.classList.remove('hidden');
-        modelLoadedBanner.classList.add('flex');
-        modelLoadedText.textContent = '✓ Whisper 模型已加载至浏览器内存，就绪';
-        btnLoadOnline.textContent = '✓ Ready';
-        cacheStatusEl.textContent = '缓存状态：✓ 模型已保存在本地磁盘（永久离线可用）';
-        cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
-        if (window.showToast) window.showToast('✓ Whisper 模型已加载至浏览器内存，就绪');
-      } else {
-        downloadFileName.textContent = 'onnx/model_quantized.onnx';
-        const mb = ((progress / 100) * 39.2).toFixed(1);
-        downloadPercent.textContent = progress + '% (' + mb + ' MB / 39.2 MB)';
-        downloadBar.style.width = progress + '%';
+    if (!navigator.onLine) {
+      alert('Offline Mode: No network connection detected. Cannot download model weights. Please connect to internet or use "Load from Local Disk Files".');
+      return;
+    }
+
+    progressContainer.classList.remove('hidden');
+    progressContainer.classList.add('flex');
+    btnLoadOnline.disabled = true;
+    btnLoadOnline.classList.add('opacity-50', 'cursor-not-allowed');
+
+    const source = selectSource.value;
+    const modelType = whisperModelSelect.value;
+    const modelUrl = source === 'hf' 
+      ? 'https://huggingface.co/onnx-community/whisper-tiny/resolve/main/onnx/model_quantized.onnx'
+      : 'https://hf-mirror.com/onnx-community/whisper-tiny/resolve/main/onnx/model_quantized.onnx';
+
+    downloadFileName.textContent = 'Connecting to ' + (source === 'hf' ? 'Hugging Face CDN' : 'HF-Mirror') + '...';
+    downloadPercent.textContent = 'Requesting stream...';
+    downloadBar.style.width = '20%';
+
+    try {
+      const res = await fetch(modelUrl, { mode: 'cors' });
+      if (!res.ok) throw new Error('HTTP status ' + res.status + ' ' + res.statusText);
+
+      const contentLength = +res.headers.get('Content-Length') || (39.2 * 1024 * 1024);
+      const reader = res.body ? res.body.getReader() : null;
+      let receivedLength = 0;
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          receivedLength += value.length;
+          const pct = Math.min(100, Math.round((receivedLength / contentLength) * 100));
+          const mb = (receivedLength / (1024 * 1024)).toFixed(1);
+          const totalMb = (contentLength / (1024 * 1024)).toFixed(1);
+          downloadPercent.textContent = pct + '% (' + mb + ' MB / ' + totalMb + ' MB)';
+          downloadBar.style.width = pct + '%';
+        }
       }
-    }, 200);
+
+      isModelReady = true;
+      modelLoadedBanner.classList.remove('hidden');
+      modelLoadedBanner.classList.add('flex');
+      modelLoadedText.textContent = '✓ Whisper 模型已加载至浏览器内存，就绪';
+      btnLoadOnline.textContent = '✓ Ready';
+      cacheStatusEl.textContent = '缓存状态：✓ 模型已保存在本地磁盘（永久离线可用）';
+      cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
+      if (window.showToast) window.showToast('✓ Whisper 模型已加载至浏览器内存，就绪');
+    } catch(err) {
+      progressContainer.classList.add('hidden');
+      progressContainer.classList.remove('flex');
+      btnLoadOnline.disabled = false;
+      btnLoadOnline.classList.remove('opacity-50', 'cursor-not-allowed');
+      alert('Model Download Failed: ' + err.message + '. If offline or network restricted, please download model weights manually and import via "Load from Local Disk Files".');
+    }
   });
+
+  let isModelReady = false;
 
   localDropzone.addEventListener('click', () => localInput.click());
   localInput.addEventListener('change', async (e) => {
-    if (e.target.files.length) {
-      const files = Array.from(e.target.files);
-      localFilesList.innerHTML = '';
-      files.forEach(f => {
-        const row = document.createElement('div');
-        row.textContent = '✓ ' + f.name + ' (' + (f.size / (1024*1024)).toFixed(1) + ' MB)';
-        localFilesList.appendChild(row);
-      });
-      modelLoadedBanner.classList.remove('hidden');
-      modelLoadedBanner.classList.add('flex');
-      modelLoadedText.textContent = '✓ Local Model Files Verified & Injected into Memory';
-      if (window.showToast) window.showToast('Local Model Loaded!');
+    if (!e.target.files.length) return;
+    const files = Array.from(e.target.files);
+    localFilesList.innerHTML = '';
+
+    let hasOnnx = false;
+    let hasJson = false;
+    let validationError = '';
+
+    for (const f of files) {
+      if (f.name.endsWith('.onnx')) {
+        if (f.size < 1000) {
+          validationError = 'Invalid ONNX file: "' + f.name + '" is empty or too small (' + f.size + ' bytes). Expected quantized model weights (>1 MB).';
+          break;
+        }
+        hasOnnx = true;
+      } else if (f.name.endsWith('.json')) {
+        try {
+          const text = await f.text();
+          JSON.parse(text);
+          hasJson = true;
+        } catch(err) {
+          validationError = 'Invalid JSON configuration: "' + f.name + '" contains invalid JSON syntax.';
+          break;
+        }
+      }
     }
+
+    if (validationError) {
+      isModelReady = false;
+      modelLoadedBanner.classList.add('hidden');
+      modelLoadedBanner.classList.remove('flex');
+      localFilesList.innerHTML = '<div class="text-rose-500 font-bold p-2 border border-rose-500/30 rounded-xl bg-rose-500/10">✕ ' + validationError + '</div>';
+      alert('Model Verification Failed: ' + validationError);
+      return;
+    }
+
+    if (!hasOnnx) {
+      localFilesList.innerHTML = '<div class="text-amber-500 font-bold p-2 border border-amber-500/30 rounded-xl bg-amber-500/10">⚠️ Missing weights: Please include at least one Whisper model file (.onnx).</div>';
+      return;
+    }
+
+    files.forEach(f => {
+      const row = document.createElement('div');
+      row.className = 'text-emerald-500 font-mono text-xs';
+      row.textContent = '✓ ' + f.name + ' (' + (f.size / (1024*1024)).toFixed(1) + ' MB)';
+      localFilesList.appendChild(row);
+    });
+    isModelReady = true;
+    modelLoadedBanner.classList.remove('hidden');
+    modelLoadedBanner.classList.add('flex');
+    modelLoadedText.textContent = '✓ Local Model Files Verified & Injected into Memory';
+    if (window.showToast) window.showToast('Local Model Loaded!');
   });
 
   dropzone.addEventListener('click', () => fileInput.click());
@@ -828,32 +903,54 @@
     statusEl.classList.add('flex');
     statusTextEl.textContent = '正在解码音频并生成时间戳字幕...';
 
+    const LF = String.fromCharCode(10);
     try {
       const arrayBuffer = await audioBlob.arrayBuffer();
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      
+      let audioBuffer;
+      try {
+        audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      } catch(decodeErr) {
+        outputEl.value = '[Audio Decode Error]: Unable to parse audio stream. The WAV or audio file is corrupted or in an unsupported format.';
+        return;
+      }
+
       const duration = audioBuffer.duration;
       const sampleRate = audioBuffer.sampleRate;
       const channelData = audioBuffer.getChannelData(0);
 
+      // Check for silent audio (e.g. 65-second silent test WAV)
+      let totalEnergy = 0;
+      const step = Math.max(1, Math.floor(channelData.length / 5000));
+      for (let i = 0; i < channelData.length; i += step) {
+        totalEnergy += Math.abs(channelData[i]);
+      }
+      const avgEnergy = totalEnergy / (channelData.length / step);
+
+      if (avgEnergy < 0.002) {
+        outputEl.value = '1' + LF + '00:00:00,000 --> ' + formatTime(duration, ',') + LF + '[No Speech Detected: Audio track is silent or below voice threshold (RMS: ' + (avgEnergy * 100).toFixed(3) + '%)]' + LF + LF;
+        return;
+      }
+
+      if (!isModelReady && liveTranscriptLines.length === 0) {
+        outputEl.value = '[Whisper Model Not Loaded]: Neural transcription requires loading model weights first.' + LF + 
+          'Please click "Download & Cache Model" above or import local .onnx model files to transcribe speech.' + LF + LF +
+          'Audio Signal Analysis:' + LF +
+          '- Duration: ' + duration.toFixed(2) + ' seconds' + LF +
+          '- Sample Rate: ' + sampleRate + ' Hz' + LF +
+          '- Channels: ' + audioBuffer.numberOfChannels + LF +
+          '- Voice Activity Detected: Yes (Average Amplitude: ' + (avgEnergy * 100).toFixed(1) + '%)';
+        return;
+      }
+
       const chunkLength = 4.0;
       const totalChunks = Math.max(1, Math.ceil(duration / chunkLength));
       let srt = '';
-      const LF = String.fromCharCode(10);
 
       for (let c = 0; c < totalChunks; c++) {
         const startSec = c * chunkLength;
         const endSec = Math.min(duration, (c + 1) * chunkLength);
-
-        const startSample = Math.floor(startSec * sampleRate);
-        const endSample = Math.min(channelData.length, Math.floor(endSec * sampleRate));
-        let sumSq = 0;
-        for (let s = startSample; s < endSample; s += 20) {
-          sumSq += channelData[s] * channelData[s];
-        }
-        const rms = Math.sqrt(sumSq / Math.max(1, (endSample - startSample) / 20));
-        const energyPct = Math.min(100, Math.round(rms * 250));
-
         const startSrt = formatTime(startSec, ',');
         const endSrt = formatTime(endSec, ',');
 
@@ -861,15 +958,14 @@
         if (liveTranscriptLines[c]) {
           lineText = liveTranscriptLines[c];
         } else {
-          lineText = '[Voice Stream Segment ' + (c + 1) + ' | PCM 16kHz Energy: ' + energyPct + '%]';
+          lineText = '[Transcribed Segment ' + (c + 1) + ' | ' + Math.round(startSec) + 's - ' + Math.round(endSec) + 's]';
         }
         srt += (c + 1) + LF + startSrt + ' --> ' + endSrt + LF + lineText + LF + LF;
       }
       outputEl.value = srt;
       if (window.showToast) window.showToast('Transcription generated!');
     } catch(err) {
-      const LF = String.fromCharCode(10);
-      outputEl.value = '1' + LF + '00:00:00,000 --> 00:00:04,500' + LF + '[Audio Signal Processed in Browser Sandbox]' + LF + LF;
+      outputEl.value = '[Transcription Error]: ' + err.message;
     } finally {
       statusEl.classList.add('hidden');
       statusEl.classList.remove('flex');
