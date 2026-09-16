@@ -408,7 +408,7 @@
 
     <!-- Input Box -->
     <div class="mt-4">
-      <textarea id="code-editor-input" rows="6" placeholder="Type or paste your code snippet, schema or regex query here..." class="w-full font-mono text-xs p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 focus:outline-none"></textarea>
+      <textarea id="code-editor-input" rows="6" placeholder="Type or paste your code snippet, schema or regex query here..." class="w-full font-mono text-xs p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 focus:outline-none leading-relaxed"></textarea>
     </div>
 
     <!-- Actions -->
@@ -479,15 +479,21 @@
     if (name === 'regex') {
       tabRegex.classList.add('border-b-2', 'border-emerald-500', 'font-bold', 'text-emerald-500');
       tabRegex.classList.remove('opacity-60');
-      codeInput.value = 'Match valid international email addresses ending in .org or .edu';
+      codeInput.value = '^\d{3}$';
     } else if (name === 'explain') {
       tabExplain.classList.add('border-b-2', 'border-emerald-500', 'font-bold', 'text-emerald-500');
       tabExplain.classList.remove('opacity-60');
-      codeInput.value = 'const debounce = (fn, delay) => { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; };';
+      codeInput.value = [
+        'for (let i = 0; i < n; i++) {',
+        '  for (let j = 0; j < n; j++) {',
+        '    sum += matrix[i][j];',
+        '  }',
+        '}'
+      ].join(String.fromCharCode(10));
     } else {
       tabSql.classList.add('border-b-2', 'border-emerald-500', 'font-bold', 'text-emerald-500');
       tabSql.classList.remove('opacity-60');
-      codeInput.value = 'SELECT u.id, u.email, COUNT(o.id) as total_orders FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE o.created_at >= NOW() - INTERVAL 30 DAY GROUP BY u.id HAVING total_orders > 5 ORDER BY total_orders DESC;';
+      codeInput.value = 'SELECT u.id, u.name, COUNT(o.id) as orders_count FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE o.created_at >= NOW() - INTERVAL 30 DAY GROUP BY u.id, u.name HAVING orders_count > 5 ORDER BY orders_count DESC LIMIT 10;';
     }
   }
 
@@ -497,48 +503,85 @@
   setTab('regex');
 
   runBtn.addEventListener('click', () => {
-    resultOutput.textContent = "Processing air-gapped code intelligence locally...";
+    const val = codeInput.value.trim();
+    if (!val) return;
+    const LF = String.fromCharCode(10);
+    resultOutput.textContent = "Analyzing input dynamically in client-side sandbox...";
+
     setTimeout(() => {
       if (activeTab === 'regex') {
-        resultOutput.textContent = 
-`// Generated Regex Pattern:
-/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(org|edu)$/i
+        let breakdown = '// DYNAMIC REGEX TOKEN ANALYSIS & EXPLANATION:' + LF;
+        breakdown += 'Pattern: ' + val + LF + LF;
 
-// Pattern Breakdown:
-1. ^                 -> Matches the start of the string.
-2. [a-zA-Z0-9._%+-]+ -> One or more allowed email prefix characters.
-3. @                 -> Literal @ symbol.
-4. [a-zA-Z0-9.-]+    -> Domain hostname characters.
-5. \.(org|edu)$     -> Strict TLD matching .org or .edu.
-6. /i                -> Case-insensitive flag.`;
+        if (val.startsWith('^')) breakdown += '1. ^         -> Start Anchor: matches line beginning' + LF;
+        if (val.includes('\d')) breakdown += '2. \d        -> Digit Class: matches [0-9]' + LF;
+        if (val.includes('\w')) breakdown += '3. \w        -> Word Class: matches [a-zA-Z0-9_]' + LF;
+        if (val.includes('\s')) breakdown += '4. \s        -> Space Class: matches whitespace' + LF;
+
+        const quantMatch = val.match(/\{(\d+)(?:,(\d*))?\}/);
+        if (quantMatch) {
+          breakdown += '5. {' + quantMatch[1] + (quantMatch[2] ? ',' + quantMatch[2] : '') + '}    -> Quantifier: matches preceding token ' + quantMatch[1] + ' times' + LF;
+        }
+        if (val.includes('+')) breakdown += '6. +         -> Quantifier: matches 1 or more times' + LF;
+        if (val.includes('*')) breakdown += '7. *         -> Quantifier: matches 0 or more times' + LF;
+        if (val.includes('?')) breakdown += '8. ?         -> Quantifier: matches 0 or 1 time (optional)' + LF;
+        if (val.endsWith('$')) breakdown += '9. $         -> End Anchor: matches line termination' + LF;
+
+        try {
+          const cleanPattern = val.replace(/^\/|\/[a-z]*$/g, '');
+          const re = new RegExp(cleanPattern);
+          breakdown += LF + '// SYNTAX STATUS: Valid JavaScript RegExp' + LF;
+          breakdown += '// Sample Test: re.test("123") => ' + re.test("123");
+        } catch(e) {
+          breakdown += LF + '// SYNTAX NOTICE: ' + e.message;
+        }
+        resultOutput.textContent = breakdown;
+
       } else if (activeTab === 'explain') {
-        resultOutput.textContent = 
-`// Code Logic & Complexity Breakdown:
-- Function: High-order debounce wrapper.
-- Purpose: Delays invoking 'fn' until after 'delay' milliseconds have elapsed since the last time it was invoked.
-- Mechanism: Uses lexical closure over 'timer' identifier and 'clearTimeout'.
-- Time Complexity: O(1) invocation overhead.
-- Space Complexity: O(1) memory overhead.`;
-      } else {
-        resultOutput.textContent = 
-`-- Formatted & Optimized SQL:
-SELECT 
-    u.id, 
-    u.email, 
-    COUNT(o.id) AS total_orders
-FROM users u
-LEFT JOIN orders o 
-    ON u.id = o.user_id
-WHERE o.created_at >= NOW() - INTERVAL 30 DAY
-GROUP BY u.id, u.email
-HAVING COUNT(o.id) > 5
-ORDER BY total_orders DESC;
+        const lines = val.split(LF);
+        const loopCount = (val.match(/(for|while|forEach|map)/g) || []).length;
+        const hasRecursion = lines.some(l => /function\s+(\w+)/.test(l) && val.includes(RegExp.$1 + '('));
+        const isAsync = /(async|await|Promise)/.test(val);
 
--- Optimization Insights:
-- Recommended Index: idx_orders_user_created ON orders (user_id, created_at).`;
+        let complexity = 'O(1) Constant Time';
+        if (loopCount >= 2) complexity = 'O(n^' + loopCount + ') Polynomial / Nested Loops';
+        else if (loopCount === 1) complexity = 'O(n) Linear Time';
+        else if (hasRecursion) complexity = 'O(2^n) or O(n) Recursive Branching';
+
+        let res = '// DYNAMIC CODE COMPLEXITY & LOGIC BREAKDOWN:' + LF;
+        res += '- Total Code Lines: ' + lines.length + LF;
+        res += '- Loop Constructs Detected: ' + loopCount + LF;
+        res += '- Estimated Time Complexity: ' + complexity + LF;
+        res += '- Space Complexity Overhead: ' + (hasRecursion ? 'O(depth) Stack Allocation' : 'O(1) Local Allocation') + LF;
+        res += '- Async / Non-blocking Operations: ' + (isAsync ? 'Yes (Promises/Async)' : 'Synchronous Execution') + LF;
+        res += '- Operational Logic Summary: Executes ' + (loopCount ? 'iterative data scanning over collection' : 'procedural sequential logic') + ' in device memory.';
+        resultOutput.textContent = res;
+
+      } else {
+        const keywords = ['SELECT', 'FROM', 'WHERE', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'JOIN', 'GROUP BY', 'HAVING', 'ORDER BY', 'LIMIT'];
+        let formatted = val;
+        keywords.forEach(kw => {
+          const re = new RegExp('\b' + kw + '\b', 'gi');
+          formatted = formatted.replace(re, LF + kw);
+        });
+        formatted = formatted.trim();
+
+        let tips = LF + LF + '-- QUERY PERFORMANCE & SAFETY AUDIT:' + LF;
+        if (/SELECT\s+\*/i.test(val)) {
+          tips += '- Notice: Wildcard SELECT * detected. Specify explicit columns to reduce network bandwidth and cache pressure.' + LF;
+        } else {
+          tips += '- Index Hygiene: Explicit column projection detected (Good Practice).' + LF;
+        }
+        if (/WHERE/i.test(val)) {
+          tips += '- Filter Strategy: WHERE clause present. Ensure composite index covers the filtered columns.' + LF;
+        }
+        if (/ORDER BY/i.test(val)) {
+          tips += '- Sorting Strategy: ORDER BY detected. Index matching the sort order will eliminate expensive filesort.' + LF;
+        }
+        resultOutput.textContent = formatted + tips;
       }
       if (window.showToast) window.showToast('Analyzed without external APIs!');
-    }, 600);
+    }, 300);
   });
 
   copyBtn.addEventListener('click', () => {
@@ -706,6 +749,14 @@ ORDER BY total_orders DESC;
       }
     });
   })();
+  </script>
+  <!-- Offline Service Worker Registration -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+    });
+  }
   </script>
 </body>
 </html>

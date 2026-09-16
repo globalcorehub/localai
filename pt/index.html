@@ -10,13 +10,13 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://localai.globalcorehub.com/pt/">
   <link rel="alternate" hreflang="en" href="https://localai.globalcorehub.com/" />
-  <link rel="alternate" hreflang="zh-CN" href="https://localai.globalcorehub.com/zh" />
-  <link rel="alternate" hreflang="zh" href="https://localai.globalcorehub.com/zh" />
-  <link rel="alternate" hreflang="es" href="https://localai.globalcorehub.com/es" />
-  <link rel="alternate" hreflang="pt" href="https://localai.globalcorehub.com/pt" />
-  <link rel="alternate" hreflang="de" href="https://localai.globalcorehub.com/de" />
-  <link rel="alternate" hreflang="fr" href="https://localai.globalcorehub.com/fr" />
-  <link rel="alternate" hreflang="ja" href="https://localai.globalcorehub.com/ja" />
+  <link rel="alternate" hreflang="zh-CN" href="https://localai.globalcorehub.com/zh/" />
+  <link rel="alternate" hreflang="zh" href="https://localai.globalcorehub.com/zh/" />
+  <link rel="alternate" hreflang="es" href="https://localai.globalcorehub.com/es/" />
+  <link rel="alternate" hreflang="pt" href="https://localai.globalcorehub.com/pt/" />
+  <link rel="alternate" hreflang="de" href="https://localai.globalcorehub.com/de/" />
+  <link rel="alternate" hreflang="fr" href="https://localai.globalcorehub.com/fr/" />
+  <link rel="alternate" hreflang="ja" href="https://localai.globalcorehub.com/ja/" />
   <link rel="alternate" hreflang="x-default" href="https://localai.globalcorehub.com/" />
 
   <!-- Dynamic Inline SVG Favicon (3D Apple Glass Frosted Package Cube) -->
@@ -614,6 +614,14 @@
       }
     });
   })();
+  </script>
+  <!-- Offline Service Worker Registration -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+    });
+  }
   </script>
 </body>
 </html>

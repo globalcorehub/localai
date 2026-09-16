@@ -400,8 +400,8 @@
         
 
     <div class="mt-6 space-y-4">
-      <div id="pdf-dropzone" class="border-2 border-dashed border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 rounded-2xl p-6 text-center cursor-pointer hover:bg-emerald-500/5 transition flex flex-col items-center justify-center min-h-[120px]">
-        <input type="file" id="pdf-file-input" accept=".pdf,.txt,.md" class="hidden">
+      <div id="pdf-dropzone" tabindex="0" role="button" aria-label="Drop Document or PDF" class="border-2 border-dashed border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 rounded-2xl p-6 text-center cursor-pointer hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition flex flex-col items-center justify-center min-h-[120px]">
+        <input type="file" id="pdf-file-input" accept=".pdf,.txt,.md,.doc" class="hidden">
         <span class="text-3xl mb-1">📑</span>
         <span class="text-xs sm:text-sm font-bold">Déposez PDF ou document texte ici (.pdf, .txt, .md)</span>
         <span id="pdf-file-name" class="text-[11px] font-mono text-emerald-500 mt-1"></span>
@@ -409,7 +409,7 @@
 
       <!-- Raw Text Area -->
       <div>
-        <textarea id="doc-text-input" rows="5" placeholder="Or paste confidential contract, legal clauses, or report here..." class="w-full font-mono text-xs p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 focus:outline-none"></textarea>
+        <textarea id="doc-text-input" rows="5" placeholder="Or paste confidential contract, lease, legal clauses, or report here..." class="w-full font-mono text-xs p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 focus:outline-none leading-relaxed"></textarea>
       </div>
 
       <!-- Settings & Action -->
@@ -482,6 +482,13 @@
   const copyBtn = document.getElementById('btn-copy-summary');
 
   dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
   fileInput.addEventListener('change', e => {
     if (e.target.files.length) {
       const f = e.target.files[0];
@@ -495,37 +502,56 @@
   summaryBtn.addEventListener('click', () => {
     const raw = textInput.value.trim();
     if (!raw) {
-      textInput.value = "MUTUAL NON-DISCLOSURE AGREEMENT\nThis Agreement is entered into by Alpha Corp and Beta LLC. The Disclosing Party agrees to share proprietary source code and client registries. The Receiving Party agrees to maintain confidentiality for a period of 5 years. Jurisdiction shall be Delaware, USA. Exclusions include public domain information.";
+      alert('Please enter or upload document text to summarize.');
+      return;
     }
-    outputDiv.textContent = "Analyzing document structure via local extractive NLP engine...";
+    const LF = String.fromCharCode(10);
+    outputDiv.textContent = "Analyzing document text structure via client-side extractive NLP...";
 
     setTimeout(() => {
+      const sentences = raw.split(LF).flatMap(p => p.split(/[.?!。！？]+/)).map(s => s.trim()).filter(s => s.length > 8);
+
+      const durationMatch = raw.match(/(\d+)\s*(months?|years?|days?|weeks?|mois|ans?|semaines?|jours?|个月|年|天)/i);
+      const durationStr = durationMatch ? durationMatch[0] : 'Not explicitly specified';
+
+      const amountMatch = raw.match(/(?:[$€¥£]|USD|EUR|CNY|RMB)\s*[\d,.]+|[\d,.]+\s*(?:[$€¥£]|USD|EUR|euros?|元)/i);
+      const amountStr = amountMatch ? amountMatch[0] : 'Non-monetary / Standard Terms';
+
+      const jurisdictionMatch = raw.match(/(delaware|california|new york|france|paris|germany|berlin|london|tokyo|beijing|shanghai|hong kong|usa)/i);
+      const jurisdictionStr = jurisdictionMatch ? jurisdictionMatch[0].toUpperCase() : 'General Civil / Commercial Jurisdiction';
+
+      const obligationKeywords = /(shall|agrees?|must|liable|obligation|terminate|payment|rent|deposit|confidential|proprietary|s'engage|devra|loyer|bail|caution|必须|应当|违约|约定|条款)/i;
+      const keySentences = sentences.filter(s => obligationKeywords.test(s));
+      const chosenSentences = (keySentences.length >= 2 ? keySentences : sentences).slice(0, 4);
+
       const depth = depthSelect.value;
       if (depth === 'exec') {
         outputDiv.textContent = 
-`### 📌 EXECUTIVE BRIEF (Zero Cloud Upload)
-- **Primary Subject**: Mutual Non-Disclosure Agreement (Alpha Corp & Beta LLC)
-- **Core Obligation**: Protection of proprietary source code and client databases.
-- **Duration**: 5 Years confidentiality term.
-- **Governing Law**: Delaware State Jurisdiction.
-- **Risk Score**: Low / Standard Commercial Clause.`;
+          '### 📌 EXECUTIVE BRIEF (Client-Side Extractive NLP)' + LF +
+          '- Primary Subject / Document Type: Legal & Operational Agreement' + LF +
+          '- Term / Timeframe: ' + durationStr + LF +
+          '- Financial Consideration: ' + amountStr + LF +
+          '- Applicable Jurisdiction: ' + jurisdictionStr + LF +
+          '- Key Governing Clause: ' + (chosenSentences[0] || 'Terms binding on participating parties.');
       } else if (depth === 'bullets') {
-        outputDiv.textContent = 
-`### ⚡ KEY ACTION ITEMS & TAKEAWAYS
-1. Strict 5-year confidentiality period starts from execution date.
-2. Proprietary source code is classified under high-protection intellectual property.
-3. Exclusions apply only to verifiable public domain information.
-4. Delaware courts retain exclusive jurisdiction over any breach dispute.`;
+        let bullets = '### ⚡ KEY ACTION ITEMS & EXTRACTED TAKEAWAYS' + LF;
+        chosenSentences.forEach((s, idx) => {
+          bullets += (idx + 1) + '. ' + s.trim() + LF;
+        });
+        outputDiv.textContent = bullets;
       } else {
-        outputDiv.textContent = 
-`### 📑 COMPREHENSIVE SECTION BREAKDOWN
-- **Section 1 (Parties)**: Alpha Corp (Disclosing) vs Beta LLC (Receiving).
-- **Section 2 (Scope)**: Software source code, algorithms, client rosters.
-- **Section 3 (Term)**: 5 Years active protection; survival of trade secrets indefinitely.
-- **Section 4 (Remedies)**: Injunctive relief without need of posting bond in Delaware Court.`;
+        let breakdown = '### 📑 SECTION-BY-SECTION STRUCTURED BREAKDOWN' + LF;
+        breakdown += '- Total Analyzed Sentences: ' + sentences.length + LF;
+        breakdown += '- Duration & Term: ' + durationStr + LF;
+        breakdown += '- Financial Scope: ' + amountStr + LF;
+        breakdown += '- Core Extracted Clauses:' + LF;
+        chosenSentences.forEach((s, idx) => {
+          breakdown += '  * Clause [' + (idx + 1) + ']: ' + s.trim() + LF;
+        });
+        outputDiv.textContent = breakdown;
       }
       if (window.showToast) window.showToast('Summary compiled in browser!');
-    }, 900);
+    }, 400);
   });
 
   copyBtn.addEventListener('click', () => {
@@ -693,6 +719,14 @@
       }
     });
   })();
+  </script>
+  <!-- Offline Service Worker Registration -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+    });
+  }
   </script>
 </body>
 </html>
