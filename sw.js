@@ -57,7 +57,8 @@ const STATIC_ASSETS = [
   "/pt/in-browser-ocr-scanner",
   "/pt/private-pdf-summarizer",
   "/pt/offline-code-regex-explainer",
-  "/pt/local-document-vector-search"
+  "/pt/local-document-vector-search",
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js"
 ];
 
 // 1. Install & Pre-cache critical routes with resilient allSettled

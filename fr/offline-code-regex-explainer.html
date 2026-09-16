@@ -551,10 +551,103 @@
         resultOutput.textContent = breakdown;
 
       } else if (activeTab === 'explain') {
-        // Robust token & indentation loop parser (C-family, JS, Python, etc.)
-        const cleanCode = val
-          .replace(/\/\*[\s\S]*?\*\//g, '')
-          .replace(/\/\/.*/g, '');
+        // Robust token & indentation loop parser with string & comment stripping
+        function stripStringsAndComments(code) {
+          let out = '';
+          let i = 0;
+          const len = code.length;
+          const templateStack = [];
+          let state = 'code';
+
+          while (i < len) {
+            const ch = code[i];
+            const next = i + 1 < len ? code[i + 1] : '';
+
+            if (state === 'code') {
+              if (ch === '/' && next === '/') {
+                state = 'line_comment';
+                i += 2;
+              } else if (ch === '/' && next === '*') {
+                state = 'block_comment';
+                i += 2;
+              } else if (ch === '"') {
+                state = 'double_quote';
+                out += '""';
+                i++;
+              } else if (ch === "'") {
+                state = 'single_quote';
+                out += "''";
+                i++;
+              } else if (ch === '`') {
+                state = 'template_string';
+                out += ' ';
+                i++;
+              } else if (ch === '}' && templateStack.length > 0 && templateStack[templateStack.length - 1] === 1) {
+                templateStack.pop();
+                state = 'template_string';
+                out += ' ';
+                i++;
+              } else {
+                if (ch === '{' && templateStack.length > 0) {
+                  templateStack[templateStack.length - 1]++;
+                } else if (ch === '}' && templateStack.length > 0) {
+                  templateStack[templateStack.length - 1]--;
+                }
+                out += ch;
+                i++;
+              }
+            } else if (state === 'line_comment') {
+              if (ch === '\n' || ch === '\r') {
+                state = 'code';
+                out += ch;
+              }
+              i++;
+            } else if (state === 'block_comment') {
+              if (ch === '*' && next === '/') {
+                state = 'code';
+                i += 2;
+              } else {
+                i++;
+              }
+            } else if (state === 'double_quote') {
+              if (ch === '\\') {
+                i += 2;
+              } else if (ch === '"') {
+                state = 'code';
+                i++;
+              } else {
+                i++;
+              }
+            } else if (state === 'single_quote') {
+              if (ch === '\\') {
+                i += 2;
+              } else if (ch === "'") {
+                state = 'code';
+                i++;
+              } else {
+                i++;
+              }
+            } else if (state === 'template_string') {
+              if (ch === '\\') {
+                i += 2;
+              } else if (ch === '$' && next === '{') {
+                templateStack.push(1);
+                state = 'code';
+                out += ' ';
+                i += 2;
+              } else if (ch === '`') {
+                state = 'code';
+                out += ' ';
+                i++;
+              } else {
+                i++;
+              }
+            }
+          }
+          return out;
+        }
+
+        const cleanCode = stripStringsAndComments(val);
 
         let maxNesting = 0;
         let totalLoops = 0;

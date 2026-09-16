@@ -653,7 +653,10 @@
   }
   drawIdleWaveform();
 
+  let currentLoadTaskId = 0;
+
   function setMode(mode) {
+    ++currentLoadTaskId;
     if (isRecording) {
       if (mediaRecorder && mediaRecorder.state !== 'inactive') {
         try { mediaRecorder.stop(); } catch(e) {}
@@ -870,6 +873,7 @@
   const TOTAL_WHISPER_BYTES = MODEL_CONFIGS['whisper-tiny'].totalBytes;
 
   async function checkCache() {
+    const thisTaskId = ++currentLoadTaskId;
     isModelReady = false;
     modelLoadedBanner.classList.add('hidden');
     modelLoadedBanner.classList.remove('flex');
@@ -879,6 +883,7 @@
     try {
       if ('caches' in window) {
         const cache = await window.caches.open('transformers-cache');
+        if (thisTaskId !== currentLoadTaskId) return;
         const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
         const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
         const repo = cfg.repo;
@@ -899,10 +904,12 @@
             break;
           }
         }
+        if (thisTaskId !== currentLoadTaskId) return;
 
         if (allFilesValid) {
           const source = selectSource ? selectSource.value : 'hf';
           const pInst = await initPipeline(repo, source);
+          if (thisTaskId !== currentLoadTaskId) return;
           if (pInst) {
             isModelReady = true;
             cacheStatusEl.textContent = '缓存状态：✓ 模型已保存在本地磁盘（永久离线可用）';
@@ -925,6 +932,7 @@
 
   if (selectModel) {
     selectModel.addEventListener('change', () => {
+      ++currentLoadTaskId;
       isModelReady = false;
       pipelineInstance = null;
       modelLoadedBanner.classList.add('hidden');
@@ -934,6 +942,7 @@
   }
 
   btnLoadOnline.addEventListener('click', async () => {
+    const thisTaskId = ++currentLoadTaskId;
     if (!navigator.onLine) {
       alert('Offline Mode: No network connection detected. Cannot download model weights. Please connect to internet or use "Load from Local Disk Files".');
       return;
@@ -966,6 +975,7 @@
       }
 
       for (let i = 0; i < filesToDownload.length; i++) {
+        if (thisTaskId !== currentLoadTaskId) return;
         const fInfo = filesToDownload[i];
         const fileUrl = baseUrl + fInfo.path;
         downloadFileName.textContent = `[${i + 1}/${filesToDownload.length}] ` + fInfo.name;
@@ -981,6 +991,7 @@
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
+            if (thisTaskId !== currentLoadTaskId) return;
             chunks.push(value);
             fileLoaded += value.length;
             overallLoaded += value.length;
@@ -992,6 +1003,7 @@
           }
         } else {
           const blob = await res.blob();
+          if (thisTaskId !== currentLoadTaskId) return;
           overallLoaded += blob.size;
           chunks.push(blob);
           const pct = Math.min(100, Math.round((overallLoaded / totalBytes) * 100));
@@ -1007,9 +1019,11 @@
         }
       }
 
+      if (thisTaskId !== currentLoadTaskId) return;
       downloadFileName.textContent = 'Initializing Neural Inference Graph...';
       downloadPercent.textContent = 'Compiling ONNX WASM...';
       const pInst = await initPipeline(repoSlug, source);
+      if (thisTaskId !== currentLoadTaskId) return;
       if (!pInst) {
         throw new Error('Failed to initialize Transformers.js neural runtime module');
       }
@@ -1025,6 +1039,7 @@
       cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
       if (window.showToast) window.showToast('✓ Whisper 模型已加载至浏览器内存，就绪');
     } catch(err) {
+      if (thisTaskId !== currentLoadTaskId) return;
       isModelReady = false;
       pipelineInstance = null;
       modelLoadedBanner.classList.add('hidden');
@@ -1040,6 +1055,7 @@
 
   localDropzone.addEventListener('click', () => localInput.click());
   localInput.addEventListener('change', async (e) => {
+    const thisTaskId = ++currentLoadTaskId;
     isModelReady = false;
     pipelineInstance = null;
     modelLoadedBanner.classList.add('hidden');
@@ -1054,6 +1070,7 @@
     let validationError = '';
 
     for (const f of files) {
+      if (thisTaskId !== currentLoadTaskId) return;
       if (f.name.endsWith('.onnx')) {
         if (f.size < 5 * 1024 * 1024) {
           validationError = 'Invalid ONNX model: "' + f.name + '" is too small (' + (f.size / 1024).toFixed(1) + ' KB). Whisper ONNX quantized models require at least 5 MB of neural weights.';
@@ -1061,6 +1078,7 @@
         }
         try {
           const sampleBuf = await f.slice(0, Math.min(f.size, 2 * 1024 * 1024)).arrayBuffer();
+          if (thisTaskId !== currentLoadTaskId) return;
           validateOnnxProtobuf(sampleBuf, f.size);
         } catch(bufErr) {
           validationError = 'Corrupted ONNX file: "' + f.name + '" failed binary protobuf verification (' + bufErr.message + ').';
@@ -1070,6 +1088,7 @@
       } else if (f.name.endsWith('.json')) {
         try {
           const text = await f.text();
+          if (thisTaskId !== currentLoadTaskId) return;
           JSON.parse(text);
           hasJson = true;
         } catch(err) {
@@ -1078,6 +1097,8 @@
         }
       }
     }
+
+    if (thisTaskId !== currentLoadTaskId) return;
 
     if (validationError) {
       isModelReady = false;
@@ -1106,6 +1127,7 @@
     if ('caches' in window) {
       try {
         const cache = await window.caches.open('transformers-cache');
+        if (thisTaskId !== currentLoadTaskId) return;
         for (const f of files) {
           let subPath = f.name;
           if (f.name.includes('encoder') || f.name.includes('decoder')) {
@@ -1120,6 +1142,8 @@
         console.warn('Local file cache error:', ce);
       }
     }
+
+    if (thisTaskId !== currentLoadTaskId) return;
 
     files.forEach(f => {
       const row = document.createElement('div');
@@ -1142,9 +1166,12 @@
       } catch(e) {}
     }
 
+    if (thisTaskId !== currentLoadTaskId) return;
+
     if (canInitialize) {
       const source = selectSource ? selectSource.value : 'hf';
       const pInst = await initPipeline(repo, source);
+      if (thisTaskId !== currentLoadTaskId) return;
       if (pInst) {
         isModelReady = true;
         modelLoadedBanner.classList.remove('hidden');
@@ -1155,6 +1182,10 @@
         isModelReady = false;
         modelLoadedBanner.classList.add('hidden');
         modelLoadedBanner.classList.remove('flex');
+        const runtimeNotice = document.createElement('div');
+        runtimeNotice.className = 'text-amber-500 font-mono text-xs mt-2 p-3 border border-amber-500/30 rounded-xl bg-amber-500/10 space-y-1';
+        runtimeNotice.innerHTML = '<div class="font-bold">⚠️ Model Weights Verified, But Neural Runtime Script Not Loaded</div><div class="text-slate-300 dark:text-slate-400">All local model files are 100% verified in memory, but the browser has not yet cached the offline neural engine module (<code>@xenova/transformers</code>).</div><div class="text-emerald-400 font-semibold mt-1">👉 Recovery Step: Connect to internet once and refresh this page to let the Service Worker pre-cache the runtime script, after which you can run completely offline.</div>';
+        localFilesList.appendChild(runtimeNotice);
       }
     } else {
       isModelReady = false;
