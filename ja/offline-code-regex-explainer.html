@@ -708,7 +708,7 @@
           });
         } else {
           const tokens = [];
-          const tokenRegex = /(\.[a-zA-Z_$][a-zA-Z0-9_$]*)|([a-zA-Z_$][a-zA-Z0-9_$]*)|([{}();])/g;
+          const tokenRegex = /[a-zA-Z_$][a-zA-Z0-9_$]*|\?\.|\.|\(|\)|\{|\}|;/g;
           let m;
           while ((m = tokenRegex.exec(cleanCode)) !== null) {
             tokens.push(m[0]);
@@ -721,6 +721,8 @@
           let i = 0;
           while (i < tokens.length) {
             const tok = tokens[i];
+            const prevTok = i > 0 ? tokens[i - 1] : '';
+            const nextTok = i + 1 < tokens.length ? tokens[i + 1] : '';
 
             if (tok === 'for' || tok === 'while' || tok === 'do') {
               totalLoops++;
@@ -762,19 +764,14 @@
                   continue;
                 }
               }
-            } else if (tok === '.map' || tok === '.forEach' || tok === '.filter' || tok === '.reduce' || tok === '.flatMap') {
+            } else if ((tok === 'map' || tok === 'forEach' || tok === 'filter' || tok === 'reduce' || tok === 'flatMap') && (prevTok === '.' || prevTok === '?.') && nextTok === '(') {
               totalLoops++;
               currentLoopDepth++;
               if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
               i++;
-              if (i < tokens.length && tokens[i] === '(') {
-                scopeStack.push('method_loop');
-                i++;
-                continue;
-              } else {
-                currentLoopDepth = Math.max(0, currentLoopDepth - 1);
-                continue;
-              }
+              scopeStack.push('method_loop');
+              i++;
+              continue;
             } else if (tok === '{') {
               scopeStack.push('normal_block');
             } else if (tok === '}') {

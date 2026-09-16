@@ -1005,10 +1005,7 @@
       }
 
       for (let i = 0; i < filesToDownload.length; i++) {
-        if (thisTaskId !== currentLoadTaskId) {
-          resetDownloadBusyState();
-          return;
-        }
+        if (thisTaskId !== currentLoadTaskId) return;
         const fInfo = filesToDownload[i];
         const fileUrl = baseUrl + fInfo.path;
         downloadFileName.textContent = `[${i + 1}/${filesToDownload.length}] ` + fInfo.name;
@@ -1024,10 +1021,7 @@
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            if (thisTaskId !== currentLoadTaskId) {
-              resetDownloadBusyState();
-              return;
-            }
+            if (thisTaskId !== currentLoadTaskId) return;
             chunks.push(value);
             fileLoaded += value.length;
             overallLoaded += value.length;
@@ -1039,10 +1033,7 @@
           }
         } else {
           const blob = await res.blob();
-          if (thisTaskId !== currentLoadTaskId) {
-            resetDownloadBusyState();
-            return;
-          }
+          if (thisTaskId !== currentLoadTaskId) return;
           overallLoaded += blob.size;
           chunks.push(blob);
           const pct = Math.min(100, Math.round((overallLoaded / totalBytes) * 100));
@@ -1058,10 +1049,7 @@
         }
       }
 
-      if (thisTaskId !== currentLoadTaskId) {
-        resetDownloadBusyState();
-        return;
-      }
+      if (thisTaskId !== currentLoadTaskId) return;
       downloadFileName.textContent = 'Initializing Neural Inference Graph...';
       downloadPercent.textContent = 'Compiling ONNX WASM...';
       const pInst = await initPipeline(repoSlug, source);
@@ -1069,7 +1057,6 @@
         if (pInst && typeof pInst.dispose === 'function') {
           try { await pInst.dispose(); } catch(e) {}
         }
-        resetDownloadBusyState();
         return;
       }
       if (!pInst) {
