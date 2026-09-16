@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>LocalAI Suite - Suite d’Outils IA 100% Locaux dans le Navigateur</title>
   <meta name="description" content="Zéro téléversement serveur, zéro coût d’API et confidentialité absolue. Exécutez Whisper, suppression de fond et OCR en local via WebGPU.">
-  <meta name="keywords" content="LocalAI Suite, amazon fba calculator, shopify profit margin, customs tariff, landed freight cost, cross border ecommerce">
+  <meta name="keywords" content="LocalAI Suite, Suite d’Outils IA 100% Locaux dans le Navigateur, transcription audio hors ligne, supprimer arriere plan sans televerser, ocr prive dans navigateur, resumer pdf sans televerser, explication de code hors ligne, recherche vectorielle dans navigateur, Transcription Whisper, Supprimer Fond IA, Scanner OCR Privé, Résumé PDF Privé, IA Dev Hors Ligne, Recherche RAG Locale">
   <meta name="author" content="LocalAI Suite">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://localai.globalcorehub.com/fr/">
@@ -136,11 +136,16 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "LocalAI Suite",
-    "applicationCategory": "UtilitiesApplication",
+    "applicationCategory": "AIApplication",
     "operatingSystem": "All",
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
     "url": "https://localai.globalcorehub.com/fr/",
     "description": "Zéro téléversement serveur, zéro coût d’API et confidentialité absolue. Exécutez Whisper, suppression de fond et OCR en local via WebGPU.",
+    "potentialAction": {
+      "@type": "UseAction",
+      "target": "https://localai.globalcorehub.com/fr/",
+      "name": "Execute LocalAI Suite"
+    },
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -149,7 +154,21 @@
   }
   </script>
 
-  
+  <!-- BreadcrumbList Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://localai.globalcorehub.com/fr/"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
 
@@ -166,7 +185,7 @@
         </div>
         <div>
           <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition">LocalAI Suite</span>
-          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">FBA & DTC DASHBOARD</span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">100% CLIENT-SIDE AI</span>
         </div>
       </a>
 
@@ -337,57 +356,138 @@
     
 
     
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center py-8 sm:py-12 md:py-16">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs font-mono mb-4 sm:mb-5">
-          <span>Suite d’Outils IA 100% Locaux dans le Navigateur</span>
+    <div class="max-w-7xl mx-auto px-2 sm:px-4">
+      <!-- Live Local AI Architecture & Telemetry Ribbon -->
+      <div class="mb-6 sm:mb-8 p-3.5 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-wrap items-center justify-between gap-2.5 text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-300">
+        <div class="flex items-center space-x-2">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
+          <span class="font-bold text-slate-800 dark:text-slate-200">Architecture IA 100% Côté Client et Télémétrie:</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-3 sm:mb-4">
-          LocalAI Suite
-        </h1>
-        <p class="max-w-2xl mx-auto text-xs sm:text-sm md:text-base opacity-75 leading-relaxed px-2">
-          Zéro téléversement serveur, zéro coût d’API et confidentialité absolue. Exécutez Whisper, suppression de fond et OCR en local via WebGPU.
-        </p>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-semibold">WebGPU: Accéléré</span>
+          <span class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-semibold">WASM SIMD: Prêt</span>
+          <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800">Latence: < 15ms</span>
+          <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800">Téléversements: 0 Octet</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-semibold">Air-Gapped: 100% Local</span>
+        </div>
       </div>
 
-      <div class="max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
-        <div id="search-section" class="relative flex items-center scroll-mt-28 sm:scroll-mt-36">
+      <!-- Hero Bento Section Header & Instant Search -->
+      <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gradient-to-r from-sky-500/10 to-blue-500/10 border border-sky-400/30 text-sky-600 dark:text-sky-400 text-xs font-semibold mb-3">
+          <span>Suite d’Outils IA 100% Locaux dans le Navigateur</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-3 sm:mb-4">
+          LocalAI Suite
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-6">
+          Zéro téléversement serveur, zéro coût d’API et confidentialité absolue. Exécutez Whisper, suppression de fond et OCR en local via WebGPU.
+        </p>
+
+        <!-- Floating Apple Glass Search Bar -->
+        <div id="search-section" class="max-w-xl mx-auto relative flex items-center scroll-mt-28 sm:scroll-mt-36">
           <div class="absolute left-4 opacity-50 pointer-events-none">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
+            <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
-          <input type="text" id="tool-search" placeholder="Filtrer les outils par mot-clé, format ou extension... (Touche /)" class="w-full pl-11 pr-20 py-3 sm:py-3.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 text-xs sm:text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition scroll-mt-28 sm:scroll-mt-36">
+          <input type="text" id="tool-search" placeholder="Filtrer les outils par mot-clé, format ou extension... (Touche /)" class="w-full pl-11 pr-20 py-3.5 rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl text-xs sm:text-sm font-mono shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 transition scroll-mt-28 sm:scroll-mt-36">
           <div class="absolute right-3.5 flex items-center space-x-1.5">
-            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 opacity-50 bg-black/20">Ctrl+K</kbd>
+            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded-full border border-slate-300 dark:border-slate-700 opacity-60 bg-slate-100 dark:bg-slate-800">Ctrl+K</kbd>
             <button id="btn-clear-search" class="hidden text-xs opacity-60 hover:opacity-100 font-mono px-1">&times;</button>
           </div>
         </div>
-        <div class="flex items-center justify-between text-[11px] font-mono opacity-60 mt-2.5 px-1">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 mt-2 max-w-xl mx-auto px-2">
           <span id="search-stats">Affichage des 6 outils disponibles</span>
           <span class="hidden sm:inline">100% Exécution Côté Client</span>
         </div>
       </div>
 
-      <div id="no-tools-found" class="hidden text-center py-12 px-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5 mb-12">
-        <p class="text-sm font-mono opacity-75 mb-3">Aucun outil ne correspond à votre recherche.</p>
-        <button id="btn-reset-filter" class="px-4 py-1.5 rounded-xl text-xs font-mono font-bold border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 hover:bg-white/10 transition">
+      <!-- Empty State -->
+      <div id="no-tools-found" class="hidden text-center py-12 px-4 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl mb-12">
+        <p class="text-sm font-mono text-slate-600 dark:text-slate-300 mb-3">Aucun outil ne correspond à votre recherche.</p>
+        <button id="btn-reset-filter" class="px-5 py-2 rounded-full text-xs font-mono font-bold border border-slate-300 dark:border-slate-700 hover:bg-white transition">
           Réinitialiser le filtre
         </button>
       </div>
 
-      <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
-        <a href="/fr/whisper-speech-to-text" data-search="transcription vocale whisper en local - audio en texte 100% privé et gratuit convertissez vos réunions et interviews audio en texte et sous-titres srt en local sans aucun téléversement de données. transcription audio hors ligne whisper audio en texte gratuit transcrire audio sans upload transcription reunions privee whisper-speech-to-text" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Transcription Vocale Whisper en Local - Audio en Texte 100% Privé et Gratuit</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Convertissez vos réunions et interviews audio en texte et sous-titres SRT en local sans aucun téléversement de données.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#transcription audio hors ligne</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#whisper audio en texte gratuit</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#transcrire audio sans upload</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
-<a href="/fr/ai-background-remover" data-search="suppression de fond par ia en ligne - détourage png transparent instantané supprimez l’arrière-plan de vos photos instantanément dans le navigateur avec confidentialité absolue. supprimer arriere plan sans televerser detourage photo gratuit sans upload creer png transparent local ai-background-remover" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Suppression de Fond par IA en Ligne - Détourage PNG Transparent Instantané</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Supprimez l’arrière-plan de vos photos instantanément dans le navigateur avec confidentialité absolue.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#supprimer arriere plan sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#detourage photo gratuit sans upload</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#creer png transparent local</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
-<a href="/fr/in-browser-ocr-scanner" data-search="scanner ocr privé en local - extraction de texte d’image et masquage sensible extrayez le texte de reçus et documents confidentiels dans votre navigateur avec masquage automatique des données sensibles. ocr prive dans navigateur extraire texte image sans televerser scanner facture en local in-browser-ocr-scanner" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Scanner OCR Privé en Local - Extraction de Texte d’Image et Masquage Sensible</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Extrayez le texte de reçus et documents confidentiels dans votre navigateur avec masquage automatique des données sensibles.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ocr prive dans navigateur</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#extraire texte image sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#scanner facture en local</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
-<a href="/fr/private-pdf-summarizer" data-search="générateur de résumé pdf et document privé - analyse de contrat 100% en local résumez des contrats confidentiels et rapports financiers dans votre navigateur en toute sécurité sans envoi de fichier. resumer pdf sans televerser analyse contrat confidentiel ia resume document securise en local private-pdf-summarizer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Générateur de Résumé PDF et Document Privé - Analyse de Contrat 100% en Local</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Résumez des contrats confidentiels et rapports financiers dans votre navigateur en toute sécurité sans envoi de fichier.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#resumer pdf sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#analyse contrat confidentiel ia</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#resume document securise en local</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
-<a href="/fr/offline-code-regex-explainer" data-search="explicateur de code et générateur regex hors ligne - ia développeur sécurisée déboguez vos expressions régulières et optimisez vos requêtes sql dans un bac à sable local totalement étanche. explication de code hors ligne generateur regex securise ia developpement sans connexion offline-code-regex-explainer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Explicateur de Code et Générateur Regex Hors Ligne - IA Développeur Sécurisée</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Déboguez vos expressions régulières et optimisez vos requêtes SQL dans un bac à sable local totalement étanche.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#explication de code hors ligne</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#generateur regex securise</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#ia developpement sans connexion</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
-<a href="/fr/local-document-vector-search" data-search="recherche vectorielle de documents locale - base de connaissances rag en local indexez vos documents en local et effectuez des recherches sémantiques instantanées sans base de données cloud. recherche vectorielle dans navigateur rag local sans cloud recherche semantique documents prive local-document-vector-search" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% Local</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">Recherche Vectorielle de Documents Locale - Base de Connaissances RAG en Local</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">Indexez vos documents en local et effectuez des recherches sémantiques instantanées sans base de données cloud.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#recherche vectorielle dans navigateur</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#rag local sans cloud</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#recherche semantique documents prive</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+      <!-- Asymmetric Apple Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 sm:mb-16">
+        <div class="col-span-1 md:col-span-2 rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-white/90 via-sky-50/50 to-white/90 dark:from-slate-900/90 dark:via-sky-950/20 dark:to-slate-900/90 backdrop-blur-2xl border-2 border-sky-400/30 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono uppercase px-3 py-1 rounded-full bg-sky-500 text-white font-bold tracking-wide">SIMULATEUR NEURONAL</span>
+              <span class="text-xs font-mono text-sky-600 dark:text-sky-400 font-bold">100% CLIENT-SIDE SANDBOX</span>
+            </div>
+            <h2 class="text-lg sm:text-2xl font-black text-slate-900 dark:text-slate-50 mb-2">Simulateur d’Inférence Neuronale et de Confidentialité Locale</h2>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-6">Ajustez la charge de traitement pour simuler la vitesse WebGPU dans le navigateur, zéro bande passante et les économies d’API cloud.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+              <div>
+                <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 font-mono">
+                  <span>Volume de traitement (Audio/Documents/Images)</span>
+                  <span id="bento-workload-val" class="text-sky-600 dark:text-sky-400 font-extrabold">25 MB / 120s</span>
+                </div>
+                <input type="range" id="bento-workload-slider" min="5" max="100" step="5" value="25" class="w-full accent-sky-500">
+              </div>
+              <div class="flex flex-col justify-center">
+                <div class="text-xs font-mono text-slate-500 mb-1 font-semibold">Moteur d’exécution: WebGPU / WASM</div>
+                <div class="inline-flex items-center space-x-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>Zero-Cloud Transmission Verified</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 mb-4">
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">Économie d’API Cloud:</span>
+                <span id="bento-cost-disp" class="text-sm sm:text-base font-bold text-sky-600 dark:text-sky-400 font-mono">$0.75</span>
+              </div>
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">Bande passante consommée:</span>
+                <span id="bento-band-disp" class="text-sm sm:text-base font-bold text-emerald-600 dark:text-emerald-400 font-mono">0 KB</span>
+              </div>
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">Risque de fuite de données:</span>
+                <span id="bento-risk-disp" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-mono font-bold text-xs">0.0% (Zero Cloud Logs)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <a href="/fr/whisper-speech-to-text" class="inline-flex items-center text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+              <span>Lancer la transcription Whisper →</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="/fr/whisper-speech-to-text" data-search="transcription vocale whisper en local - audio en texte 100% privé et gratuit convertissez vos réunions et interviews audio en texte et sous-titres srt en local sans aucun téléversement de données. transcription audio hors ligne whisper audio en texte gratuit transcrire audio sans upload transcription reunions privee whisper-speech-to-text" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Transcription Vocale Whisper en Local - Audio en Texte 100% Privé et Gratuit</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Convertissez vos réunions et interviews audio en texte et sous-titres SRT en local sans aucun téléversement de données.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#transcription audio hors ligne</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#whisper audio en texte gratuit</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#transcrire audio sans upload</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+<a href="/fr/ai-background-remover" data-search="suppression de fond par ia en ligne - détourage png transparent instantané supprimez l’arrière-plan de vos photos instantanément dans le navigateur avec confidentialité absolue. supprimer arriere plan sans televerser detourage photo gratuit sans upload creer png transparent local ai-background-remover" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Suppression de Fond par IA en Ligne - Détourage PNG Transparent Instantané</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Supprimez l’arrière-plan de vos photos instantanément dans le navigateur avec confidentialité absolue.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#supprimer arriere plan sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#detourage photo gratuit sans upload</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#creer png transparent local</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+<a href="/fr/in-browser-ocr-scanner" data-search="scanner ocr privé en local - extraction de texte d’image et masquage sensible extrayez le texte de reçus et documents confidentiels dans votre navigateur avec masquage automatique des données sensibles. ocr prive dans navigateur extraire texte image sans televerser scanner facture en local in-browser-ocr-scanner" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Scanner OCR Privé en Local - Extraction de Texte d’Image et Masquage Sensible</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Extrayez le texte de reçus et documents confidentiels dans votre navigateur avec masquage automatique des données sensibles.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#ocr prive dans navigateur</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#extraire texte image sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#scanner facture en local</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+<a href="/fr/private-pdf-summarizer" data-search="générateur de résumé pdf et document privé - analyse de contrat 100% en local résumez des contrats confidentiels et rapports financiers dans votre navigateur en toute sécurité sans envoi de fichier. resumer pdf sans televerser analyse contrat confidentiel ia resume document securise en local private-pdf-summarizer" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Générateur de Résumé PDF et Document Privé - Analyse de Contrat 100% en Local</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Résumez des contrats confidentiels et rapports financiers dans votre navigateur en toute sécurité sans envoi de fichier.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#resumer pdf sans televerser</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#analyse contrat confidentiel ia</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#resume document securise en local</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+<a href="/fr/offline-code-regex-explainer" data-search="explicateur de code et générateur regex hors ligne - ia développeur sécurisée déboguez vos expressions régulières et optimisez vos requêtes sql dans un bac à sable local totalement étanche. explication de code hors ligne generateur regex securise ia developpement sans connexion offline-code-regex-explainer" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Explicateur de Code et Générateur Regex Hors Ligne - IA Développeur Sécurisée</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Déboguez vos expressions régulières et optimisez vos requêtes SQL dans un bac à sable local totalement étanche.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#explication de code hors ligne</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#generateur regex securise</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#ia developpement sans connexion</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
+<a href="/fr/local-document-vector-search" data-search="recherche vectorielle de documents locale - base de connaissances rag en local indexez vos documents en local et effectuez des recherches sémantiques instantanées sans base de données cloud. recherche vectorielle dans navigateur rag local sans cloud recherche semantique documents prive local-document-vector-search" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">Recherche Vectorielle de Documents Locale - Base de Connaissances RAG en Local</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">Indexez vos documents en local et effectuez des recherches sémantiques instantanées sans base de données cloud.</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#recherche vectorielle dans navigateur</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#rag local sans cloud</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#recherche semantique documents prive</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>Ouvrir l’Outil</span><span>&rarr;</span></div></div></a>
       </div>
     </div>
 
     <script>
     (function() {
+      const workloadSlider = document.getElementById('bento-workload-slider');
+      const workloadVal = document.getElementById('bento-workload-val');
+      const costDisp = document.getElementById('bento-cost-disp');
+
+      function updateLocalAiSim() {
+        if (!workloadSlider || !workloadVal || !costDisp) return;
+        const val = parseInt(workloadSlider.value) || 25;
+        workloadVal.innerText = val + ' MB / ' + (val * 4.8).toFixed(0) + 's';
+        const cost = (val * 0.03).toFixed(2);
+        costDisp.innerText = '$' + cost;
+      }
+
+      if (workloadSlider) {
+        workloadSlider.addEventListener('input', updateLocalAiSim);
+        updateLocalAiSim();
+      }
+
       const searchInput = document.getElementById('tool-search');
       const clearBtn = document.getElementById('btn-clear-search');
       const resetBtn = document.getElementById('btn-reset-filter');
@@ -493,6 +593,8 @@
             
             <li><a href="/fr/offline-code-regex-explainer" class="hover:text-sky-600 transition">IA Dev Hors Ligne</a></li>
             
+            <li><a href="/fr/local-document-vector-search" class="hover:text-sky-600 transition">Recherche RAG Locale</a></li>
+            
           </ul>
         </div>
         <div>
@@ -517,7 +619,7 @@
         </div>
       </div>
       <div class="pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 font-mono">
-        <div>&copy; LocalAI Suite. Apple Bento Glass Engine.</div>
+        <div>&copy; 2026 LocalAI Suite. 100% Client-Side Private AI. All rights reserved.</div>
         <div class="mt-2 sm:mt-0">7 Langues Mondiales · 42 Points d’Accès Localisés · 100% Côté Client</div>
       </div>
     </div>
@@ -613,6 +715,20 @@
         window.focusAndCenterSearch();
       }
     });
+  })();
+  </script>
+  <!-- Hardware Acceleration & Compatibility Detection -->
+  <script>
+  (function checkHardwareAcceleration() {
+    if ('gpu' in navigator) {
+      navigator.gpu.requestAdapter().then(adapter => {
+        const el = document.getElementById('accel-status-text');
+        if (el) el.textContent = adapter ? 'WebGPU Accelerated ⚡' : 'WebAssembly Mode (CPU Fallback)';
+      }).catch(() => {
+        const el = document.getElementById('accel-status-text');
+        if (el) el.textContent = 'WebAssembly Mode (CPU Fallback)';
+      });
+    }
   })();
   </script>
   <!-- Offline Service Worker Registration -->

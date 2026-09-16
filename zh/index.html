@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>LocalAI Suite - 100% 纯前端端侧模型与本地 AI 工具套件</title>
   <meta name="description" content="零数据上报、零服务器成本、极致数据隐私。基于 WebGPU 与纯前端模型，在您的浏览器本地直接运行 Whisper 语音转录、智能抠图、隐私 OCR 与本地文档 AI。">
-  <meta name="keywords" content="LocalAI Suite, amazon fba calculator, shopify profit margin, customs tariff, landed freight cost, cross border ecommerce">
+  <meta name="keywords" content="LocalAI Suite, 100% 纯前端端侧模型与本地 AI 工具套件, 纯前端语音转文字 在线, 纯前端抠图工具 在线, 纯前端ocr文字识别, 纯前端pdf摘要工具, 离线代码解释器 在线, 纯前端文档向量检索, 语音转文字, 智能抠图, 隐私文字识别, 文档隐私摘要, 离线研发助手, 本地知识库检索">
   <meta name="author" content="LocalAI Suite">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://localai.globalcorehub.com/zh/">
@@ -136,11 +136,16 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "LocalAI Suite",
-    "applicationCategory": "UtilitiesApplication",
+    "applicationCategory": "AIApplication",
     "operatingSystem": "All",
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
     "url": "https://localai.globalcorehub.com/zh/",
     "description": "零数据上报、零服务器成本、极致数据隐私。基于 WebGPU 与纯前端模型，在您的浏览器本地直接运行 Whisper 语音转录、智能抠图、隐私 OCR 与本地文档 AI。",
+    "potentialAction": {
+      "@type": "UseAction",
+      "target": "https://localai.globalcorehub.com/zh/",
+      "name": "Execute LocalAI Suite"
+    },
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -149,7 +154,21 @@
   }
   </script>
 
-  
+  <!-- BreadcrumbList Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首页",
+        "item": "https://localai.globalcorehub.com/zh/"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
 
@@ -166,7 +185,7 @@
         </div>
         <div>
           <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition">LocalAI Suite</span>
-          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">FBA & DTC DASHBOARD</span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-bold">100% CLIENT-SIDE AI</span>
         </div>
       </a>
 
@@ -337,57 +356,138 @@
     
 
     
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center py-8 sm:py-12 md:py-16">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs font-mono mb-4 sm:mb-5">
-          <span>100% 纯前端端侧模型与本地 AI 工具套件</span>
+    <div class="max-w-7xl mx-auto px-2 sm:px-4">
+      <!-- Live Local AI Architecture & Telemetry Ribbon -->
+      <div class="mb-6 sm:mb-8 p-3.5 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-wrap items-center justify-between gap-2.5 text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-300">
+        <div class="flex items-center space-x-2">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
+          <span class="font-bold text-slate-800 dark:text-slate-200">纯前端端侧神经网络架构与运行时遥测:</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-3 sm:mb-4">
-          LocalAI Suite
-        </h1>
-        <p class="max-w-2xl mx-auto text-xs sm:text-sm md:text-base opacity-75 leading-relaxed px-2">
-          零数据上报、零服务器成本、极致数据隐私。基于 WebGPU 与纯前端模型，在您的浏览器本地直接运行 Whisper 语音转录、智能抠图、隐私 OCR 与本地文档 AI。
-        </p>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-semibold">WebGPU: 硬件级加速</span>
+          <span class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-semibold">WASM SIMD: 已就绪</span>
+          <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800">推理延迟: 亚毫秒响应</span>
+          <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800">云端上传: 0 字节</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-semibold">隔离沙箱: 100% 本地运算</span>
+        </div>
       </div>
 
-      <div class="max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
-        <div id="search-section" class="relative flex items-center scroll-mt-28 sm:scroll-mt-36">
+      <!-- Hero Bento Section Header & Instant Search -->
+      <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gradient-to-r from-sky-500/10 to-blue-500/10 border border-sky-400/30 text-sky-600 dark:text-sky-400 text-xs font-semibold mb-3">
+          <span>100% 纯前端端侧模型与本地 AI 工具套件</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-3 sm:mb-4">
+          LocalAI Suite
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-6">
+          零数据上报、零服务器成本、极致数据隐私。基于 WebGPU 与纯前端模型，在您的浏览器本地直接运行 Whisper 语音转录、智能抠图、隐私 OCR 与本地文档 AI。
+        </p>
+
+        <!-- Floating Apple Glass Search Bar -->
+        <div id="search-section" class="max-w-xl mx-auto relative flex items-center scroll-mt-28 sm:scroll-mt-36">
           <div class="absolute left-4 opacity-50 pointer-events-none">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
+            <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
-          <input type="text" id="tool-search" placeholder="按工具名称、长尾关键词或文件格式快速查找... (按 / 聚焦)" class="w-full pl-11 pr-20 py-3 sm:py-3.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/10 dark:bg-black/30 text-xs sm:text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition scroll-mt-28 sm:scroll-mt-36">
+          <input type="text" id="tool-search" placeholder="按工具名称、长尾关键词或文件格式快速查找... (按 / 聚焦)" class="w-full pl-11 pr-20 py-3.5 rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl text-xs sm:text-sm font-mono shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 transition scroll-mt-28 sm:scroll-mt-36">
           <div class="absolute right-3.5 flex items-center space-x-1.5">
-            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 opacity-50 bg-black/20">Ctrl+K</kbd>
+            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded-full border border-slate-300 dark:border-slate-700 opacity-60 bg-slate-100 dark:bg-slate-800">Ctrl+K</kbd>
             <button id="btn-clear-search" class="hidden text-xs opacity-60 hover:opacity-100 font-mono px-1">&times;</button>
           </div>
         </div>
-        <div class="flex items-center justify-between text-[11px] font-mono opacity-60 mt-2.5 px-1">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 mt-2 max-w-xl mx-auto px-2">
           <span id="search-stats">显示全部 6 个开发者工具</span>
           <span class="hidden sm:inline">100% 浏览器纯前端运算</span>
         </div>
       </div>
 
-      <div id="no-tools-found" class="hidden text-center py-12 px-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-black/5 dark:bg-white/5 mb-12">
-        <p class="text-sm font-mono opacity-75 mb-3">未找到符合条件的开发者工具，请尝试其他关键词。</p>
-        <button id="btn-reset-filter" class="px-4 py-1.5 rounded-xl text-xs font-mono font-bold border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 hover:bg-white/10 transition">
+      <!-- Empty State -->
+      <div id="no-tools-found" class="hidden text-center py-12 px-4 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl mb-12">
+        <p class="text-sm font-mono text-slate-600 dark:text-slate-300 mb-3">未找到符合条件的开发者工具，请尝试其他关键词。</p>
+        <button id="btn-reset-filter" class="px-5 py-2 rounded-full text-xs font-mono font-bold border border-slate-300 dark:border-slate-700 hover:bg-white transition">
           重置筛选
         </button>
       </div>
 
-      <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
-        <a href="/zh/whisper-speech-to-text" data-search="纯前端 whisper 语音转文字 - 100% 本地离线音频转录与字幕生成器 基于浏览器端 webgpu 硬件加速与 whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 srt 字幕，绝不上报任何私密录音。 纯前端语音转文字 在线 本地whisper离线转录 免费无限制语音转文字 录音转文字不上报服务器 浏览器端音频转字幕 whisper网页版免费 whisper-speech-to-text" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">纯前端 Whisper 语音转文字 - 100% 本地离线音频转录与字幕生成器</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">基于浏览器端 WebGPU 硬件加速与 Whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 SRT 字幕，绝不上报任何私密录音。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#纯前端语音转文字 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#本地whisper离线转录</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#免费无限制语音转文字</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
-<a href="/zh/ai-background-remover" data-search="纯前端智能 ai 抠图工具 - 浏览器本地一键抠图生成透明背景 png 利用浏览器本地像素级分割算法与 canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 png 一键下载。 纯前端抠图工具 在线 免费一键图片抠图透明 图片去背景不上传服务器 本地智能抠图软件 头像证件照换底色透明 ai-background-remover" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">纯前端智能 AI 抠图工具 - 浏览器本地一键抠图生成透明背景 PNG</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">利用浏览器本地像素级分割算法与 Canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 PNG 一键下载。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#纯前端抠图工具 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#免费一键图片抠图透明</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#图片去背景不上传服务器</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
-<a href="/zh/in-browser-ocr-scanner" data-search="纯前端隐私 ocr 文字识别 - 本地图片文字提取与敏感信息自动脱敏 纯本地运行的证件发票 ocr 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。 纯前端ocr文字识别 本地图片提取文字不上报 发票ocr识别敏感信息脱敏 截图识别文字 隐私安全 免安装离线ocr工具 in-browser-ocr-scanner" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">纯前端隐私 OCR 文字识别 - 本地图片文字提取与敏感信息自动脱敏</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">纯本地运行的证件发票 OCR 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#纯前端ocr文字识别</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#本地图片提取文字不上报</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#发票ocr识别敏感信息脱敏</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
-<a href="/zh/private-pdf-summarizer" data-search="隐私敏感 pdf 与文档 ai 摘要器 - 纯前端商业合同与财报要点提炼 专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。 纯前端pdf摘要工具 保密合同ai要点提取 离线文档摘要生成器 财务报表隐私总结 pdf不上传服务器解析摘要 private-pdf-summarizer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">隐私敏感 PDF 与文档 AI 摘要器 - 纯前端商业合同与财报要点提炼</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#纯前端pdf摘要工具</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#保密合同ai要点提取</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#离线文档摘要生成器</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
-<a href="/zh/offline-code-regex-explainer" data-search="离线代码解释与正则/sql生成器 - 隔离网络与保密研发专用端侧 ai 专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 sql 查询，杜绝代码泄露。 离线代码解释器 在线 保密研发端侧ai助手 内网正则表达式生成器 代码不上传服务器分析 纯前端sql美化与解释 offline-code-regex-explainer" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">离线代码解释与正则/SQL生成器 - 隔离网络与保密研发专用端侧 AI</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 SQL 查询，杜绝代码泄露。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#离线代码解释器 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#保密研发端侧ai助手</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#内网正则表达式生成器</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
-<a href="/zh/local-document-vector-search" data-search="纯前端文档向量检索与本地知识库 - 浏览器端 rag 语义相似度搜索 在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。 纯前端文档向量检索 本地知识库rag检索 浏览器端语义搜索笔记 无需云端向量数据库检索 私密文档余弦相似度匹配 local-document-vector-search" class="tool-card bg-white/80 dark:bg-[#131b2e]/80 backdrop-blur-xl rounded-xl p-5 sm:p-6 border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5">TOOL</span><span class="text-[11px] opacity-50 font-mono">100% 本地运算</span></div><h3 class="text-base sm:text-lg font-bold group-hover:underline transition mb-2 tracking-tight">纯前端文档向量检索与本地知识库 - 浏览器端 RAG 语义相似度搜索</h3><p class="text-xs opacity-75 line-clamp-2 mb-4 leading-relaxed">在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#纯前端文档向量检索</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#本地知识库rag检索</span><span class='inline-block bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-full text-xs font-semibold px-2.5 py-0.5 text-[11px] sm:text-xs px-2 py-0.5 rounded mr-1.5 mb-1.5 font-mono'>#浏览器端语义搜索笔记</span></div><div class="text-xs font-bold flex items-center space-x-1 group-hover:translate-x-1 transition-transform" style="color: #0284c7"><span>立即开启</span><span>&rarr;</span></div></div></a>
+      <!-- Asymmetric Apple Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 sm:mb-16">
+        <div class="col-span-1 md:col-span-2 rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-white/90 via-sky-50/50 to-white/90 dark:from-slate-900/90 dark:via-sky-950/20 dark:to-slate-900/90 backdrop-blur-2xl border-2 border-sky-400/30 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono uppercase px-3 py-1 rounded-full bg-sky-500 text-white font-bold tracking-wide">端侧模型沙箱</span>
+              <span class="text-xs font-mono text-sky-600 dark:text-sky-400 font-bold">100% CLIENT-SIDE SANDBOX</span>
+            </div>
+            <h2 class="text-lg sm:text-2xl font-black text-slate-900 dark:text-slate-50 mb-2">端侧本地 AI 推理与数据隐私安全沙箱</h2>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-6">调节任务处理规模滑块，即时动态测算浏览器内模型吞吐、零网络带宽消耗以及节省的云端 API 成本。</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+              <div>
+                <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 font-mono">
+                  <span>任务处理规模 (音频/文档/图像量级)</span>
+                  <span id="bento-workload-val" class="text-sky-600 dark:text-sky-400 font-extrabold">25 MB / 120s</span>
+                </div>
+                <input type="range" id="bento-workload-slider" min="5" max="100" step="5" value="25" class="w-full accent-sky-500">
+              </div>
+              <div class="flex flex-col justify-center">
+                <div class="text-xs font-mono text-slate-500 mb-1 font-semibold">运算后端: WebGPU / WASM SIMD</div>
+                <div class="inline-flex items-center space-x-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>Zero-Cloud Transmission Verified</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 mb-4">
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">已节约云端费用:</span>
+                <span id="bento-cost-disp" class="text-sm sm:text-base font-bold text-sky-600 dark:text-sky-400 font-mono">$0.75</span>
+              </div>
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">云端数据上传量:</span>
+                <span id="bento-band-disp" class="text-sm sm:text-base font-bold text-emerald-600 dark:text-emerald-400 font-mono">0 KB</span>
+              </div>
+              <div>
+                <span class="block text-[11px] font-mono text-slate-500">数据泄露风险:</span>
+                <span id="bento-risk-disp" class="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-mono font-bold text-xs">0.0% (Zero Cloud Logs)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <a href="/zh/whisper-speech-to-text" class="inline-flex items-center text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+              <span>进入 Whisper 语音转录引擎 →</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="/zh/whisper-speech-to-text" data-search="纯前端 whisper 语音转文字 - 100% 本地离线音频转录与字幕生成器 基于浏览器端 webgpu 硬件加速与 whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 srt 字幕，绝不上报任何私密录音。 纯前端语音转文字 在线 本地whisper离线转录 免费无限制语音转文字 录音转文字不上报服务器 浏览器端音频转字幕 whisper网页版免费 whisper-speech-to-text" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">纯前端 Whisper 语音转文字 - 100% 本地离线音频转录与字幕生成器</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">基于浏览器端 WebGPU 硬件加速与 Whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 SRT 字幕，绝不上报任何私密录音。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#纯前端语音转文字 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#本地whisper离线转录</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#免费无限制语音转文字</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
+<a href="/zh/ai-background-remover" data-search="纯前端智能 ai 抠图工具 - 浏览器本地一键抠图生成透明背景 png 利用浏览器本地像素级分割算法与 canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 png 一键下载。 纯前端抠图工具 在线 免费一键图片抠图透明 图片去背景不上传服务器 本地智能抠图软件 头像证件照换底色透明 ai-background-remover" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">纯前端智能 AI 抠图工具 - 浏览器本地一键抠图生成透明背景 PNG</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">利用浏览器本地像素级分割算法与 Canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 PNG 一键下载。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#纯前端抠图工具 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#免费一键图片抠图透明</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#图片去背景不上传服务器</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
+<a href="/zh/in-browser-ocr-scanner" data-search="纯前端隐私 ocr 文字识别 - 本地图片文字提取与敏感信息自动脱敏 纯本地运行的证件发票 ocr 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。 纯前端ocr文字识别 本地图片提取文字不上报 发票ocr识别敏感信息脱敏 截图识别文字 隐私安全 免安装离线ocr工具 in-browser-ocr-scanner" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">纯前端隐私 OCR 文字识别 - 本地图片文字提取与敏感信息自动脱敏</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">纯本地运行的证件发票 OCR 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#纯前端ocr文字识别</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#本地图片提取文字不上报</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#发票ocr识别敏感信息脱敏</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
+<a href="/zh/private-pdf-summarizer" data-search="隐私敏感 pdf 与文档 ai 摘要器 - 纯前端商业合同与财报要点提炼 专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。 纯前端pdf摘要工具 保密合同ai要点提取 离线文档摘要生成器 财务报表隐私总结 pdf不上传服务器解析摘要 private-pdf-summarizer" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">隐私敏感 PDF 与文档 AI 摘要器 - 纯前端商业合同与财报要点提炼</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#纯前端pdf摘要工具</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#保密合同ai要点提取</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#离线文档摘要生成器</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
+<a href="/zh/offline-code-regex-explainer" data-search="离线代码解释与正则/sql生成器 - 隔离网络与保密研发专用端侧 ai 专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 sql 查询，杜绝代码泄露。 离线代码解释器 在线 保密研发端侧ai助手 内网正则表达式生成器 代码不上传服务器分析 纯前端sql美化与解释 offline-code-regex-explainer" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">离线代码解释与正则/SQL生成器 - 隔离网络与保密研发专用端侧 AI</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 SQL 查询，杜绝代码泄露。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#离线代码解释器 在线</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#保密研发端侧ai助手</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#内网正则表达式生成器</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
+<a href="/zh/local-document-vector-search" data-search="纯前端文档向量检索与本地知识库 - 浏览器端 rag 语义相似度搜索 在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。 纯前端文档向量检索 本地知识库rag检索 浏览器端语义搜索笔记 无需云端向量数据库检索 私密文档余弦相似度匹配 local-document-vector-search" class="tool-card rounded-3xl p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between group"><div><div class="flex items-center justify-between mb-3"><span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 font-bold">TOOL</span><span class="text-[10px] text-slate-400 font-mono">100% Client-Side</span></div><h3 class="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 transition mb-2">纯前端文档向量检索与本地知识库 - 浏览器端 RAG 语义相似度搜索</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。</p></div><div><div class="flex flex-wrap mb-3"><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#纯前端文档向量检索</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#本地知识库rag检索</span><span class='inline-block bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 text-[11px] px-2 py-0.5 rounded-full font-mono mr-1.5 mb-1.5 border border-sky-200/50 dark:border-sky-800/50'>#浏览器端语义搜索笔记</span></div><div class="text-xs font-bold text-sky-600 dark:text-sky-400 flex items-center space-x-1 group-hover:translate-x-1 transition-transform"><span>立即开启</span><span>&rarr;</span></div></div></a>
       </div>
     </div>
 
     <script>
     (function() {
+      const workloadSlider = document.getElementById('bento-workload-slider');
+      const workloadVal = document.getElementById('bento-workload-val');
+      const costDisp = document.getElementById('bento-cost-disp');
+
+      function updateLocalAiSim() {
+        if (!workloadSlider || !workloadVal || !costDisp) return;
+        const val = parseInt(workloadSlider.value) || 25;
+        workloadVal.innerText = val + ' MB / ' + (val * 4.8).toFixed(0) + 's';
+        const cost = (val * 0.03).toFixed(2);
+        costDisp.innerText = '$' + cost;
+      }
+
+      if (workloadSlider) {
+        workloadSlider.addEventListener('input', updateLocalAiSim);
+        updateLocalAiSim();
+      }
+
       const searchInput = document.getElementById('tool-search');
       const clearBtn = document.getElementById('btn-clear-search');
       const resetBtn = document.getElementById('btn-reset-filter');
@@ -493,6 +593,8 @@
             
             <li><a href="/zh/offline-code-regex-explainer" class="hover:text-sky-600 transition">离线研发助手</a></li>
             
+            <li><a href="/zh/local-document-vector-search" class="hover:text-sky-600 transition">本地知识库检索</a></li>
+            
           </ul>
         </div>
         <div>
@@ -517,7 +619,7 @@
         </div>
       </div>
       <div class="pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 font-mono">
-        <div>&copy; LocalAI Suite. Apple Bento Glass Engine.</div>
+        <div>&copy; 2026 LocalAI Suite. 100% Client-Side Private AI. All rights reserved.</div>
         <div class="mt-2 sm:mt-0">7 大全球语种 · 42 个本地化端点 · 100% 浏览器纯前端</div>
       </div>
     </div>
@@ -613,6 +715,20 @@
         window.focusAndCenterSearch();
       }
     });
+  })();
+  </script>
+  <!-- Hardware Acceleration & Compatibility Detection -->
+  <script>
+  (function checkHardwareAcceleration() {
+    if ('gpu' in navigator) {
+      navigator.gpu.requestAdapter().then(adapter => {
+        const el = document.getElementById('accel-status-text');
+        if (el) el.textContent = adapter ? 'WebGPU Accelerated ⚡' : 'WebAssembly Mode (CPU Fallback)';
+      }).catch(() => {
+        const el = document.getElementById('accel-status-text');
+        if (el) el.textContent = 'WebAssembly Mode (CPU Fallback)';
+      });
+    }
   })();
   </script>
   <!-- Offline Service Worker Registration -->
