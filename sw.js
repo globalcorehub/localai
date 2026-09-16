@@ -1,5 +1,5 @@
 // LocalAI Service Worker - 100% Offline & Air-Gapped Cache
-const CACHE_NAME = 'localai-offline-v3';
+const CACHE_NAME = 'localai-offline-v4';
 const STATIC_ASSETS = [
   "/",
   "/manifest.json",
@@ -58,7 +58,11 @@ const STATIC_ASSETS = [
   "/pt/private-pdf-summarizer",
   "/pt/offline-code-regex-explainer",
   "/pt/local-document-vector-search",
-  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js"
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js",
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm-simd.wasm",
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm.wasm",
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm-threaded.wasm",
+  "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/ort-wasm-simd-threaded.wasm"
 ];
 
 // 1. Install & Pre-cache critical routes with resilient allSettled

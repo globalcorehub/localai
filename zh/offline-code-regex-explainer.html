@@ -558,6 +558,7 @@
           const len = code.length;
           const templateStack = [];
           let state = 'code';
+          let lastNonWhitespace = '';
 
           while (i < len) {
             const ch = code[i];
@@ -573,18 +574,25 @@
               } else if (ch === '"') {
                 state = 'double_quote';
                 out += '""';
+                lastNonWhitespace = '"';
                 i++;
               } else if (ch === "'") {
                 state = 'single_quote';
                 out += "''";
+                lastNonWhitespace = "'";
                 i++;
               } else if (ch === '`') {
                 state = 'template_string';
                 out += ' ';
+                lastNonWhitespace = '`';
                 i++;
               } else if (ch === '}' && templateStack.length > 0 && templateStack[templateStack.length - 1] === 1) {
                 templateStack.pop();
                 state = 'template_string';
+                out += ' ';
+                i++;
+              } else if (ch === '/' && /^[=(:;,\!?&|^~<>{}\[\]\n\r+\-*%]$/.test(lastNonWhitespace || ';')) {
+                state = 'regex_literal';
                 out += ' ';
                 i++;
               } else {
@@ -594,17 +602,22 @@
                   templateStack[templateStack.length - 1]--;
                 }
                 out += ch;
+                if (!/\s/.test(ch)) {
+                  lastNonWhitespace = ch;
+                }
                 i++;
               }
             } else if (state === 'line_comment') {
               if (ch === '\n' || ch === '\r') {
                 state = 'code';
                 out += ch;
+                lastNonWhitespace = '\n';
               }
               i++;
             } else if (state === 'block_comment') {
               if (ch === '*' && next === '/') {
                 state = 'code';
+                out += ' ';
                 i += 2;
               } else {
                 i++;
@@ -634,10 +647,34 @@
                 templateStack.push(1);
                 state = 'code';
                 out += ' ';
+                lastNonWhitespace = '{';
                 i += 2;
               } else if (ch === '`') {
                 state = 'code';
                 out += ' ';
+                i++;
+              } else {
+                i++;
+              }
+            } else if (state === 'regex_literal') {
+              if (ch === '\\') {
+                i += 2;
+              } else if (ch === '[') {
+                state = 'regex_class';
+                i++;
+              } else if (ch === '/') {
+                i++;
+                while (i < len && /[a-z]/i.test(code[i])) i++;
+                state = 'code';
+                lastNonWhitespace = '/';
+              } else {
+                i++;
+              }
+            } else if (state === 'regex_class') {
+              if (ch === '\\') {
+                i += 2;
+              } else if (ch === ']') {
+                state = 'regex_literal';
                 i++;
               } else {
                 i++;
@@ -670,47 +707,99 @@
             }
           });
         } else {
-          let braceDepth = 0;
-          const loopDepths = [];
-          let pendingLoop = 0;
-          const tokens = cleanCode.match(/[a-zA-Z_$][a-zA-Z0-9_$]*|[{}();]/g) || [];
-          let tIdx = 0;
-          while (tIdx < tokens.length) {
-            const tok = tokens[tIdx];
-            if (tok === 'for' || tok === 'while' || tok === 'do' || tok === 'forEach' || tok === 'map') {
-              totalLoops++;
-              const currentNesting = loopDepths.length + pendingLoop + 1;
-              if (currentNesting > maxNesting) maxNesting = currentNesting;
+          const tokens = [];
+          const tokenRegex = /(\.[a-zA-Z_$][a-zA-Z0-9_$]*)|([a-zA-Z_$][a-zA-Z0-9_$]*)|([{}();])/g;
+          let m;
+          while ((m = tokenRegex.exec(cleanCode)) !== null) {
+            tokens.push(m[0]);
+          }
 
-              tIdx++;
-              if (tIdx < tokens.length && tokens[tIdx] === '(') {
-                let parenDepth = 1;
-                tIdx++;
-                while (tIdx < tokens.length && parenDepth > 0) {
-                  if (tokens[tIdx] === '(') parenDepth++;
-                  else if (tokens[tIdx] === ')') parenDepth--;
-                  tIdx++;
+          let currentLoopDepth = 0;
+          const scopeStack = [];
+          let pendingLoopBody = false;
+
+          let i = 0;
+          while (i < tokens.length) {
+            const tok = tokens[i];
+
+            if (tok === 'for' || tok === 'while' || tok === 'do') {
+              totalLoops++;
+              if (tok === 'for' || tok === 'while') {
+                i++;
+                if (i < tokens.length && tokens[i] === '(') {
+                  let pDepth = 1;
+                  i++;
+                  while (i < tokens.length && pDepth > 0) {
+                    if (tokens[i] === '(') pDepth++;
+                    else if (tokens[i] === ')') pDepth--;
+                    i++;
+                  }
+                }
+                if (i < tokens.length && tokens[i] === '{') {
+                  currentLoopDepth++;
+                  if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
+                  scopeStack.push('loop_block');
+                  i++;
+                  continue;
+                } else {
+                  currentLoopDepth++;
+                  if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
+                  pendingLoopBody = true;
+                  continue;
+                }
+              } else {
+                i++;
+                if (i < tokens.length && tokens[i] === '{') {
+                  currentLoopDepth++;
+                  if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
+                  scopeStack.push('loop_block');
+                  i++;
+                  continue;
+                } else {
+                  currentLoopDepth++;
+                  if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
+                  pendingLoopBody = true;
+                  continue;
                 }
               }
-              if (tIdx < tokens.length && tokens[tIdx] === '{') {
-                braceDepth++;
-                loopDepths.push(braceDepth);
-                tIdx++;
+            } else if (tok === '.map' || tok === '.forEach' || tok === '.filter' || tok === '.reduce' || tok === '.flatMap') {
+              totalLoops++;
+              currentLoopDepth++;
+              if (currentLoopDepth > maxNesting) maxNesting = currentLoopDepth;
+              i++;
+              if (i < tokens.length && tokens[i] === '(') {
+                scopeStack.push('method_loop');
+                i++;
+                continue;
               } else {
-                pendingLoop++;
+                currentLoopDepth = Math.max(0, currentLoopDepth - 1);
+                continue;
               }
-              continue;
             } else if (tok === '{') {
-              braceDepth++;
+              scopeStack.push('normal_block');
             } else if (tok === '}') {
-              if (loopDepths.length > 0 && loopDepths[loopDepths.length - 1] === braceDepth) {
-                loopDepths.pop();
+              if (scopeStack.length > 0) {
+                const popped = scopeStack.pop();
+                if (popped === 'loop_block') {
+                  currentLoopDepth = Math.max(0, currentLoopDepth - 1);
+                }
               }
-              braceDepth = Math.max(0, braceDepth - 1);
+            } else if (tok === '(') {
+              scopeStack.push('normal_paren');
+            } else if (tok === ')') {
+              if (scopeStack.length > 0) {
+                const popped = scopeStack.pop();
+                if (popped === 'method_loop') {
+                  currentLoopDepth = Math.max(0, currentLoopDepth - 1);
+                }
+              }
             } else if (tok === ';') {
-              if (pendingLoop > 0) pendingLoop--;
+              if (pendingLoopBody) {
+                currentLoopDepth = Math.max(0, currentLoopDepth - 1);
+                pendingLoopBody = false;
+              }
             }
-            tIdx++;
+            i++;
           }
         }
 
