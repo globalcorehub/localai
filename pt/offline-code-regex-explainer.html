@@ -527,9 +527,9 @@
         breakdown += 'Pattern: ' + val + LF + LF;
 
         if (val.startsWith('^')) breakdown += '1. ^         -> Start Anchor: matches line beginning' + LF;
-        if (val.includes('\d')) breakdown += '2. \d        -> Digit Class: matches [0-9]' + LF;
-        if (val.includes('\w')) breakdown += '3. \w        -> Word Class: matches [a-zA-Z0-9_]' + LF;
-        if (val.includes('\s')) breakdown += '4. \s        -> Space Class: matches whitespace' + LF;
+        if (val.includes('\\d')) breakdown += '2. \d        -> Digit Class: matches [0-9]' + LF;
+        if (val.includes('\\w')) breakdown += '3. \w        -> Word Class: matches [a-zA-Z0-9_]' + LF;
+        if (val.includes('\\s')) breakdown += '4. \s        -> Space Class: matches whitespace' + LF;
 
         const quantMatch = val.match(/\{(\d+)(?:,(\d*))?\}/);
         if (quantMatch) {
@@ -552,32 +552,48 @@
 
       } else if (activeTab === 'explain') {
         const lines = val.split(LF);
-        const loopCount = (val.match(/\b(for|while|forEach|map)\b/g) || []).length;
+        let maxNesting = 0;
+        let currentDepth = 0;
+        let totalLoops = 0;
+        lines.forEach(l => {
+          const isLoop = /(?:^|\s)(?:for|while|do)(?:\s|\(|$)/.test(l);
+          if (isLoop) {
+            totalLoops++;
+            currentDepth++;
+            if (currentDepth > maxNesting) maxNesting = currentDepth;
+          }
+          if (l.includes('}')) {
+            currentDepth = Math.max(0, currentDepth - 1);
+          }
+        });
+
         const hasRecursion = lines.some(l => /function\s+(\w+)/.test(l) && val.includes(RegExp.$1 + '('));
-        const isAsync = /\b(async|await|Promise)\b/.test(val);
+        const isAsync = new RegExp('\\b(async|await|Promise)\\b').test(val);
 
         let complexity = 'O(1) Constant Time';
-        if (loopCount >= 2) complexity = 'O(n^' + loopCount + ') Polynomial / Nested Loops';
-        else if (loopCount === 1) complexity = 'O(n) Linear Time';
+        if (maxNesting >= 2) complexity = 'O(n^' + maxNesting + ') Polynomial / Nested Loops';
+        else if (totalLoops >= 1) complexity = 'O(n) Linear Time (Sequential Iteration)';
         else if (hasRecursion) complexity = 'O(2^n) or O(n) Recursive Branching';
 
         let res = '// DYNAMIC CODE COMPLEXITY & LOGIC BREAKDOWN:' + LF;
         res += '- Total Code Lines: ' + lines.length + LF;
-        res += '- Loop Constructs Detected: ' + loopCount + LF;
+        res += '- Loop Constructs Detected: ' + totalLoops + (maxNesting >= 2 ? ' (Nested Depth: ' + maxNesting + ')' : ' (Sequential)') + LF;
         res += '- Estimated Time Complexity: ' + complexity + LF;
         res += '- Space Complexity Overhead: ' + (hasRecursion ? 'O(depth) Stack Allocation' : 'O(1) Local Allocation') + LF;
         res += '- Async / Non-blocking Operations: ' + (isAsync ? 'Yes (Promises/Async)' : 'Synchronous Execution') + LF;
-        res += '- Operational Logic Summary: Executes ' + (loopCount ? 'iterative data scanning over collection' : 'procedural sequential logic') + ' in device memory.';
+        res += '- Operational Logic Summary: Executes ' + (totalLoops ? 'iterative data scanning over collection' : 'procedural sequential logic') + ' in device memory.';
         resultOutput.textContent = res;
 
       } else {
         const keywords = ['SELECT', 'FROM', 'WHERE', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'JOIN', 'GROUP BY', 'HAVING', 'ORDER BY', 'LIMIT'];
-        let formatted = val;
+        const parts = val.split("'");
         keywords.forEach(kw => {
-          const re = new RegExp('\b' + kw + '\b', 'gi');
-          formatted = formatted.replace(re, LF + kw);
+          const re = new RegExp('\\b' + kw + '\\b', 'gi');
+          for (let pIdx = 0; pIdx < parts.length; pIdx += 2) {
+            parts[pIdx] = parts[pIdx].replace(re, LF + kw);
+          }
         });
-        formatted = formatted.trim();
+        let formatted = parts.join("'").trim();
 
         let tips = LF + LF + '-- QUERY PERFORMANCE & SAFETY AUDIT:' + LF;
         if (/SELECT\s+\*/i.test(val)) {

@@ -695,19 +695,63 @@
 
   let isModelReady = false;
 
-  const WHISPER_FILES = [
-    { name: 'config.json', path: 'config.json', size: 2048 },
-    { name: 'encoder_model_quantized.onnx', path: 'onnx/encoder_model_quantized.onnx', size: 10124910 },
-    { name: 'decoder_model_merged_quantized.onnx', path: 'onnx/decoder_model_merged_quantized.onnx', size: 30727765 }
-  ];
-  const TOTAL_WHISPER_BYTES = WHISPER_FILES.reduce((s, f) => s + f.size, 0);
+  const MODEL_CONFIGS = {
+    'whisper-tiny': {
+      repo: 'Xenova/whisper-tiny',
+      totalBytes: 40854723,
+      totalMb: '39.0',
+      files: [
+        { name: 'config.json', path: 'config.json', size: 2048, minSize: 500 },
+        { name: 'encoder_model_quantized.onnx', path: 'onnx/encoder_model_quantized.onnx', size: 10124910, minSize: 2000000 },
+        { name: 'decoder_model_merged_quantized.onnx', path: 'onnx/decoder_model_merged_quantized.onnx', size: 30727765, minSize: 5000000 }
+      ]
+    },
+    'whisper-base': {
+      repo: 'Xenova/whisper-base',
+      totalBytes: 145000000,
+      totalMb: '138.3',
+      files: [
+        { name: 'config.json', path: 'config.json', size: 2048, minSize: 500 },
+        { name: 'encoder_model_quantized.onnx', path: 'onnx/encoder_model_quantized.onnx', size: 35000000, minSize: 5000000 },
+        { name: 'decoder_model_merged_quantized.onnx', path: 'onnx/decoder_model_merged_quantized.onnx', size: 110000000, minSize: 10000000 }
+      ]
+    }
+  };
+  const TOTAL_WHISPER_BYTES = MODEL_CONFIGS['whisper-tiny'].totalBytes;
+  let pipelineInstance = null;
 
   async function checkCache() {
+    isModelReady = false;
+    modelLoadedBanner.classList.add('hidden');
+    modelLoadedBanner.classList.remove('flex');
+    cacheStatusEl.textContent = 'Cache: Ainda não baixado';
+    cacheStatusEl.classList.remove('text-emerald-500', 'font-bold');
+
     try {
       if ('caches' in window) {
         const cache = await window.caches.open('transformers-cache');
-        const match = await cache.match('https://huggingface.co/Xenova/whisper-tiny/resolve/main/onnx/encoder_model_quantized.onnx');
-        if (match) {
+        const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
+        const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
+        const repo = cfg.repo;
+
+        let allFilesValid = true;
+        for (const f of cfg.files) {
+          const hfUrl = 'https://huggingface.co/' + repo + '/resolve/main/' + f.path;
+          const mirrorUrl = 'https://hf-mirror.com/' + repo + '/resolve/main/' + f.path;
+          let match = await cache.match(hfUrl);
+          if (!match) match = await cache.match(mirrorUrl);
+          if (!match) {
+            allFilesValid = false;
+            break;
+          }
+          const blob = await match.blob();
+          if (blob.size < f.minSize) {
+            allFilesValid = false;
+            break;
+          }
+        }
+
+        if (allFilesValid) {
           isModelReady = true;
           cacheStatusEl.textContent = 'Cache: ✓ Modelo salvo no disco local (Pronto offline)';
           cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
@@ -719,6 +763,15 @@
     } catch(e) {}
   }
   checkCache();
+
+  if (selectModel) {
+    selectModel.addEventListener('change', () => {
+      isModelReady = false;
+      modelLoadedBanner.classList.add('hidden');
+      modelLoadedBanner.classList.remove('flex');
+      checkCache();
+    });
+  }
 
   btnLoadOnline.addEventListener('click', async () => {
     if (!navigator.onLine) {
@@ -733,9 +786,16 @@
     btnLoadOnline.textContent = '⏳ Downloading...';
 
     const source = selectSource ? selectSource.value : 'hf';
+    const modelKey = (selectModel && selectModel.value) ? selectModel.value : 'whisper-tiny';
+    const cfg = MODEL_CONFIGS[modelKey] || MODEL_CONFIGS['whisper-tiny'];
+    const repoSlug = cfg.repo;
+    const filesToDownload = cfg.files;
+    const totalBytes = cfg.totalBytes;
+    const totalMb = cfg.totalMb;
+
     const baseUrl = source === 'mirror'
-      ? 'https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/'
-      : 'https://huggingface.co/Xenova/whisper-tiny/resolve/main/';
+      ? ('https://hf-mirror.com/' + repoSlug + '/resolve/main/')
+      : ('https://huggingface.co/' + repoSlug + '/resolve/main/');
 
     let overallLoaded = 0;
 
@@ -745,10 +805,10 @@
         try { cache = await window.caches.open('transformers-cache'); } catch(e) {}
       }
 
-      for (let i = 0; i < WHISPER_FILES.length; i++) {
-        const fInfo = WHISPER_FILES[i];
+      for (let i = 0; i < filesToDownload.length; i++) {
+        const fInfo = filesToDownload[i];
         const fileUrl = baseUrl + fInfo.path;
-        downloadFileName.textContent = `[${i + 1}/${WHISPER_FILES.length}] ` + fInfo.name;
+        downloadFileName.textContent = `[${i + 1}/${filesToDownload.length}] ` + fInfo.name;
 
         const res = await fetch(fileUrl, { mode: 'cors' });
         if (!res.ok) throw new Error(`HTTP ${res.status} (${res.statusText || 'Error'}) on ${fInfo.name}`);
@@ -765,9 +825,8 @@
             fileLoaded += value.length;
             overallLoaded += value.length;
 
-            const pct = Math.min(100, Math.round((overallLoaded / TOTAL_WHISPER_BYTES) * 100));
+            const pct = Math.min(100, Math.round((overallLoaded / totalBytes) * 100));
             const mb = (overallLoaded / (1024 * 1024)).toFixed(1);
-            const totalMb = (TOTAL_WHISPER_BYTES / (1024 * 1024)).toFixed(1);
             downloadPercent.textContent = pct + '% (' + mb + ' MB / ' + totalMb + ' MB)';
             downloadBar.style.width = pct + '%';
           }
@@ -775,7 +834,7 @@
           const blob = await res.blob();
           overallLoaded += blob.size;
           chunks.push(blob);
-          const pct = Math.min(100, Math.round((overallLoaded / TOTAL_WHISPER_BYTES) * 100));
+          const pct = Math.min(100, Math.round((overallLoaded / totalBytes) * 100));
           downloadPercent.textContent = pct + '%';
           downloadBar.style.width = pct + '%';
         }
@@ -799,6 +858,9 @@
       cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
       if (window.showToast) window.showToast('✓ Modelo Whisper carregado e pronto na memória');
     } catch(err) {
+      isModelReady = false;
+      modelLoadedBanner.classList.add('hidden');
+      modelLoadedBanner.classList.remove('flex');
       progressContainer.classList.add('hidden');
       progressContainer.classList.remove('flex');
       btnLoadOnline.disabled = false;
@@ -810,6 +872,10 @@
 
   localDropzone.addEventListener('click', () => localInput.click());
   localInput.addEventListener('change', async (e) => {
+    isModelReady = false;
+    modelLoadedBanner.classList.add('hidden');
+    modelLoadedBanner.classList.remove('flex');
+
     if (!e.target.files.length) return;
     const files = Array.from(e.target.files);
     localFilesList.innerHTML = '';
@@ -820,8 +886,32 @@
 
     for (const f of files) {
       if (f.name.endsWith('.onnx')) {
-        if (f.size < 1000) {
-          validationError = 'Invalid ONNX file: "' + f.name + '" is empty or too small (' + f.size + ' bytes). Expected quantized model weights (>1 MB).';
+        if (f.size < 5 * 1024 * 1024) {
+          validationError = 'Invalid ONNX model: "' + f.name + '" is too small (' + (f.size / 1024).toFixed(1) + ' KB). Whisper ONNX quantized models require at least 5 MB of neural weights.';
+          break;
+        }
+        try {
+          const headerBuffer = await f.slice(0, 512).arrayBuffer();
+          const bytes = new Uint8Array(headerBuffer);
+          let sameByteCount = 0;
+          for (let bIdx = 1; bIdx < Math.min(64, bytes.length); bIdx++) {
+            if (bytes[bIdx] === bytes[0]) sameByteCount++;
+          }
+          if (sameByteCount > 30) {
+            validationError = 'Corrupted ONNX file: "' + f.name + '" contains repetitive dummy payload (e.g. padding/filler bytes). Binary verification rejected.';
+            break;
+          }
+          const validStartTags = [0x08, 0x12, 0x1a, 0x22, 0x3a];
+          if (!validStartTags.includes(bytes[0])) {
+            validationError = 'Invalid ONNX format: "' + f.name + '" missing valid ONNX ModelProto protobuf signature (first byte 0x' + bytes[0].toString(16) + ').';
+            break;
+          }
+          if (bytes[0] === 0x08 && (bytes[1] < 1 || bytes[1] > 20)) {
+            validationError = 'Invalid ONNX IR version: "' + f.name + '" specifies unsupported protobuf IR version (' + bytes[1] + ').';
+            break;
+          }
+        } catch(bufErr) {
+          validationError = 'Failed reading ONNX header: ' + bufErr.message;
           break;
         }
         hasOnnx = true;
@@ -847,6 +937,9 @@
     }
 
     if (!hasOnnx) {
+      isModelReady = false;
+      modelLoadedBanner.classList.add('hidden');
+      modelLoadedBanner.classList.remove('flex');
       localFilesList.innerHTML = '<div class="text-amber-500 font-bold p-2 border border-amber-500/30 rounded-xl bg-amber-500/10">⚠️ Missing weights: Please include at least one Whisper model file (.onnx).</div>';
       return;
     }
@@ -914,7 +1007,7 @@
           fileNameEl.textContent = '✓ Live_Recording_' + new Date().toLocaleTimeString() + '.wav';
         };
         mediaRecorder.start();
-        if (speechRec) { try { speechRec.start(); } catch(e) {} }
+        if (activeMode === 'native' && speechRec) { try { speechRec.start(); } catch(e) {} }
         isRecording = true;
         recordBtn.textContent = '⏹ Parar Gravação';
         recordBtn.classList.add('bg-red-500/20', 'text-red-500');
@@ -940,11 +1033,57 @@
     return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + delim + pad(ms, 3);
   }
 
+  let validSegments = [];
+  let isTranscriptionValid = false;
+  function setExportButtonsState(enabled) {
+    [exportSrtBtn, exportVttBtn, exportTxtBtn].forEach(btn => {
+      if (!btn) return;
+      btn.disabled = !enabled;
+      if (!enabled) {
+        btn.classList.add('opacity-40', 'cursor-not-allowed');
+        btn.classList.remove('hover:bg-white/10');
+      } else {
+        btn.classList.remove('opacity-40', 'cursor-not-allowed');
+        btn.classList.add('hover:bg-white/10');
+      }
+    });
+  }
+  setExportButtonsState(false);
+
+  function resampleTo16k(audioBuffer) {
+    const targetRate = 16000;
+    const numChannels = audioBuffer.numberOfChannels;
+    const originalRate = audioBuffer.sampleRate;
+    const originalLength = audioBuffer.length;
+    const mono = new Float32Array(originalLength);
+    for (let c = 0; c < numChannels; c++) {
+      const channelData = audioBuffer.getChannelData(c);
+      for (let i = 0; i < originalLength; i++) {
+        mono[i] += channelData[i] / numChannels;
+      }
+    }
+    if (originalRate === targetRate) return mono;
+    const newLength = Math.round(originalLength * (targetRate / originalRate));
+    const resampled = new Float32Array(newLength);
+    const ratio = originalLength / newLength;
+    for (let i = 0; i < newLength; i++) {
+      const pos = i * ratio;
+      const index = Math.floor(pos);
+      const frac = pos - index;
+      const nextIndex = Math.min(index + 1, originalLength - 1);
+      resampled[i] = mono[index] * (1 - frac) + mono[nextIndex] * frac;
+    }
+    return resampled;
+  }
+
   transcribeBtn.addEventListener('click', async () => {
     if (!audioBlob) {
       alert('Please upload an audio file or record speech via microphone first.');
       return;
     }
+    validSegments = [];
+    isTranscriptionValid = false;
+    setExportButtonsState(false);
     statusEl.classList.remove('hidden');
     statusEl.classList.add('flex');
     statusTextEl.textContent = 'Decodificando áudio e gerando legendas...';
@@ -959,6 +1098,9 @@
         audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
       } catch(decodeErr) {
         outputEl.value = '[Audio Decode Error]: Unable to parse audio stream. The WAV or audio file is corrupted or in an unsupported format.';
+        validSegments = [];
+        isTranscriptionValid = false;
+        setExportButtonsState(false);
         return;
       }
 
@@ -975,7 +1117,10 @@
       const avgEnergy = totalEnergy / (channelData.length / step);
 
       if (avgEnergy < 0.002) {
-        outputEl.value = '1' + LF + '00:00:00,000 --> ' + formatTime(duration, ',') + LF + '[No Speech Detected: Audio track is silent or below voice threshold (RMS: ' + (avgEnergy * 100).toFixed(3) + '%)]' + LF + LF;
+        outputEl.value = '[No Speech Detected]: Audio track is silent or below voice threshold (RMS: ' + (avgEnergy * 100).toFixed(3) + '%).';
+        validSegments = [];
+        isTranscriptionValid = false;
+        setExportButtonsState(false);
         return;
       }
 
@@ -987,31 +1132,106 @@
           '- Sample Rate: ' + sampleRate + ' Hz' + LF +
           '- Channels: ' + audioBuffer.numberOfChannels + LF +
           '- Voice Activity Detected: Yes (Average Amplitude: ' + (avgEnergy * 100).toFixed(1) + '%)';
+        validSegments = [];
+        isTranscriptionValid = false;
+        setExportButtonsState(false);
+        return;
+      }
+
+      // Execute real neural Whisper inference if pipeline is initialized
+      if (pipelineInstance) {
+        try {
+          const audio16k = resampleTo16k(audioBuffer);
+          const out = await pipelineInstance(audio16k, {
+            chunk_length_s: 30,
+            stride_length_s: 5,
+            return_timestamps: true
+          });
+          if (out && out.text) {
+            const rawText = out.text.trim();
+            if (rawText && rawText !== '[BLANK_AUDIO]' && rawText.toLowerCase() !== '[music]') {
+              validSegments = [];
+              if (out.chunks && out.chunks.length > 0) {
+                out.chunks.forEach((chk, cIdx) => {
+                  const t = chk.text.trim();
+                  if (t) {
+                    validSegments.push({
+                      index: validSegments.length + 1,
+                      start: (chk.timestamp && chk.timestamp[0] != null) ? chk.timestamp[0] : (cIdx * 4),
+                      end: (chk.timestamp && chk.timestamp[1] != null) ? chk.timestamp[1] : Math.min(duration, (cIdx + 1) * 4),
+                      text: t
+                    });
+                  }
+                });
+              }
+              if (validSegments.length === 0) {
+                validSegments.push({
+                  index: 1,
+                  start: 0,
+                  end: duration,
+                  text: rawText
+                });
+              }
+              let srt = '';
+              validSegments.forEach(seg => {
+                srt += seg.index + LF + formatTime(seg.start, ',') + ' --> ' + formatTime(seg.end, ',') + LF + seg.text + LF + LF;
+              });
+              outputEl.value = srt;
+              isTranscriptionValid = true;
+              setExportButtonsState(true);
+              if (window.showToast) window.showToast('Neural transcription generated!');
+              return;
+            }
+          }
+        } catch(inferErr) {
+          console.warn('Transformers.js runtime fallback:', inferErr);
+        }
+      }
+
+      if (liveTranscriptLines.length === 0) {
+        outputEl.value = '[No Speech Content]: Audio contains acoustic energy, but zero linguistic voice or speech tokens were detected in the input signal.';
+        validSegments = [];
+        isTranscriptionValid = false;
+        setExportButtonsState(false);
         return;
       }
 
       const chunkLength = 4.0;
-      const totalChunks = Math.max(1, Math.ceil(duration / chunkLength));
+      const totalChunks = Math.min(liveTranscriptLines.length, Math.max(1, Math.ceil(duration / chunkLength)));
+      validSegments = [];
       let srt = '';
 
       for (let c = 0; c < totalChunks; c++) {
         const startSec = c * chunkLength;
         const endSec = Math.min(duration, (c + 1) * chunkLength);
-        const startSrt = formatTime(startSec, ',');
-        const endSrt = formatTime(endSec, ',');
-
-        let lineText = '';
-        if (liveTranscriptLines[c]) {
-          lineText = liveTranscriptLines[c];
-        } else {
-          lineText = '[Transcribed Segment ' + (c + 1) + ' | ' + Math.round(startSec) + 's - ' + Math.round(endSec) + 's]';
+        const lineText = liveTranscriptLines[c] || '';
+        if (lineText) {
+          validSegments.push({
+            index: validSegments.length + 1,
+            start: startSec,
+            end: endSec,
+            text: lineText
+          });
+          srt += (validSegments.length) + LF + formatTime(startSec, ',') + ' --> ' + formatTime(endSec, ',') + LF + lineText + LF + LF;
         }
-        srt += (c + 1) + LF + startSrt + ' --> ' + endSrt + LF + lineText + LF + LF;
       }
-      outputEl.value = srt;
-      if (window.showToast) window.showToast('Transcription generated!');
+
+      if (validSegments.length > 0) {
+        outputEl.value = srt;
+        isTranscriptionValid = true;
+        setExportButtonsState(true);
+        if (window.showToast) window.showToast('Transcription generated!');
+      } else {
+        outputEl.value = '[No Speech Content]: Audio contains acoustic energy, but zero linguistic voice or speech tokens were detected in the input signal.';
+        validSegments = [];
+        isTranscriptionValid = false;
+        setExportButtonsState(false);
+      }
     } catch(err) {
       outputEl.value = '[Transcription Error]: ' + err.message;
+      validSegments = [];
+      isTranscriptionValid = false;
+      setExportButtonsState(false);
     } finally {
       statusEl.classList.add('hidden');
       statusEl.classList.remove('flex');
@@ -1027,8 +1247,16 @@
   });
 
   exportSrtBtn.addEventListener('click', () => {
-    if (!outputEl.value) return;
-    const blob = new Blob([outputEl.value], { type: 'text/plain;charset=utf-8' });
+    if (!isTranscriptionValid || !validSegments.length || !outputEl.value || outputEl.value.startsWith('[')) {
+      alert('Cannot Export Subtitles: No valid speech transcription was generated. Subtitle export is blocked for error messages or non-transcribed audio.');
+      return;
+    }
+    const LF = String.fromCharCode(10);
+    let srt = '';
+    validSegments.forEach((seg, idx) => {
+      srt += (idx + 1) + LF + formatTime(seg.start, ',') + ' --> ' + formatTime(seg.end, ',') + LF + seg.text + LF + LF;
+    });
+    const blob = new Blob([srt], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -1039,16 +1267,14 @@
 
   if (exportVttBtn) {
     exportVttBtn.addEventListener('click', () => {
-      if (!outputEl.value) return;
+      if (!isTranscriptionValid || !validSegments.length || !outputEl.value || outputEl.value.startsWith('[')) {
+        alert('Cannot Export Subtitles: No valid speech transcription was generated. Subtitle export is blocked for error messages or non-transcribed audio.');
+        return;
+      }
       const LF = String.fromCharCode(10);
       let vttContent = 'WEBVTT' + LF + LF;
-      const blocks = outputEl.value.trim().split(LF + LF);
-      blocks.forEach(b => {
-        const lines = b.split(LF);
-        if (lines.length >= 3) {
-          const timeLine = lines[1].replace(/,/g, '.');
-          vttContent += timeLine + LF + lines.slice(2).join(LF) + LF + LF;
-        }
+      validSegments.forEach((seg, idx) => {
+        vttContent += (idx + 1) + LF + formatTime(seg.start, '.') + ' --> ' + formatTime(seg.end, '.') + LF + seg.text + LF + LF;
       });
       const blob = new Blob([vttContent], { type: 'text/vtt;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -1060,21 +1286,23 @@
     });
   }
 
-  exportTxtBtn.addEventListener('click', () => {
-    if (!outputEl.value) return;
-    const cleanLines = outputEl.value.split(String.fromCharCode(10)).filter(line => {
-      const tr = line.trim();
-      return tr && !tr.match(/^\d+$/) && !tr.includes('-->');
+  if (exportTxtBtn) {
+    exportTxtBtn.addEventListener('click', () => {
+      if (!isTranscriptionValid || !validSegments.length || !outputEl.value || outputEl.value.startsWith('[')) {
+        alert('Cannot Export Text: No valid speech transcription was generated. Export is blocked for error messages or silent tracks.');
+        return;
+      }
+      const LF = String.fromCharCode(10);
+      const cleanTxt = validSegments.map(s => s.text).join(LF);
+      const blob = new Blob([cleanTxt], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'transcript_' + Date.now() + '.txt';
+      a.click();
+      URL.revokeObjectURL(url);
     });
-    const cleanTxt = cleanLines.join(String.fromCharCode(10));
-    const blob = new Blob([cleanTxt], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'transcript_' + Date.now() + '.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+  }
 })();
 </script>
         
