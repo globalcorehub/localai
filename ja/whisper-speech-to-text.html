@@ -217,48 +217,51 @@
         </a>
         
 
-        <!-- All Tools Dropdown -->
-        <div class="relative group/menu">
-          <button id="tools-dropdown-btn" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+        <!-- All Tools Dropdown (Zero-Gap Hover + Click Controller) -->
+        <div class="relative" id="tools-dropdown-container">
+          <button id="tools-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1 cursor-pointer select-none">
             <span>全ツール一覧</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg id="tools-dropdown-arrow" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div id="tools-dropdown-panel" class="hidden group-hover/menu:block absolute right-0 mt-2 w-72 rounded-3xl bento-glass shadow-2xl p-2.5 z-50">
-            <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
-              全ツール一覧 (6)
-            </div>
-            <div class="max-h-80 overflow-y-auto space-y-1">
-              
-              <a href="/ja/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">Whisper 音声文字起こし</div>
-                <div class="text-[11px] text-slate-500 truncate">WebGPUによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。</div>
-              </a>
-              
-              <a href="/ja/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">AI 背景透過・切り抜き</div>
-                <div class="text-[11px] text-slate-500 truncate">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</div>
-              </a>
-              
-              <a href="/ja/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">プライバシー保護 OCR</div>
-                <div class="text-[11px] text-slate-500 truncate">領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。</div>
-              </a>
-              
-              <a href="/ja/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">機密保持 PDF 要約</div>
-                <div class="text-[11px] text-slate-500 truncate">社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。</div>
-              </a>
-              
-              <a href="/ja/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">隔離環境 Dev AI</div>
-                <div class="text-[11px] text-slate-500 truncate">企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、SQL最適化をブラウザ内で実行。</div>
-              </a>
-              
-              <a href="/ja/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">ローカル RAG 検索</div>
-                <div class="text-[11px] text-slate-500 truncate">複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。</div>
-              </a>
-              
+          <!-- Bridge wrapper: top-full pt-2 guarantees mouse never leaves hit-box when moving to panel -->
+          <div id="tools-dropdown-panel" class="hidden absolute right-0 top-full pt-2 w-72 z-50 transition-all duration-150">
+            <div class="rounded-3xl bento-glass shadow-2xl p-2.5 border border-slate-200/80 dark:border-slate-700/80">
+              <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
+                全ツール一覧 (6)
+              </div>
+              <div class="max-h-80 overflow-y-auto space-y-1">
+                
+                <a href="/ja/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">Whisper 音声文字起こし</div>
+                  <div class="text-[11px] text-slate-500 truncate">WebGPUによるハードウェアアクセラレーションを活用し、長時間の音声や会議録音を端末内ローカルで高速・高精度に文字起こし。</div>
+                </a>
+                
+                <a href="/ja/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">AI 背景透過・切り抜き</div>
+                  <div class="text-[11px] text-slate-500 truncate">写真や商品画像の背景を端末内ローカルで高精度に自動認識・透過処理。個人情報や非公開画像もサーバー送信ゼロで安心。</div>
+                </a>
+                
+                <a href="/ja/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">プライバシー保護 OCR</div>
+                  <div class="text-[11px] text-slate-500 truncate">領収書、身分証、請求書の画像をブラウザ内で解析しテキスト化。クレジットカード番号や電話番号の自動マスキング機能付き。</div>
+                </a>
+                
+                <a href="/ja/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">機密保持 PDF 要約</div>
+                  <div class="text-[11px] text-slate-500 truncate">社外秘の契約書や財務レポートを外部送信なしでブラウザ内で高速要約。エグゼクティブサマリーや重要条項を瞬時に整理。</div>
+                </a>
+                
+                <a href="/ja/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">隔離環境 Dev AI</div>
+                  <div class="text-[11px] text-slate-500 truncate">企業秘密コードや機密クエリを外部に一切送信せず、正規表現の生成・テストや複雑なコードのロジック解説、SQL最適化をブラウザ内で実行。</div>
+                </a>
+                
+                <a href="/ja/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">ローカル RAG 検索</div>
+                  <div class="text-[11px] text-slate-500 truncate">複数のメモやテキストファイルをブラウザ内メモリにインデックス化。クラウド不要で瞬時にコサイン類似度によるセマンティック検索を実行。</div>
+                </a>
+                
+              </div>
             </div>
           </div>
         </div>
@@ -475,11 +478,10 @@
             <span>🔗 オフライン用モデル直接ダウンロードリンク</span>
           </div>
           <p class="text-[11px] opacity-70 mb-2 leading-relaxed">ブラウザやダウンローダーで保存後、上の「ローカル端末内のモデルを読み込み」から指定してください：</p>
-          <div class="flex flex-wrap gap-2 text-[11px] font-mono">
-            <a href="https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/onnx/model_quantized.onnx" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">🚀 HF-Mirror: model_quantized.onnx (39 MB)</a>
-            <a href="https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/tokenizer.json" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">🚀 HF-Mirror: tokenizer.json (2.4 MB)</a>
-            <a href="https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/config.json" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">🚀 HF-Mirror: config.json (2 KB)</a>
-            <a href="https://huggingface.co/Xenova/whisper-tiny/resolve/main/onnx/model_quantized.onnx" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-white/5 hover:bg-white/10 opacity-70 transition">🌐 Global CDN: model.onnx</a>
+            <a href="https://huggingface.co/Xenova/whisper-tiny/resolve/main/onnx/encoder_model_quantized.onnx" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">1. Encoder ONNX (10.1 MB)</a>
+            <a href="https://huggingface.co/Xenova/whisper-tiny/resolve/main/onnx/decoder_model_merged_quantized.onnx" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">2. Decoder ONNX (30.7 MB)</a>
+            <a href="https://huggingface.co/Xenova/whisper-tiny/resolve/main/tokenizer.json" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">3. Tokenizer JSON (2.4 MB)</a>
+            <a href="https://huggingface.co/Xenova/whisper-tiny/resolve/main/config.json" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold transition">4. Config JSON (2 KB)</a>
           </div>
         </div>
       </div>
@@ -691,14 +693,27 @@
   makeKeyAccessible(dropzone, fileInput);
   makeKeyAccessible(localDropzone, localInput);
 
+  let isModelReady = false;
+
+  const WHISPER_FILES = [
+    { name: 'config.json', path: 'config.json', size: 2048 },
+    { name: 'encoder_model_quantized.onnx', path: 'onnx/encoder_model_quantized.onnx', size: 10124910 },
+    { name: 'decoder_model_merged_quantized.onnx', path: 'onnx/decoder_model_merged_quantized.onnx', size: 30727765 }
+  ];
+  const TOTAL_WHISPER_BYTES = WHISPER_FILES.reduce((s, f) => s + f.size, 0);
+
   async function checkCache() {
     try {
-      if (window.caches) {
+      if ('caches' in window) {
         const cache = await window.caches.open('transformers-cache');
-        const match = await cache.match('https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/onnx/model_quantized.onnx');
+        const match = await cache.match('https://huggingface.co/Xenova/whisper-tiny/resolve/main/onnx/encoder_model_quantized.onnx');
         if (match) {
+          isModelReady = true;
           cacheStatusEl.textContent = 'キャッシュ：✓ 端末ローカルに保存済み（オフライン即時起動）';
           cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
+          modelLoadedBanner.classList.remove('hidden');
+          modelLoadedBanner.classList.add('flex');
+          modelLoadedText.textContent = '✓ Whisperモデルがメモリに展開され準備完了';
         }
       }
     } catch(e) {}
@@ -706,11 +721,6 @@
   checkCache();
 
   btnLoadOnline.addEventListener('click', async () => {
-    progressContainer.classList.remove('hidden');
-    progressContainer.classList.add('flex');
-    btnLoadOnline.disabled = true;
-    btnLoadOnline.textContent = '⏳ Loading...';
-
     if (!navigator.onLine) {
       alert('Offline Mode: No network connection detected. Cannot download model weights. Please connect to internet or use "Load from Local Disk Files".');
       return;
@@ -720,35 +730,61 @@
     progressContainer.classList.add('flex');
     btnLoadOnline.disabled = true;
     btnLoadOnline.classList.add('opacity-50', 'cursor-not-allowed');
+    btnLoadOnline.textContent = '⏳ Downloading...';
 
-    const source = selectSource.value;
-    const modelType = whisperModelSelect.value;
-    const modelUrl = source === 'hf' 
-      ? 'https://huggingface.co/onnx-community/whisper-tiny/resolve/main/onnx/model_quantized.onnx'
-      : 'https://hf-mirror.com/onnx-community/whisper-tiny/resolve/main/onnx/model_quantized.onnx';
+    const source = selectSource ? selectSource.value : 'hf';
+    const baseUrl = source === 'mirror'
+      ? 'https://hf-mirror.com/Xenova/whisper-tiny/resolve/main/'
+      : 'https://huggingface.co/Xenova/whisper-tiny/resolve/main/';
 
-    downloadFileName.textContent = 'Connecting to ' + (source === 'hf' ? 'Hugging Face CDN' : 'HF-Mirror') + '...';
-    downloadPercent.textContent = 'Requesting stream...';
-    downloadBar.style.width = '20%';
+    let overallLoaded = 0;
 
     try {
-      const res = await fetch(modelUrl, { mode: 'cors' });
-      if (!res.ok) throw new Error('HTTP status ' + res.status + ' ' + res.statusText);
+      let cache = null;
+      if ('caches' in window) {
+        try { cache = await window.caches.open('transformers-cache'); } catch(e) {}
+      }
 
-      const contentLength = +res.headers.get('Content-Length') || (39.2 * 1024 * 1024);
-      const reader = res.body ? res.body.getReader() : null;
-      let receivedLength = 0;
+      for (let i = 0; i < WHISPER_FILES.length; i++) {
+        const fInfo = WHISPER_FILES[i];
+        const fileUrl = baseUrl + fInfo.path;
+        downloadFileName.textContent = `[${i + 1}/${WHISPER_FILES.length}] ` + fInfo.name;
 
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          receivedLength += value.length;
-          const pct = Math.min(100, Math.round((receivedLength / contentLength) * 100));
-          const mb = (receivedLength / (1024 * 1024)).toFixed(1);
-          const totalMb = (contentLength / (1024 * 1024)).toFixed(1);
-          downloadPercent.textContent = pct + '% (' + mb + ' MB / ' + totalMb + ' MB)';
+        const res = await fetch(fileUrl, { mode: 'cors' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} (${res.statusText || 'Error'}) on ${fInfo.name}`);
+
+        const reader = res.body ? res.body.getReader() : null;
+        let fileLoaded = 0;
+        const chunks = [];
+
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            fileLoaded += value.length;
+            overallLoaded += value.length;
+
+            const pct = Math.min(100, Math.round((overallLoaded / TOTAL_WHISPER_BYTES) * 100));
+            const mb = (overallLoaded / (1024 * 1024)).toFixed(1);
+            const totalMb = (TOTAL_WHISPER_BYTES / (1024 * 1024)).toFixed(1);
+            downloadPercent.textContent = pct + '% (' + mb + ' MB / ' + totalMb + ' MB)';
+            downloadBar.style.width = pct + '%';
+          }
+        } else {
+          const blob = await res.blob();
+          overallLoaded += blob.size;
+          chunks.push(blob);
+          const pct = Math.min(100, Math.round((overallLoaded / TOTAL_WHISPER_BYTES) * 100));
+          downloadPercent.textContent = pct + '%';
           downloadBar.style.width = pct + '%';
+        }
+
+        if (cache) {
+          try {
+            const fileBlob = new Blob(chunks);
+            await cache.put(fileUrl, new Response(fileBlob));
+          } catch(ce) {}
         }
       }
 
@@ -757,6 +793,8 @@
       modelLoadedBanner.classList.add('flex');
       modelLoadedText.textContent = '✓ Whisperモデルがメモリに展開され準備完了';
       btnLoadOnline.textContent = '✓ Ready';
+      btnLoadOnline.disabled = false;
+      btnLoadOnline.classList.remove('opacity-50', 'cursor-not-allowed');
       cacheStatusEl.textContent = 'キャッシュ：✓ 端末ローカルに保存済み（オフライン即時起動）';
       cacheStatusEl.classList.add('text-emerald-500', 'font-bold');
       if (window.showToast) window.showToast('✓ Whisperモデルがメモリに展開され準備完了');
@@ -765,11 +803,10 @@
       progressContainer.classList.remove('flex');
       btnLoadOnline.disabled = false;
       btnLoadOnline.classList.remove('opacity-50', 'cursor-not-allowed');
-      alert('Model Download Failed: ' + err.message + '. If offline or network restricted, please download model weights manually and import via "Load from Local Disk Files".');
+      btnLoadOnline.textContent = '⬇ モデルをダウンロードして保存（Whisper Tiny 約39 MB）';
+      alert('Model Download Notice: ' + err.message + '. If your network restricts direct Hugging Face access, please download the files directly from the links below and load them via "Load from Local Disk Files", or use "Native Speech Engine" for zero-download transcription.');
     }
   });
-
-  let isModelReady = false;
 
   localDropzone.addEventListener('click', () => localInput.click());
   localInput.addEventListener('change', async (e) => {
@@ -1120,6 +1157,75 @@
     if (mobileBtn && mobileMenu) {
       mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     }
+
+    // All Tools Dropdown Controller: Zero-Gap Hover + Click Toggle + Click Outside
+    (function initToolsDropdown() {
+      const container = document.getElementById('tools-dropdown-container');
+      const btn = document.getElementById('tools-dropdown-btn');
+      const panel = document.getElementById('tools-dropdown-panel');
+      const arrow = document.getElementById('tools-dropdown-arrow');
+      if (!container || !btn || !panel) return;
+
+      let hoverTimer = null;
+      let isOpen = false;
+
+      function openPanel() {
+        if (hoverTimer) clearTimeout(hoverTimer);
+        isOpen = true;
+        panel.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        if (arrow) arrow.classList.add('rotate-180');
+      }
+
+      function closePanel() {
+        if (hoverTimer) clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        }, 220);
+      }
+
+      function togglePanel(e) {
+        e.stopPropagation();
+        if (isOpen) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        } else {
+          openPanel();
+        }
+      }
+
+      container.addEventListener('mouseenter', openPanel);
+      container.addEventListener('mouseleave', closePanel);
+      btn.addEventListener('click', togglePanel);
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        }
+        // Auto close open details tag when clicking outside
+        document.querySelectorAll('details[open]').forEach(det => {
+          if (!det.contains(e.target)) det.removeAttribute('open');
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+          btn.focus();
+        }
+      });
+    })();
 
     const btt = document.getElementById('back-to-top-btn');
     if (btt) {

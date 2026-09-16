@@ -217,48 +217,51 @@
         </a>
         
 
-        <!-- All Tools Dropdown -->
-        <div class="relative group/menu">
-          <button id="tools-dropdown-btn" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+        <!-- All Tools Dropdown (Zero-Gap Hover + Click Controller) -->
+        <div class="relative" id="tools-dropdown-container">
+          <button id="tools-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false" class="px-3.5 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1 cursor-pointer select-none">
             <span>全部工具</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg id="tools-dropdown-arrow" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div id="tools-dropdown-panel" class="hidden group-hover/menu:block absolute right-0 mt-2 w-72 rounded-3xl bento-glass shadow-2xl p-2.5 z-50">
-            <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
-              全部工具 (6)
-            </div>
-            <div class="max-h-80 overflow-y-auto space-y-1">
-              
-              <a href="/zh/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">语音转文字</div>
-                <div class="text-[11px] text-slate-500 truncate">基于浏览器端 WebGPU 硬件加速与 Whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 SRT 字幕，绝不上报任何私密录音。</div>
-              </a>
-              
-              <a href="/zh/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">智能抠图</div>
-                <div class="text-[11px] text-slate-500 truncate">利用浏览器本地像素级分割算法与 Canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 PNG 一键下载。</div>
-              </a>
-              
-              <a href="/zh/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">隐私文字识别</div>
-                <div class="text-[11px] text-slate-500 truncate">纯本地运行的证件发票 OCR 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。</div>
-              </a>
-              
-              <a href="/zh/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">文档隐私摘要</div>
-                <div class="text-[11px] text-slate-500 truncate">专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。</div>
-              </a>
-              
-              <a href="/zh/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">离线研发助手</div>
-                <div class="text-[11px] text-slate-500 truncate">专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 SQL 查询，杜绝代码泄露。</div>
-              </a>
-              
-              <a href="/zh/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
-                <div class="font-bold text-slate-900 dark:text-slate-100">本地知识库检索</div>
-                <div class="text-[11px] text-slate-500 truncate">在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。</div>
-              </a>
-              
+          <!-- Bridge wrapper: top-full pt-2 guarantees mouse never leaves hit-box when moving to panel -->
+          <div id="tools-dropdown-panel" class="hidden absolute right-0 top-full pt-2 w-72 z-50 transition-all duration-150">
+            <div class="rounded-3xl bento-glass shadow-2xl p-2.5 border border-slate-200/80 dark:border-slate-700/80">
+              <div class="text-[10px] font-mono text-slate-400 px-3 py-1.5 uppercase tracking-wider font-bold border-b border-slate-100 dark:border-slate-800 mb-1">
+                全部工具 (6)
+              </div>
+              <div class="max-h-80 overflow-y-auto space-y-1">
+                
+                <a href="/zh/whisper-speech-to-text" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">语音转文字</div>
+                  <div class="text-[11px] text-slate-500 truncate">基于浏览器端 WebGPU 硬件加速与 Whisper 神经网络模型，秒级离线识别长音频，导出带时间戳的 SRT 字幕，绝不上报任何私密录音。</div>
+                </a>
+                
+                <a href="/zh/ai-background-remover" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">智能抠图</div>
+                  <div class="text-[11px] text-slate-500 truncate">利用浏览器本地像素级分割算法与 Canvas 滤镜，自动精准识别前景主体并剔除杂乱背景，支持边缘平滑微调与透明 PNG 一键下载。</div>
+                </a>
+                
+                <a href="/zh/in-browser-ocr-scanner" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">隐私文字识别</div>
+                  <div class="text-[11px] text-slate-500 truncate">纯本地运行的证件发票 OCR 文字识别引擎，支持一键剪贴板粘贴截图识别，并内置敏感信息（身份证号、手机、银行卡号）一键脱敏防泄密。</div>
+                </a>
+                
+                <a href="/zh/private-pdf-summarizer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">文档隐私摘要</div>
+                  <div class="text-[11px] text-slate-500 truncate">专为保密商业合同、法务条款与未公开财报打造的纯前端文档摘要工具，多级精细度提取核心要点与风险责任，杜绝商业机密泄露。</div>
+                </a>
+                
+                <a href="/zh/offline-code-regex-explainer" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">离线研发助手</div>
+                  <div class="text-[11px] text-slate-500 truncate">专为金融机构、内网开发环境与受合规限制团队设计，纯浏览器端解析代码算法、调试正则表达式并优化 SQL 查询，杜绝代码泄露。</div>
+                </a>
+                
+                <a href="/zh/local-document-vector-search" class="block px-3 py-2 rounded-2xl text-xs hover:bg-sky-50 dark:hover:bg-slate-800 transition">
+                  <div class="font-bold text-slate-900 dark:text-slate-100">本地知识库检索</div>
+                  <div class="text-[11px] text-slate-500 truncate">在浏览器内存中建立纯本地文档向量索引，支持跨多篇私密笔记、技术文档快速进行余弦相似度语义检索，无需云端向量数据库。</div>
+                </a>
+                
+              </div>
             </div>
           </div>
         </div>
@@ -683,6 +686,75 @@
     if (mobileBtn && mobileMenu) {
       mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     }
+
+    // All Tools Dropdown Controller: Zero-Gap Hover + Click Toggle + Click Outside
+    (function initToolsDropdown() {
+      const container = document.getElementById('tools-dropdown-container');
+      const btn = document.getElementById('tools-dropdown-btn');
+      const panel = document.getElementById('tools-dropdown-panel');
+      const arrow = document.getElementById('tools-dropdown-arrow');
+      if (!container || !btn || !panel) return;
+
+      let hoverTimer = null;
+      let isOpen = false;
+
+      function openPanel() {
+        if (hoverTimer) clearTimeout(hoverTimer);
+        isOpen = true;
+        panel.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        if (arrow) arrow.classList.add('rotate-180');
+      }
+
+      function closePanel() {
+        if (hoverTimer) clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        }, 220);
+      }
+
+      function togglePanel(e) {
+        e.stopPropagation();
+        if (isOpen) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        } else {
+          openPanel();
+        }
+      }
+
+      container.addEventListener('mouseenter', openPanel);
+      container.addEventListener('mouseleave', closePanel);
+      btn.addEventListener('click', togglePanel);
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+        }
+        // Auto close open details tag when clicking outside
+        document.querySelectorAll('details[open]').forEach(det => {
+          if (!det.contains(e.target)) det.removeAttribute('open');
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+          isOpen = false;
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          if (arrow) arrow.classList.remove('rotate-180');
+          btn.focus();
+        }
+      });
+    })();
 
     const btt = document.getElementById('back-to-top-btn');
     if (btt) {
