@@ -1,5 +1,5 @@
 // LocalAI Service Worker - 100% Offline & Air-Gapped Cache
-const CACHE_NAME = 'localai-offline-v6';
+const CACHE_NAME = 'localai-offline-v7';
 const STATIC_ASSETS = [
   "/",
   "/manifest.json",
@@ -116,7 +116,7 @@ self.addEventListener('fetch', event => {
         return response;
       }).catch(async () => {
         const cache = await caches.open(CACHE_NAME);
-        let cached = await cache.match(event.request);
+        let cached = await cache.match(event.request, { ignoreSearch: true });
         if (cached) return cached;
         const url = new URL(event.request.url);
         let p = url.pathname;
@@ -134,7 +134,7 @@ self.addEventListener('fetch', event => {
   }
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
+    caches.match(event.request, { ignoreSearch: true }).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
         if (response && response.status === 200 && (response.type === 'basic' || response.type === 'cors')) {
