@@ -1,6 +1,8 @@
 // LocalAI Service Worker - 100% Offline & Air-Gapped Cache
-const CACHE_NAME = 'localai-offline-v8';
+const CACHE_NAME = 'localai-offline-v9';
 const STATIC_ASSETS = [
+  "/vendor/pdf.min.mjs",
+  "/vendor/pdf.worker.min.mjs",
   "/",
   "/manifest.json",
   "/og-image.svg",
