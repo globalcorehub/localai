@@ -463,8 +463,8 @@
           <div>
             <label class="text-[11px] font-bold block mb-1 opacity-75">Download-Quelle</label>
             <select id="select-model-source" class="w-full text-xs font-mono p-2.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 hover:border-sky-500/40 bg-white dark:bg-slate-900 focus:outline-none">
-              <option value="mirror" selected>Beschleunigter HF-Mirror</option>
-              <option value="hf">Offizielles Hugging Face CDN</option>
+              <option value="hf" selected>Offizielles Hugging Face CDN</option>
+              <option value="mirror">Beschleunigter HF-Mirror</option>
             </select>
           </div>
           <div>
@@ -883,7 +883,7 @@
   let moduleRetryNonce = 0;
   const RUNTIME_VERIFIED_KEY = 'localai_neural_verified_v1';
   const RUNTIME_SIGNATURE = {
-    version: 'v4.1',
+    version: 'v4.2',
     runtime: '@xenova/transformers@2.17.2',
     onnx: 'ort-wasm-simd.wasm'
   };
@@ -976,18 +976,24 @@
         }
       }
       let isVerified = false;
-      try {
-        const raw = localStorage.getItem(RUNTIME_VERIFIED_KEY);
-        if (raw) {
+      const raw = localStorage.getItem(RUNTIME_VERIFIED_KEY);
+      if (raw) {
+        try {
           const data = JSON.parse(raw);
-          if (data && data.version === RUNTIME_SIGNATURE.version && data.runtime === RUNTIME_SIGNATURE.runtime) {
+          if (
+            data &&
+            typeof data === 'object' &&
+            data.version === RUNTIME_SIGNATURE.version &&
+            data.runtime === RUNTIME_SIGNATURE.runtime &&
+            data.onnx === RUNTIME_SIGNATURE.onnx
+          ) {
             isVerified = true;
           }
+        } catch(e) {
+          isVerified = false;
         }
-      } catch(e) {
-        if (localStorage.getItem(RUNTIME_VERIFIED_KEY) === 'true') isVerified = true;
       }
-      if ((!jsFound || !wasmFound) && isVerified) {
+      if (!isVerified || !jsFound || !wasmFound) {
         revokeRuntimeVerified();
         isVerified = false;
       }
@@ -2094,11 +2100,20 @@
       }, 2000);
     };
 
-    // Smooth Centered Search Focus Runtime
+    // Smooth Centered Search Focus Runtime with Header Offset
     window.focusAndCenterSearch = function() {
       const searchInput = document.getElementById('tool-search');
       if (searchInput) {
-        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const header = document.querySelector('header') || document.querySelector('nav');
+        const headerOffset = (header ? header.offsetHeight : 70) + 24;
+        const elementPosition = searchInput.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+
         setTimeout(() => {
           try {
             searchInput.focus({ preventScroll: true });
