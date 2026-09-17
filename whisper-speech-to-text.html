@@ -952,7 +952,10 @@
   ];
 
   async function probeNeuralRuntime() {
-    if (!('caches' in window)) return { ready: false, jsCached: false, wasmCached: false, verified: false };
+    if (!('caches' in window)) {
+      revokeRuntimeVerified();
+      return { ready: false, jsCached: false, wasmCached: false, verified: false };
+    }
     try {
       let jsFound = false;
       let wasmFound = false;
@@ -1000,6 +1003,7 @@
       const verified = jsFound && wasmFound && isVerified;
       return { ready: verified, jsCached: jsFound, wasmCached: wasmFound, verified: verified };
     } catch(e) {
+      revokeRuntimeVerified();
       return { ready: false, jsCached: false, wasmCached: false, verified: false };
     }
   }
